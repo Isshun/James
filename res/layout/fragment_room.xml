@@ -2,12 +2,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#f1f1f1"
     tools:context=".MainActivity$DummySectionFragment" >
 
-    <GridView
-        android:id="@+id/grid_room"
+    <ImageView
+        android:id="@+id/room_img"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="180dp"
+        android:layout_gravity="right"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg_bedroom"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/room_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#8000"
+        android:paddingLeft="6dp"
+        android:text="Bedroom"
+        android:textColor="@android:color/white"
+        android:textSize="32sp" />
+
+    <GridView
+        android:id="@+id/grid_actions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="42dp"
         android:listSelector="@android:color/transparent"
         android:numColumns="1" >
     </GridView>

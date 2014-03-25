@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-sdk
-        android:minSdkVersion="14"
+        android:minSdkVersion="16"
         android:targetSdkVersion="19" />
 
     <application
@@ -18,7 +18,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.bluebox.james.MainActivity"
+            android:name="com.bluebox.james.activity.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,8 +27,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.bluebox.james.TemperatureSceneActivity"
+            android:name="com.bluebox.james.activity.TemperatureSceneActivity"
             android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.bluebox.james.activity.FeatureEditActivity"
+            android:label="@string/activity_edit_feature" >
+        </activity>
+        <activity
+            android:name="com.bluebox.james.activity.ScenarioEditActivity"
+            android:label="@string/activity_edit_scenario" >
+        </activity>
+        <activity
+            android:name="com.bluebox.james.activity.RoomActivity"
+            android:label="@string/title_activity_room" >
         </activity>
     </application>
 

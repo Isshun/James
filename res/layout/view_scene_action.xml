@@ -1,0 +1,34 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="10dp"
+    tools:context=".MainActivity$DummySectionFragment" >
+
+    <FrameLayout
+        android:id="@+id/frame_scene"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/bg_tile_on" >
+
+        <TextView
+            android:id="@+id/lb_scene"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="32dp"
+            android:gravity="center_vertical"
+            android:textColor="#333" />
+
+        <TextView
+            android:id="@+id/lb_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_margin="5dp"
+            android:text="on" />
+    </FrameLayout>
+
+</FrameLayout>
