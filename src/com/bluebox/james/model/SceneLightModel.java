@@ -1,11 +1,11 @@
 package com.bluebox.james.model;
 
-public class SceneLightModel extends featureModel {
+public class SceneLightModel extends FeatureModel {
 	private float 	mValue;
 	private boolean	mIsVariometer;
 	
 	public SceneLightModel(String name, int icon) {
-		super(featureModel.SCENE_LIGHT, name, icon);
+		super(FeatureModel.SCENE_LIGHT, name, icon);
 		
 		mValue = 1f;
 	}

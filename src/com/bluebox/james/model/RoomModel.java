@@ -7,22 +7,22 @@ import java.util.List;
 public class RoomModel {
 	private static long			sCount;
 	private String 				mName;
-	private List<featureModel>	mScenes;
+	private List<FeatureModel>	mScenes;
 	private long 				mId;
 	private int 				mImgBackground;
 
 	public RoomModel(String name, int imgBackground) {
 		mId = sCount++;
 		mName = name;
-		mScenes = new ArrayList<featureModel>();
+		mScenes = new ArrayList<FeatureModel>();
 		mImgBackground = imgBackground;
 	}
 
-	public void addScene(featureModel scene) {
+	public void addScene(FeatureModel scene) {
 		mScenes.add(scene);
 	}
 	
-	public List<featureModel> getScenes() {
+	public List<FeatureModel> getScenes() {
 		return mScenes;
 	}
 
@@ -30,8 +30,8 @@ public class RoomModel {
 		return mId;
 	}
 
-	public featureModel getScene(long id) {
-		for (featureModel scene: mScenes) {
+	public FeatureModel getScene(long id) {
+		for (FeatureModel scene: mScenes) {
 			if (scene.getId() == id) {
 				return scene;
 			}

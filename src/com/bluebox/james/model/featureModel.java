@@ -3,7 +3,7 @@ package com.bluebox.james.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class featureModel {
+public class FeatureModel {
 	
 	public final static int	SCENE_UNKNOW = 0;
 	public final static int	SCENE_LIGHT = 1;
@@ -22,7 +22,7 @@ public class featureModel {
 	private int 				mIcon;
 	private long 				mId;
 	
-	public featureModel(int type, String name, int icon) {
+	public FeatureModel(int type, String name, int icon) {
 		mId = sCount++;
 		mType = type;
 		mName = name;
@@ -30,7 +30,7 @@ public class featureModel {
 		mActions = new ArrayList<ActionModel>();
 	}
 	
-	public featureModel(String name) {
+	public FeatureModel(String name) {
 		mType = SCENE_UNKNOW;
 		mName = name;
 	}

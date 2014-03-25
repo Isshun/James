@@ -5,7 +5,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,19 +12,16 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.GridView;
-import android.widget.TextView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bluebox.james.R;
 import com.bluebox.james.activity.FeatureEditActivity;
 import com.bluebox.james.activity.TemperatureSceneActivity;
-import com.bluebox.james.adapter.OnSubItemClickListener;
 import com.bluebox.james.adapter.RoomSceneAdapter;
 import com.bluebox.james.model.ActionModel;
 import com.bluebox.james.model.RoomModel;
-import com.bluebox.james.model.SceneLightModel;
-import com.bluebox.james.model.featureModel;
-import com.bluebox.james.model.SceneTemperatureModel;
+import com.bluebox.james.model.FeatureModel;
 import com.bluebox.james.service.RoomService;
 
 public class RoomFragment extends Fragment {
@@ -46,7 +42,7 @@ public class RoomFragment extends Fragment {
         grid.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
-				featureModel scene = room.getScenes().get(pos);
+				FeatureModel scene = room.getScenes().get(pos);
 				clickOnTile(view, scene);
 			}
 		});
@@ -55,7 +51,7 @@ public class RoomFragment extends Fragment {
         grid.setOnItemLongClickListener(new OnItemLongClickListener() {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view, int pos, long id) {
-				featureModel scene = room.getScenes().get(pos);
+				FeatureModel scene = room.getScenes().get(pos);
 				Intent intent = new Intent(RoomFragment.this.getActivity(), FeatureEditActivity.class);
 				intent.putExtra("room_id", room.getId());
 				intent.putExtra("scene_id", scene.getId());
@@ -77,9 +73,9 @@ public class RoomFragment extends Fragment {
         return rootView;
     }
 
-	protected void clickOnTile(View view, featureModel scene) {
+	protected void clickOnTile(View view, FeatureModel scene) {
 		switch (scene.getType()) {
-		case featureModel.SCENE_TEMPERATURE:
+		case FeatureModel.SCENE_TEMPERATURE:
 			Intent intent = new Intent(getActivity(), TemperatureSceneActivity.class);
 			startActivity(intent);
 			break;
@@ -89,7 +85,7 @@ public class RoomFragment extends Fragment {
 		}
 	}
 
-	protected void nextAction(View view, featureModel scene) {
+	protected void nextAction(View view, FeatureModel scene) {
 		ActionModel action = scene.nextAction();
 		RoomService.execute(action);
 		

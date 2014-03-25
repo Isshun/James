@@ -16,10 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.bluebox.james.R;
-import com.bluebox.james.fragment.AlarmPanelFragment;
-import com.bluebox.james.fragment.LightPanelFragment;
 import com.bluebox.james.fragment.RoomFragment;
-import com.bluebox.james.fragment.TempPanelFragment;
 import com.bluebox.james.service.RoomService;
 
 public class MainActivity extends FragmentActivity {

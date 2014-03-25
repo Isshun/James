@@ -4,13 +4,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bluebox.james.R;
 import com.bluebox.james.model.ActionModel;
 import com.bluebox.james.model.RoomModel;
-import com.bluebox.james.model.featureModel;
+import com.bluebox.james.model.FeatureModel;
 
 public class RoomSceneAdapter extends BaseAdapter {
 
@@ -43,12 +42,12 @@ public class RoomSceneAdapter extends BaseAdapter {
 
 	@Override
 	public int getViewTypeCount() {
-		return featureModel.SCENE_COUNT;
+		return FeatureModel.SCENE_COUNT;
 	}
 
 	@Override
 	public View getView(final int pos, View view, ViewGroup viewgroup) {
-		final featureModel scene = mRoom.getScenes().get(pos);
+		final FeatureModel scene = mRoom.getScenes().get(pos);
 		
 		view = LayoutInflater.from(viewgroup.getContext()).inflate(R.layout.view_room_scene, null);
 //		switch (scene.getType()) {

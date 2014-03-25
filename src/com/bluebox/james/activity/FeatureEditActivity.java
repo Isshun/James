@@ -21,13 +21,13 @@ import com.bluebox.james.R;
 import com.bluebox.james.adapter.SceneActionAdapter;
 import com.bluebox.james.model.ActionModel;
 import com.bluebox.james.model.RoomModel;
-import com.bluebox.james.model.featureModel;
+import com.bluebox.james.model.FeatureModel;
 import com.bluebox.james.service.RoomService;
 
 public class FeatureEditActivity extends FragmentActivity {
 
     private RoomModel 	mRoom;
-    private featureModel 	mScene;
+    private FeatureModel 	mScene;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,7 +131,7 @@ public class FeatureEditActivity extends FragmentActivity {
 		@Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             final long featureId = getArguments().getLong("feature_id");
-            final featureModel scene = RoomService.getInstance().getFeature(featureId);
+            final FeatureModel scene = RoomService.getInstance().getFeature(featureId);
         	final View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_dialog_create_scenario, null, false);
         	
         	final EditText editActionName = (EditText)view.findViewById(R.id.edit_scenario_name);

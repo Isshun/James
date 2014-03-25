@@ -1,10 +1,10 @@
 package com.bluebox.james.model;
 
 
-public class SceneSwitchModel extends featureModel {
+public class SceneSwitchModel extends FeatureModel {
 	
 	public SceneSwitchModel(String name, int icon) {
-		super(featureModel.SCENE_UNKNOW, name, icon);
+		super(FeatureModel.SCENE_UNKNOW, name, icon);
 	}
 
 	@Override

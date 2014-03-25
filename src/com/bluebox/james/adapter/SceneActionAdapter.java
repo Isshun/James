@@ -8,13 +8,13 @@ import android.widget.TextView;
 
 import com.bluebox.james.R;
 import com.bluebox.james.model.ActionModel;
-import com.bluebox.james.model.featureModel;
+import com.bluebox.james.model.FeatureModel;
 
 public class SceneActionAdapter extends BaseAdapter {
 
-	private featureModel mScene;
+	private FeatureModel mScene;
 
-	public SceneActionAdapter(featureModel scene) {
+	public SceneActionAdapter(FeatureModel scene) {
 		mScene = scene;
 	}
 	

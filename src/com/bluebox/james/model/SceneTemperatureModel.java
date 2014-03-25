@@ -2,12 +2,12 @@ package com.bluebox.james.model;
 
 import android.util.Log;
 
-public class SceneTemperatureModel extends featureModel {
+public class SceneTemperatureModel extends FeatureModel {
 	private float mCurrent;
 	private float mExpected; 
 	
 	public SceneTemperatureModel(String name, int icon) {
-		super(featureModel.SCENE_TEMPERATURE, name, icon);
+		super(FeatureModel.SCENE_TEMPERATURE, name, icon);
 		
 		mExpected = 24f;
 	}

@@ -1,8 +1,9 @@
 package com.bluebox.james.model;
 
-import android.annotation.SuppressLint;
 import java.util.HashMap;
 import java.util.Map;
+
+import android.annotation.SuppressLint;
 
 public class EquipmentModel {
 	public String mName;

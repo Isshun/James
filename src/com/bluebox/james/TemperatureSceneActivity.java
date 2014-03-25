@@ -1,12 +1,5 @@
 package com.bluebox.james;
 
-import com.jjoe64.graphview.CustomLabelFormatter;
-import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.GraphViewDataInterface;
-import com.jjoe64.graphview.GraphViewSeries;
-import com.jjoe64.graphview.GraphViewSeries.GraphViewSeriesStyle;
-import com.jjoe64.graphview.LineGraphView;
-
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -18,6 +11,12 @@ import android.view.View.OnDragListener;
 import android.view.View.OnGenericMotionListener;
 import android.view.View.OnTouchListener;
 import android.widget.FrameLayout;
+
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.GraphViewDataInterface;
+import com.jjoe64.graphview.GraphViewSeries;
+import com.jjoe64.graphview.GraphViewSeries.GraphViewSeriesStyle;
+import com.jjoe64.graphview.LineGraphView;
 
 public class TemperatureSceneActivity extends Activity {
 

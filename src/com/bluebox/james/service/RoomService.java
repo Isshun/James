@@ -1,7 +1,6 @@
 package com.bluebox.james.service;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,19 +13,19 @@ import com.androidquery.callback.AjaxStatus;
 import com.bluebox.james.Application;
 import com.bluebox.james.model.ActionModel;
 import com.bluebox.james.model.EquipmentModel;
+import com.bluebox.james.model.FeatureModel;
 import com.bluebox.james.model.RoomModel;
-import com.bluebox.james.model.featureModel;
 
 public class RoomService {
 
 	private static RoomService 		sRoomService;
 	private Map<Long, RoomModel> 	mRooms;
 	private Map<Long, ActionModel> 	mActions;
-	private Map<Long, featureModel> 	mScenes;
+	private Map<Long, FeatureModel> 	mScenes;
 
 	private RoomService() {
 		mRooms = new HashMap<Long, RoomModel>();
-		mScenes = new HashMap<Long, featureModel>();
+		mScenes = new HashMap<Long, FeatureModel>();
 		mActions = new HashMap<Long, ActionModel>();
 	}
 
@@ -84,7 +83,7 @@ public class RoomService {
 	public void addRoom(RoomModel room) {
 		mRooms.put(room.getId(), room);
 		
-		for (featureModel scene: room.getScenes()) {
+		for (FeatureModel scene: room.getScenes()) {
 			mScenes.put(scene.getId(), scene);
 
 			for (ActionModel action: scene.getActions()) {
@@ -93,7 +92,7 @@ public class RoomService {
 		}
 	}
 
-	public featureModel getFeature(long sceneId) {
+	public FeatureModel getFeature(long sceneId) {
 		return mScenes.get(sceneId);
 	}
 
@@ -101,7 +100,7 @@ public class RoomService {
 		return mActions.get(actionId);
 	}
 
-	public void addAction(featureModel scene, ActionModel action) {
+	public void addAction(FeatureModel scene, ActionModel action) {
 		mActions.put(action.getId(), action);
 		scene.addAction(action);
 	}

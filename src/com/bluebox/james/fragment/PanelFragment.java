@@ -21,8 +21,8 @@ import com.bluebox.james.adapter.RoomSceneAdapter;
 import com.bluebox.james.model.ActionModel;
 import com.bluebox.james.model.RoomModel;
 import com.bluebox.james.model.SceneLightModel;
-import com.bluebox.james.model.featureModel;
 import com.bluebox.james.model.SceneTemperatureModel;
+import com.bluebox.james.model.FeatureModel;
 import com.bluebox.james.service.RoomService;
 
 public class PanelFragment extends Fragment {
@@ -43,7 +43,7 @@ public class PanelFragment extends Fragment {
         grid.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
-				featureModel scene = room.getScenes().get(pos);
+				FeatureModel scene = room.getScenes().get(pos);
 				clickOnTile(view, scene);
 			}
 		});
@@ -52,7 +52,7 @@ public class PanelFragment extends Fragment {
         grid.setOnItemLongClickListener(new OnItemLongClickListener() {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view, int pos, long id) {
-				featureModel scene = room.getScenes().get(pos);
+				FeatureModel scene = room.getScenes().get(pos);
 				Intent intent = new Intent(PanelFragment.this.getActivity(), FeatureEditActivity.class);
 				intent.putExtra("room_id", room.getId());
 				intent.putExtra("scene_id", scene.getId());
@@ -66,7 +66,7 @@ public class PanelFragment extends Fragment {
         adapter.setOnSubItemClickListener(new OnSubItemClickListener() {
 			@Override
 			public void onSubItemClick(AdapterView<?> parent, View view, View sub, int pos, long id) {
-				featureModel scene = room.getScenes().get(pos);
+				FeatureModel scene = room.getScenes().get(pos);
 			}
 		});
         grid.setAdapter(adapter);
@@ -74,15 +74,15 @@ public class PanelFragment extends Fragment {
         return rootView;
     }
     
-	protected void clickOnTile(View view, featureModel scene) {
+	protected void clickOnTile(View view, FeatureModel scene) {
 		switch (scene.getType()) {
-		case featureModel.SCENE_UNKNOW:
+		case FeatureModel.SCENE_UNKNOW:
 			toogleScene(view, scene);
 			break;
-		case featureModel.SCENE_LIGHT:
+		case FeatureModel.SCENE_LIGHT:
 			toogleSceneLight(view, (SceneLightModel)scene);
 			break;
-		case featureModel.SCENE_TEMPERATURE:
+		case FeatureModel.SCENE_TEMPERATURE:
 			Intent intent = new Intent(getActivity(), TemperatureSceneActivity.class);
 			startActivity(intent);
 //			toogleSceneTemperature(view, (SceneTemperatureModel)scene);
@@ -123,7 +123,7 @@ public class PanelFragment extends Fragment {
 //		}
 	}
 
-	protected void toogleScene(View view, featureModel scene) {
+	protected void toogleScene(View view, FeatureModel scene) {
 		View frame = view.findViewById(R.id.frame_scene);
 
 		ActionModel action = scene.nextAction();

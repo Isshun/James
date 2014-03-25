@@ -1,24 +1,20 @@
 package com.bluebox.james.activity;
 
-import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.bluebox.james.R;
 import com.bluebox.james.model.ActionModel;
 import com.bluebox.james.model.EquipmentModel;
 import com.bluebox.james.model.RoomModel;
-import com.bluebox.james.model.featureModel;
+import com.bluebox.james.model.FeatureModel;
 import com.bluebox.james.service.RoomService;
 
 public class ScenarioEditActivity extends FragmentActivity {
 
     private RoomModel 	mRoom;
-    private featureModel 	mScene;
+    private FeatureModel 	mScene;
     
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +33,7 @@ public class ScenarioEditActivity extends FragmentActivity {
 
         Bundle bundle = getIntent().getExtras();
         RoomModel room = RoomService.getInstance().getRoom(bundle.getLong("room_id"));
-        featureModel scene = RoomService.getInstance().getFeature(bundle.getLong("scene_id"));
+        FeatureModel scene = RoomService.getInstance().getFeature(bundle.getLong("scene_id"));
         ActionModel action = RoomService.getInstance().getAction(bundle.getLong("action_id"));
 
         int i = 0;

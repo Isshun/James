@@ -1,12 +1,10 @@
 package com.bluebox.james.activity;
 
-import com.bluebox.james.R;
-import com.bluebox.james.R.layout;
-import com.bluebox.james.R.menu;
-
-import android.os.Bundle;
 import android.app.Activity;
+import android.os.Bundle;
 import android.view.Menu;
+
+import com.bluebox.james.R;
 
 public class RoomActivity extends Activity {
 

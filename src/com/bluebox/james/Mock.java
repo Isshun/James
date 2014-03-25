@@ -6,7 +6,6 @@ import com.bluebox.james.model.ActionModel;
 import com.bluebox.james.model.EquipmentModel;
 import com.bluebox.james.model.RoomModel;
 import com.bluebox.james.model.SceneLightModel;
-import com.bluebox.james.model.featureModel;
 import com.bluebox.james.model.SceneSwitchModel;
 import com.bluebox.james.model.SceneTemperatureModel;
 import com.bluebox.james.service.RoomService;
