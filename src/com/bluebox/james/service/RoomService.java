@@ -12,21 +12,24 @@ import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
 import com.bluebox.james.Application;
 import com.bluebox.james.model.ActionModel;
-import com.bluebox.james.model.EquipmentModel;
+import com.bluebox.james.model.DeviceModel;
 import com.bluebox.james.model.FeatureModel;
+import com.bluebox.james.model.ProbeModel;
 import com.bluebox.james.model.RoomModel;
 
 public class RoomService {
 
-	private static RoomService 		sRoomService;
-	private Map<Long, RoomModel> 	mRooms;
-	private Map<Long, ActionModel> 	mActions;
-	private Map<Long, FeatureModel> mFeatures;
+	private static RoomService 			sRoomService;
+	private Map<Long, RoomModel> 		mRooms;
+	private Map<Long, ActionModel> 		mActions;
+	private Map<Long, FeatureModel> 	mFeatures;
+	private HashMap<Long, ProbeModel> 	mProbes;
 
 	private RoomService() {
 		mRooms = new HashMap<Long, RoomModel>();
 		mFeatures = new HashMap<Long, FeatureModel>();
 		mActions = new HashMap<Long, ActionModel>();
+		mProbes = new HashMap<Long, ProbeModel>();
 	}
 
 	public static RoomService getInstance() {
@@ -40,28 +43,19 @@ public class RoomService {
 		return mRooms.size();
 	}
 
-	public RoomModel getRoom(long id) {
-		for (RoomModel room: mRooms.values()) {
-			if (room.getId() == id) {
-				return room;
-			}
-		}
-		return null;
-	}
-
 	public List<ActionModel> getAllActions() {
 		return new ArrayList<ActionModel>(mActions.values());
 	}
 
-	public List<RoomModel> getRoomList() {
-		return new ArrayList<RoomModel>(mRooms.values());
-	}
+//	public List<RoomModel> getRoomList() {
+//		return new ArrayList<RoomModel>(mRooms.values());
+//	}
 
 	public static void execute(ActionModel action) {
 		AQuery aquery = new AQuery(Application.getContext());
 		
-		Map<EquipmentModel, Integer> equipments = action.getEquipments();
-		for (EquipmentModel equipment: equipments.keySet()) {
+		Map<DeviceModel, Integer> equipments = action.getEquipments();
+		for (DeviceModel equipment: equipments.keySet()) {
 			int value = equipments.get(equipment);
 			String url = equipment.getUrl(value);
 			if (url != null) {
@@ -103,6 +97,18 @@ public class RoomService {
 	public void addAction(FeatureModel scene, ActionModel action) {
 		mActions.put(action.getId(), action);
 		scene.addAction(action);
+	}
+
+	public RoomModel getRoom(long id) {
+		return mRooms.get(id);
+	}
+
+	public List<ProbeModel> getProbeList() {
+		return new ArrayList<ProbeModel>(mProbes.values());
+	}
+
+	public void addProbe(ProbeModel device) {
+		mProbes.put(device.getId(), device);
 	}
 	
 }

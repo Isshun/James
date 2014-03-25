@@ -13,7 +13,7 @@ public class SceneModel {
 	public final static int	SCENE_COUNT = 3;
 	
 	public String mName;
-	public List<EquipmentModel>	mEquipments;
+	public List<DeviceModel>	mEquipments;
 	private List<String> mUrls;
 	private boolean mOn;
 	private int mType;
@@ -39,7 +39,7 @@ public class SceneModel {
 		return mName;
 	}
 	
-	public List<EquipmentModel> getEquipments() {
+	public List<DeviceModel> getEquipments() {
 		return mEquipments;
 	}
 

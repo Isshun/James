@@ -5,12 +5,12 @@ import java.util.Map;
 
 import android.annotation.SuppressLint;
 
-public class EquipmentModel {
+public class DeviceModel {
 	public String mName;
 	public Map<Integer, Integer>	mUrls;
 	
 	@SuppressLint("UseSparseArrays")
-	public EquipmentModel(String name) {
+	public DeviceModel(String name, int id) {
 		mName = name;
 		mUrls = new HashMap<Integer, Integer>();
 	}
@@ -31,7 +31,7 @@ public class EquipmentModel {
 		return null;
 	}
 
-	public int getId() {
+	public long getId() {
 		return mUrls.get(0);
 	}
 }

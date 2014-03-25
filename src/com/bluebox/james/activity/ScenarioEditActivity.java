@@ -5,8 +5,9 @@ import android.support.v4.app.FragmentActivity;
 import android.widget.EditText;
 
 import com.bluebox.james.R;
+import com.bluebox.james.Utils;
 import com.bluebox.james.model.ActionModel;
-import com.bluebox.james.model.EquipmentModel;
+import com.bluebox.james.model.DeviceModel;
 import com.bluebox.james.model.RoomModel;
 import com.bluebox.james.model.FeatureModel;
 import com.bluebox.james.service.RoomService;
@@ -37,7 +38,7 @@ public class ScenarioEditActivity extends FragmentActivity {
         ActionModel action = RoomService.getInstance().getAction(bundle.getLong("action_id"));
 
         int i = 0;
-        for (EquipmentModel device: action.getEquipments().keySet()) {
+        for (DeviceModel device: action.getEquipments().keySet()) {
         	if (i == 0) {
                 EditText editIdAction1 = (EditText)findViewById(R.id.edit_device_1_id);
                 editIdAction1.setText(String.valueOf(device.getId()));

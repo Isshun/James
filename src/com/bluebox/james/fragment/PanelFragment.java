@@ -17,7 +17,7 @@ import com.bluebox.james.R;
 import com.bluebox.james.activity.FeatureEditActivity;
 import com.bluebox.james.activity.TemperatureSceneActivity;
 import com.bluebox.james.adapter.OnSubItemClickListener;
-import com.bluebox.james.adapter.RoomSceneAdapter;
+import com.bluebox.james.adapter.ScenarioAdapter;
 import com.bluebox.james.model.ActionModel;
 import com.bluebox.james.model.RoomModel;
 import com.bluebox.james.model.SceneLightModel;
@@ -62,7 +62,7 @@ public class PanelFragment extends Fragment {
 		});
         
         // Item sub click
-        RoomSceneAdapter adapter = new RoomSceneAdapter(room);
+        ScenarioAdapter adapter = new ScenarioAdapter(room);
         adapter.setOnSubItemClickListener(new OnSubItemClickListener() {
 			@Override
 			public void onSubItemClick(AdapterView<?> parent, View view, View sub, int pos, long id) {

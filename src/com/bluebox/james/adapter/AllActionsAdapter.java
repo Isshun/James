@@ -1,4 +1,4 @@
-package com.bluebox.james.activity;
+package com.bluebox.james.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;

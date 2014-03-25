@@ -11,12 +11,12 @@ import com.bluebox.james.model.ActionModel;
 import com.bluebox.james.model.RoomModel;
 import com.bluebox.james.model.FeatureModel;
 
-public class RoomSceneAdapter extends BaseAdapter {
+public class ScenarioAdapter extends BaseAdapter {
 
 	private RoomModel mRoom;
 	private OnSubItemClickListener mSubItemClickListener;
 
-	public RoomSceneAdapter(RoomModel room) {
+	public ScenarioAdapter(RoomModel room) {
 		mRoom = room;
 	}
 

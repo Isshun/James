@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.bluebox.james.R;
 import com.bluebox.james.activity.FeatureEditActivity;
 import com.bluebox.james.activity.TemperatureSceneActivity;
-import com.bluebox.james.adapter.RoomSceneAdapter;
+import com.bluebox.james.adapter.ScenarioAdapter;
 import com.bluebox.james.model.ActionModel;
 import com.bluebox.james.model.RoomModel;
 import com.bluebox.james.model.FeatureModel;
@@ -26,11 +26,12 @@ import com.bluebox.james.service.RoomService;
 
 public class RoomFragment extends Fragment {
 
-    public static final String ARG_SECTION_NUMBER = "section_number";
+    public static final String ARG_ROOM_ID = "room_id";
+    public static final String ARG_FEATURE_ID = "feature_id";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final RoomModel room = RoomService.getInstance().getRoomList().get(getArguments().getInt(ARG_SECTION_NUMBER));
+        final RoomModel room = RoomService.getInstance().getRoom(getArguments().getInt(ARG_ROOM_ID));
     	final View rootView = inflater.inflate(R.layout.fragment_room, container, false);
 
         ((TextView)rootView.findViewById(R.id.room_name)).setText(room.getName());
@@ -53,8 +54,8 @@ public class RoomFragment extends Fragment {
 			public boolean onItemLongClick(AdapterView<?> parent, View view, int pos, long id) {
 				FeatureModel feature = room.getScenes().get(pos);
 				Intent intent = new Intent(RoomFragment.this.getActivity(), FeatureEditActivity.class);
-				intent.putExtra("room_id", room.getId());
-				intent.putExtra("feature_id", feature.getId());
+				intent.putExtra(ARG_ROOM_ID, room.getId());
+				intent.putExtra(ARG_FEATURE_ID, feature.getId());
 				startActivity(intent);
 				return true;
 			}
@@ -67,7 +68,7 @@ public class RoomFragment extends Fragment {
 //				SceneModel scene = room.getScenes().get(pos);
 //			}
 //		});
-        RoomSceneAdapter adapter = new RoomSceneAdapter(room);
+        ScenarioAdapter adapter = new ScenarioAdapter(room);
         grid.setAdapter(adapter);
         
         return rootView;

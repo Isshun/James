@@ -32,15 +32,19 @@
         </activity>
         <activity
             android:name="com.bluebox.james.activity.FeatureEditActivity"
-            android:label="@string/activity_edit_feature" >
+            android:label="@string/edit_feature" >
         </activity>
         <activity
             android:name="com.bluebox.james.activity.ScenarioEditActivity"
-            android:label="@string/activity_edit_scenario" >
+            android:label="@string/edit_scenario" >
         </activity>
         <activity
             android:name="com.bluebox.james.activity.RoomActivity"
             android:label="@string/title_activity_room" >
+        </activity>
+        <activity
+            android:name="com.bluebox.james.activity.AdminProbesActivity"
+            android:label="@string/title_activity_probes" >
         </activity>
     </application>
 

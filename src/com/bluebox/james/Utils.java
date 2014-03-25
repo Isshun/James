@@ -1,4 +1,4 @@
-package com.bluebox.james.activity;
+package com.bluebox.james;
 
 import android.app.Activity;
 import android.view.WindowManager;

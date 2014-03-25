@@ -12,7 +12,7 @@ public class FeatureModel {
 	
 	private static long			sCount;
 	public String 				mName;
-	public List<EquipmentModel>	mEquipments;
+	public List<DeviceModel>	mEquipments;
 	protected List<ActionModel> mActions;
 	protected boolean 			mOn;
 	private int 				mType;
@@ -47,7 +47,7 @@ public class FeatureModel {
 		return mActions;
 	}
 	
-	public List<EquipmentModel> getEquipments() {
+	public List<DeviceModel> getEquipments() {
 		return mEquipments;
 	}
 

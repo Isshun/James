@@ -10,11 +10,11 @@ import com.bluebox.james.R;
 import com.bluebox.james.model.ActionModel;
 import com.bluebox.james.model.FeatureModel;
 
-public class SceneActionAdapter extends BaseAdapter {
+public class ActionAdapter extends BaseAdapter {
 
 	private FeatureModel mScene;
 
-	public SceneActionAdapter(FeatureModel scene) {
+	public ActionAdapter(FeatureModel scene) {
 		mScene = scene;
 	}
 	

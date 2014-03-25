@@ -7,7 +7,7 @@ import android.graphics.Color;
 
 public class ActionModel {
 	private static long						sCount;
-	private Map<EquipmentModel, Integer>	mEquipments;
+	private Map<DeviceModel, Integer>	mEquipments;
 	private String 							mName;
 	public int 								mIcon;
 	private int 							mColor = -1;
@@ -18,16 +18,16 @@ public class ActionModel {
 		mName = name;
 		mIcon = icon;
 		mColor = Color.rgb(64, 138, 191);
-		mEquipments = new HashMap<EquipmentModel, Integer>();
+		mEquipments = new HashMap<DeviceModel, Integer>();
 	}
 
 	public void execute() {
-		for (EquipmentModel equipment: mEquipments.keySet()) {
+		for (DeviceModel equipment: mEquipments.keySet()) {
 			int value = mEquipments.get(equipment);
 		}
 	}
 
-	public void addEquipment(EquipmentModel equipment, int value) {
+	public void addEquipment(DeviceModel equipment, int value) {
 		mEquipments.put(equipment, value);
 	}
 	
@@ -35,7 +35,7 @@ public class ActionModel {
 		return mIcon;
 	}
 
-	public Map<EquipmentModel, Integer> getEquipments() {
+	public Map<DeviceModel, Integer> getEquipments() {
 		return mEquipments;
 	}
 

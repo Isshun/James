@@ -3,7 +3,8 @@ package com.bluebox.james;
 import android.graphics.Color;
 
 import com.bluebox.james.model.ActionModel;
-import com.bluebox.james.model.EquipmentModel;
+import com.bluebox.james.model.DeviceModel;
+import com.bluebox.james.model.ProbeModel;
 import com.bluebox.james.model.RoomModel;
 import com.bluebox.james.model.SceneLightModel;
 import com.bluebox.james.model.SceneSwitchModel;
@@ -13,18 +14,24 @@ import com.bluebox.james.service.RoomService;
 public class Mock {
 
 	public static void init() {
+		
+		RoomService.getInstance().addProbe(new ProbeModel("Probe - living room", 42));
+		RoomService.getInstance().addProbe(new ProbeModel("Probe - Ellen bedroom", 43));
+		RoomService.getInstance().addProbe(new ProbeModel("Probe - Parents' bedroom", 44));
+		RoomService.getInstance().addProbe(new ProbeModel("Probe - Outside", 45));
+		RoomService.getInstance().addProbe(new ProbeModel("Probe - Bathroom", 46));
 
 		// Salon
 		{
-			EquipmentModel light1 = new EquipmentModel("Light bed");
+			DeviceModel light1 = new DeviceModel("Light bed", 4);
 			light1.setUrl(0, 4);
 			light1.setUrl(100, 4);
 			
-			EquipmentModel light2 = new EquipmentModel("Light lounge");
+			DeviceModel light2 = new DeviceModel("Light lounge", 8);
 			light2.setUrl(0, 8);
 			light2.setUrl(100, 8);
 			
-			EquipmentModel light3 = new EquipmentModel("Light desk");
+			DeviceModel light3 = new DeviceModel("Light desk", 20);
 			light3.setUrl(0, 20);
 			light3.setUrl(100, 20);
 			
@@ -57,7 +64,7 @@ public class Mock {
 						
 			SceneSwitchModel ampli = new SceneSwitchModel("Ampli", R.drawable.bg_switch);
 
-			EquipmentModel eAmpli = new EquipmentModel("Light desk");
+			DeviceModel eAmpli = new DeviceModel("Light desk", 19);
 			eAmpli.setUrl(0, 19);
 			eAmpli.setUrl(100, 19);
 
@@ -71,15 +78,29 @@ public class Mock {
 			ampliA2.addEquipment(eAmpli, 100);
 			ampli.addAction(ampliA2);
 
+			{
+				DeviceModel tempEquip = new DeviceModel("Sonde 1", 100);
+				SceneTemperatureModel temp = new SceneTemperatureModel("Temp. salon", R.drawable.bg_temp);
+				ActionModel confTempAction = new ActionModel("23°", R.drawable.bg_temp);
+				confTempAction.addEquipment(tempEquip, 100);
+				temp.addAction(confTempAction);
+	
+				temp.setCurrent(21f);
+				temp.setExpected(24f);
+				
+				salon.addScene(temp);
+			}
 			
-			EquipmentModel tempEquip = new EquipmentModel("Sonde 1");
-			SceneTemperatureModel temp = new SceneTemperatureModel("Temperature", R.drawable.bg_temp);
-			ActionModel confTempAction = new ActionModel("23°", R.drawable.bg_temp);
-			confTempAction.addEquipment(tempEquip, 100);
-			temp.addAction(confTempAction);
-
-			temp.setCurrent(21f);
-			temp.setExpected(24f);
+			{
+				DeviceModel tempEquip = new DeviceModel("Sonde 2", 101);
+				SceneTemperatureModel temp = new SceneTemperatureModel("Temp. terrasse", R.drawable.bg_temp);
+				ActionModel confTempAction = new ActionModel("12°", R.drawable.bg_temp);
+				confTempAction.addEquipment(tempEquip, 100);
+				temp.addAction(confTempAction);
+	
+				temp.setCurrent(12f);
+				salon.addScene(temp);
+			}
 			
 			
 			//EquipmentModel tempEquip = new EquipmentModel("Sonde 1");
@@ -88,11 +109,11 @@ public class Mock {
 			confAlarmAction.addEquipment(light1, 100);
 			confAlarmAction.setColor(Color.rgb(77, 202, 185));
 			alarmScene.addAction(confAlarmAction);
-			temp.addAction(confTempAction);
+			//temp.addAction(confTempAction);
 
 			
 			salon.addScene(alarmScene);
-			salon.addScene(temp);
+			//
 			salon.addScene(ampli);
 			RoomService.getInstance().addRoom(salon);
 		}
@@ -123,18 +144,18 @@ public class Mock {
 			RoomService.getInstance().addRoom(bed);
 		}
 
-		// Sdb
-		{
-			RoomModel sdb = new RoomModel("Bathroom", R.drawable.bg_bathroom);
-			SceneLightModel light = new SceneLightModel("Light", R.drawable.bg_light);
-			SceneTemperatureModel temp = new SceneTemperatureModel("Temperature", R.drawable.bg_temp);
-			temp.setCurrent(21f);
-			temp.setExpected(24f);
-			
-			RoomService.getInstance().getRoomList().add(sdb);
-			sdb.addScene(light);
-			sdb.addScene(temp);
-		}
+//		// Sdb
+//		{
+//			RoomModel sdb = new RoomModel("Bathroom", R.drawable.bg_bathroom);
+//			SceneLightModel light = new SceneLightModel("Light", R.drawable.bg_light);
+//			SceneTemperatureModel temp = new SceneTemperatureModel("Temperature", R.drawable.bg_temp);
+//			temp.setCurrent(21f);
+//			temp.setExpected(24f);
+//			
+//			RoomService.getInstance().getRoomList().add(sdb);
+//			sdb.addScene(light);
+//			sdb.addScene(temp);
+//		}
 		
 		// Cuisine
 		{
