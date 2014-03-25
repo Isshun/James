@@ -30,7 +30,7 @@ public class RoomModel {
 		return mId;
 	}
 
-	public FeatureModel getScene(long id) {
+	public FeatureModel getFeature(long id) {
 		for (FeatureModel scene: mScenes) {
 			if (scene.getId() == id) {
 				return scene;

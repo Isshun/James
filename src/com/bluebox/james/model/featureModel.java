@@ -52,7 +52,7 @@ public class FeatureModel {
 	}
 
 	public long getId() {
-		return 0;
+		return mId;
 	}
 
 	public ActionModel nextAction() {

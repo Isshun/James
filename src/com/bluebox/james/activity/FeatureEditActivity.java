@@ -25,9 +25,7 @@ import com.bluebox.james.model.FeatureModel;
 import com.bluebox.james.service.RoomService;
 
 public class FeatureEditActivity extends FragmentActivity {
-
-    private RoomModel 	mRoom;
-    private FeatureModel 	mScene;
+    public static final String ARG_FEATURE_ID = "feature_id";
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,42 +33,42 @@ public class FeatureEditActivity extends FragmentActivity {
         setContentView(R.layout.activity_edit_feature);
 
         Bundle bundle = getIntent().getExtras();
-        mRoom = RoomService.getInstance().getRoom(bundle.getLong("room_id"));
-        mScene = mRoom.getScene(bundle.getLong("feature_id"));
+        final RoomModel room = RoomService.getInstance().getRoom(bundle.getLong("room_id"));
+        final FeatureModel feature = room.getFeature(bundle.getLong(ARG_FEATURE_ID));
 
         // "Scenario name" EditText
         EditText editSceneName = (EditText)findViewById(R.id.edit_scene_name);
-        editSceneName.setText(mScene.getName());
+        editSceneName.setText(feature.getName());
 
         // "Actions" ListView
         final ListView listAction = (ListView)findViewById(R.id.list_action);
-        final SceneActionAdapter actionsAdapter = new SceneActionAdapter(mScene);
+        final SceneActionAdapter actionsAdapter = new SceneActionAdapter(feature);
         listAction.setAdapter(actionsAdapter);
         listAction.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
-				ActionModel action = mScene.getActions().get(pos);
+				ActionModel action = feature.getActions().get(pos);
 				Intent intent = new Intent(FeatureEditActivity.this, ScenarioEditActivity.class);
-				intent.putExtra("room_id", mRoom.getId());
-				intent.putExtra("scene_id", mScene.getId());
+				intent.putExtra("room_id", room.getId());
+				intent.putExtra(ARG_FEATURE_ID, feature.getId());
 				intent.putExtra("action_id", action.getId());
 				startActivity(intent);
 			}
 		});
         
         // Action on "add actions" button
-        findViewById(R.id.bt_add_action).setOnClickListener(new OnClickListener() {
+        findViewById(R.id.bt_new_scenario).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				ListActionsDialogFragment f = new ListActionsDialogFragment();
-				f.setOnCloseListener(new ListActionsDialogFragment.OnCloseListener() {
+				NewScenarioDialogFragment f = new NewScenarioDialogFragment();
+				f.setOnCloseListener(new NewScenarioDialogFragment.OnCloseListener() {
 					@Override
 					public void onClose() {
 						actionsAdapter.notifyDataSetChanged();
 					}
 				});
 		    	Bundle args = new Bundle();
-		        args.putLong("scene_id", mScene.getId());
+		        args.putLong(ARG_FEATURE_ID, feature.getId());
 		        f.setArguments(args);
 		        f.show(getFragmentManager().beginTransaction(), "dialog");
 			}
@@ -88,12 +86,6 @@ public class FeatureEditActivity extends FragmentActivity {
         Utils.hideKeyboard(this);
     }
 
-	@Override
-    protected void onResume() {
-		super.onResume();
-		Log.i("gg", "RESUME");
-	}
-    
     public static class ColorDialogFragment extends DialogFragment {
 
         @Override
@@ -108,7 +100,7 @@ public class FeatureEditActivity extends FragmentActivity {
         }
     }
 
-    public static class ListActionsDialogFragment extends DialogFragment {
+    public static class NewScenarioDialogFragment extends DialogFragment {
     	
 		private OnCloseListener mOnCloseListener;
 
@@ -116,13 +108,13 @@ public class FeatureEditActivity extends FragmentActivity {
     		void onClose();
     	}
 
-        public static ListActionsDialogFragment newInstance(int title) {
-        	ListActionsDialogFragment frag = new ListActionsDialogFragment();
-            Bundle args = new Bundle();
-            args.putInt("title", title);
-            frag.setArguments(args);
-            return frag;
-        }
+//        public static ListActionsDialogFragment newInstance(int title) {
+//        	ListActionsDialogFragment frag = new ListActionsDialogFragment();
+//            Bundle args = new Bundle();
+//            args.putInt(ARG_FEATURE_ID, title);
+//            frag.setArguments(args);
+//            return frag;
+//        }
 
         public void setOnCloseListener(OnCloseListener onCloseListener) {
         	mOnCloseListener = onCloseListener;
@@ -130,8 +122,8 @@ public class FeatureEditActivity extends FragmentActivity {
 
 		@Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-            final long featureId = getArguments().getLong("feature_id");
-            final FeatureModel scene = RoomService.getInstance().getFeature(featureId);
+            final long featureId = getArguments().getLong(ARG_FEATURE_ID);
+            final FeatureModel feature = RoomService.getInstance().getFeature(featureId);
         	final View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_dialog_create_scenario, null, false);
         	
         	final EditText editActionName = (EditText)view.findViewById(R.id.edit_scenario_name);
@@ -142,7 +134,7 @@ public class FeatureEditActivity extends FragmentActivity {
                     .setPositiveButton("Create",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
-                            	RoomService.getInstance().addAction(scene, new ActionModel(editActionName.getText().toString(), R.drawable.ic_alarm));
+                            	RoomService.getInstance().addAction(feature, new ActionModel(editActionName.getText().toString(), R.drawable.ic_alarm));
                             	mOnCloseListener.onClose();
                             }
                         }

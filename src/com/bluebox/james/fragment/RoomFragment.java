@@ -51,10 +51,10 @@ public class RoomFragment extends Fragment {
         grid.setOnItemLongClickListener(new OnItemLongClickListener() {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view, int pos, long id) {
-				FeatureModel scene = room.getScenes().get(pos);
+				FeatureModel feature = room.getScenes().get(pos);
 				Intent intent = new Intent(RoomFragment.this.getActivity(), FeatureEditActivity.class);
 				intent.putExtra("room_id", room.getId());
-				intent.putExtra("scene_id", scene.getId());
+				intent.putExtra("feature_id", feature.getId());
 				startActivity(intent);
 				return true;
 			}

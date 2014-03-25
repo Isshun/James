@@ -52,7 +52,7 @@
                     android:textSize="18sp" />
 
                 <Button
-                    android:id="@+id/bt_add_action"
+                    android:id="@+id/bt_new_scenario"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Add scenario" />

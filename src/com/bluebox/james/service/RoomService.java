@@ -21,11 +21,11 @@ public class RoomService {
 	private static RoomService 		sRoomService;
 	private Map<Long, RoomModel> 	mRooms;
 	private Map<Long, ActionModel> 	mActions;
-	private Map<Long, FeatureModel> 	mScenes;
+	private Map<Long, FeatureModel> mFeatures;
 
 	private RoomService() {
 		mRooms = new HashMap<Long, RoomModel>();
-		mScenes = new HashMap<Long, FeatureModel>();
+		mFeatures = new HashMap<Long, FeatureModel>();
 		mActions = new HashMap<Long, ActionModel>();
 	}
 
@@ -84,7 +84,7 @@ public class RoomService {
 		mRooms.put(room.getId(), room);
 		
 		for (FeatureModel scene: room.getScenes()) {
-			mScenes.put(scene.getId(), scene);
+			mFeatures.put(scene.getId(), scene);
 
 			for (ActionModel action: scene.getActions()) {
 				mActions.put(action.getId(), action);
@@ -93,7 +93,7 @@ public class RoomService {
 	}
 
 	public FeatureModel getFeature(long sceneId) {
-		return mScenes.get(sceneId);
+		return mFeatures.get(sceneId);
 	}
 
 	public ActionModel getAction(long actionId) {
