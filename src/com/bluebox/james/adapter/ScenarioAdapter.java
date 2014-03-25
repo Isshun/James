@@ -7,7 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.bluebox.james.R;
-import com.bluebox.james.model.ActionModel;
+import com.bluebox.james.model.ScenarioModel;
 import com.bluebox.james.model.RoomModel;
 import com.bluebox.james.model.FeatureModel;
 
@@ -89,7 +89,7 @@ public class ScenarioAdapter extends BaseAdapter {
 		
 		((TextView)view.findViewById(R.id.lb_name)).setText(scene.getName());
 
-		ActionModel action = scene.getAction();
+		ScenarioModel action = scene.getAction();
 		if (action != null) {
 			view.findViewById(R.id.frame_scene).setBackgroundResource(action.getIcon());
 			((TextView)view.findViewById(R.id.lb_scene)).setText(action.getName());

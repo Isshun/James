@@ -16,6 +16,7 @@
     <string name="title_section3">Section 3</string>
     <string name="title_activity_room">RoomActivity</string>
     <string name="title_activity_probes">Probes</string>
+    <string name="title_activity_switchs">Switchs</string>
     <string name="hello_world">Hello world!</string>
     <string name="edit_feature">Edit feature</string>
     <string name="edit_scenario">Edit scenario</string>

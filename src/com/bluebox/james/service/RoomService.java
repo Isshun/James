@@ -11,7 +11,8 @@ import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
 import com.bluebox.james.Application;
-import com.bluebox.james.model.ActionModel;
+import com.bluebox.james.SwitchModel;
+import com.bluebox.james.model.ScenarioModel;
 import com.bluebox.james.model.DeviceModel;
 import com.bluebox.james.model.FeatureModel;
 import com.bluebox.james.model.ProbeModel;
@@ -21,15 +22,17 @@ public class RoomService {
 
 	private static RoomService 			sRoomService;
 	private Map<Long, RoomModel> 		mRooms;
-	private Map<Long, ActionModel> 		mActions;
+	private Map<Long, ScenarioModel> 		mActions;
 	private Map<Long, FeatureModel> 	mFeatures;
 	private HashMap<Long, ProbeModel> 	mProbes;
+	private Map<Long,SwitchModel> 		mSwitchs;
 
 	private RoomService() {
 		mRooms = new HashMap<Long, RoomModel>();
 		mFeatures = new HashMap<Long, FeatureModel>();
-		mActions = new HashMap<Long, ActionModel>();
+		mActions = new HashMap<Long, ScenarioModel>();
 		mProbes = new HashMap<Long, ProbeModel>();
+		mSwitchs = new HashMap<Long, SwitchModel>();
 	}
 
 	public static RoomService getInstance() {
@@ -43,15 +46,15 @@ public class RoomService {
 		return mRooms.size();
 	}
 
-	public List<ActionModel> getAllActions() {
-		return new ArrayList<ActionModel>(mActions.values());
+	public List<ScenarioModel> getAllActions() {
+		return new ArrayList<ScenarioModel>(mActions.values());
 	}
 
 //	public List<RoomModel> getRoomList() {
 //		return new ArrayList<RoomModel>(mRooms.values());
 //	}
 
-	public static void execute(ActionModel action) {
+	public static void execute(ScenarioModel action) {
 		AQuery aquery = new AQuery(Application.getContext());
 		
 		Map<DeviceModel, Integer> equipments = action.getEquipments();
@@ -80,7 +83,7 @@ public class RoomService {
 		for (FeatureModel scene: room.getScenes()) {
 			mFeatures.put(scene.getId(), scene);
 
-			for (ActionModel action: scene.getActions()) {
+			for (ScenarioModel action: scene.getActions()) {
 				mActions.put(action.getId(), action);
 			}
 		}
@@ -90,11 +93,11 @@ public class RoomService {
 		return mFeatures.get(sceneId);
 	}
 
-	public ActionModel getAction(long actionId) {
+	public ScenarioModel getAction(long actionId) {
 		return mActions.get(actionId);
 	}
 
-	public void addAction(FeatureModel scene, ActionModel action) {
+	public void addAction(FeatureModel scene, ScenarioModel action) {
 		mActions.put(action.getId(), action);
 		scene.addAction(action);
 	}
@@ -107,8 +110,16 @@ public class RoomService {
 		return new ArrayList<ProbeModel>(mProbes.values());
 	}
 
+	public List<SwitchModel> getSwitchList() {
+		return new ArrayList<SwitchModel>(mSwitchs.values());
+	}
+
 	public void addProbe(ProbeModel device) {
 		mProbes.put(device.getId(), device);
 	}
-	
+
+	public void addSwitch(SwitchModel device) {
+		mSwitchs.put(device.getId(), device);
+	}
+
 }

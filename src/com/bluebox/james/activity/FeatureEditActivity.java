@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.bluebox.james.Application;
 import com.bluebox.james.R;
@@ -17,7 +18,7 @@ import com.bluebox.james.adapter.ActionAdapter;
 import com.bluebox.james.dialog.ColorDialogFragment;
 import com.bluebox.james.dialog.EditScenarioDialogFragment;
 import com.bluebox.james.dialog.NewScenarioDialogFragment;
-import com.bluebox.james.model.ActionModel;
+import com.bluebox.james.model.ScenarioModel;
 import com.bluebox.james.model.FeatureModel;
 import com.bluebox.james.model.RoomModel;
 import com.bluebox.james.service.RoomService;
@@ -36,6 +37,10 @@ public class FeatureEditActivity extends FragmentActivity {
         EditText editSceneName = (EditText)findViewById(R.id.edit_scene_name);
         editSceneName.setText(feature.getName());
 
+        // "Feature name" Label
+        TextView lbFeature = (TextView)findViewById(R.id.lb_feature);
+        lbFeature.setText(feature.getTypeName());
+
         // "Actions" ListView
         final ListView listAction = (ListView)findViewById(R.id.list_action);
         final ActionAdapter actionsAdapter = new ActionAdapter(feature);
@@ -43,7 +48,7 @@ public class FeatureEditActivity extends FragmentActivity {
         listAction.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
-				ActionModel action = feature.getActions().get(pos);
+				ScenarioModel action = feature.getActions().get(pos);
 //				Intent intent = new Intent(FeatureEditActivity.this, ScenarioEditActivity.class);
 //				startActivity(intent);
 				

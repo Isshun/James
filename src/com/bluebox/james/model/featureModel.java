@@ -9,16 +9,18 @@ public class FeatureModel {
 	public final static int	SCENE_LIGHT = 1;
 	public final static int	SCENE_TEMPERATURE = 2;
 	public final static int	SCENE_COUNT = 3;
+	public final static int SCENE_ALARM = 4;
+	public final static int SCENE_SWITCH = 5;
 	
 	private static long			sCount;
 	public String 				mName;
 	public List<DeviceModel>	mEquipments;
-	protected List<ActionModel> mActions;
+	protected List<ScenarioModel> mActions;
 	protected boolean 			mOn;
 	private int 				mType;
 	private int 				mCurrentSwitch;
 	private int 				mNbSwitch;
-	private ActionModel 		mCurrentAction;
+	private ScenarioModel 		mCurrentAction;
 	private int 				mIcon;
 	private long 				mId;
 	
@@ -27,7 +29,7 @@ public class FeatureModel {
 		mType = type;
 		mName = name;
 		mIcon = icon;
-		mActions = new ArrayList<ActionModel>();
+		mActions = new ArrayList<ScenarioModel>();
 	}
 	
 	public FeatureModel(String name) {
@@ -39,11 +41,21 @@ public class FeatureModel {
 		return mType;
 	}
 
+	public String getTypeName() {
+		switch (mType) {
+		case SCENE_TEMPERATURE: return "Temperature";
+		case SCENE_LIGHT: return "Light";
+		case SCENE_ALARM: return "Alarm";
+		case SCENE_SWITCH: return "Switch";
+		}
+		return null;
+	}
+
 	public String getName() {
 		return mName;
 	}
 	
-	public List<ActionModel> getActions() {
+	public List<ScenarioModel> getActions() {
 		return mActions;
 	}
 	
@@ -55,7 +67,7 @@ public class FeatureModel {
 		return mId;
 	}
 
-	public ActionModel nextAction() {
+	public ScenarioModel nextAction() {
 		if (mNbSwitch > 0) {
 			mCurrentSwitch = (mCurrentSwitch + 1) % mNbSwitch;
 			mOn = mCurrentSwitch == 0;
@@ -69,7 +81,7 @@ public class FeatureModel {
 		return mOn;
 	}
 
-	public void addAction(ActionModel action) {
+	public void addAction(ScenarioModel action) {
 		if (mActions.size() == 0) {
 			mCurrentAction = action;
 		}
@@ -77,7 +89,7 @@ public class FeatureModel {
 		mNbSwitch++;
 	}
 
-	public ActionModel getAction() {
+	public ScenarioModel getAction() {
 		return mCurrentAction;
 	}
 

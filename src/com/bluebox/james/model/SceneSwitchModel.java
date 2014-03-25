@@ -8,7 +8,7 @@ public class SceneSwitchModel extends FeatureModel {
 	}
 
 	@Override
-	public ActionModel nextAction() {
+	public ScenarioModel nextAction() {
 		if (mActions.size() == 2) {
 			mOn = !mOn;
 			int index = mOn ? 1 : 0;

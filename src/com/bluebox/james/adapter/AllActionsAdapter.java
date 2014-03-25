@@ -7,7 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.bluebox.james.R;
-import com.bluebox.james.model.ActionModel;
+import com.bluebox.james.model.ScenarioModel;
 import com.bluebox.james.service.RoomService;
 
 public class AllActionsAdapter extends BaseAdapter  {
@@ -38,7 +38,7 @@ public class AllActionsAdapter extends BaseAdapter  {
 	public View getView(int pos, View view, ViewGroup parent) {
 		view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_scene_action, null);
 		
-		ActionModel action = RoomService.getInstance().getAllActions().get(pos);
+		ScenarioModel action = RoomService.getInstance().getAllActions().get(pos);
 		
 		TextView lbScene = (TextView)view.findViewById(R.id.lb_scene);
 		lbScene.setText(action.getName());

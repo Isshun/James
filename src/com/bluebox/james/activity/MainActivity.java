@@ -97,10 +97,16 @@ public class MainActivity extends FragmentActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-        case R.id.action_all_probe:
+        case R.id.action_all_probe: {
 			Intent intent = new Intent(MainActivity.this, AdminProbesActivity.class);
 			startActivity(intent);
             return true;
+        }
+        case R.id.action_all_switch: {
+			Intent intent = new Intent(MainActivity.this, AdminSwitchsActivity.class);
+			startActivity(intent);
+            return true;
+        }
         default:
             return super.onOptionsItemSelected(item);
         }

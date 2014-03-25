@@ -19,7 +19,7 @@ import com.bluebox.james.R;
 import com.bluebox.james.activity.FeatureEditActivity;
 import com.bluebox.james.activity.TemperatureSceneActivity;
 import com.bluebox.james.adapter.ScenarioAdapter;
-import com.bluebox.james.model.ActionModel;
+import com.bluebox.james.model.ScenarioModel;
 import com.bluebox.james.model.RoomModel;
 import com.bluebox.james.model.FeatureModel;
 import com.bluebox.james.service.RoomService;
@@ -87,7 +87,7 @@ public class RoomFragment extends Fragment {
 	}
 
 	protected void nextAction(View view, FeatureModel scene) {
-		ActionModel action = scene.nextAction();
+		ScenarioModel action = scene.nextAction();
 		RoomService.execute(action);
 		
 		view.findViewById(R.id.frame_scene).setBackgroundResource(action.getIcon());

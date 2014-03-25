@@ -12,7 +12,7 @@ import android.widget.EditText;
 import com.bluebox.james.Application;
 import com.bluebox.james.R;
 import com.bluebox.james.activity.FeatureEditActivity;
-import com.bluebox.james.model.ActionModel;
+import com.bluebox.james.model.ScenarioModel;
 import com.bluebox.james.model.FeatureModel;
 import com.bluebox.james.service.RoomService;
 
@@ -42,7 +42,7 @@ public class NewScenarioDialogFragment extends DialogFragment {
                 .setPositiveButton("Create",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
-                        	RoomService.getInstance().addAction(feature, new ActionModel(editActionName.getText().toString(), R.drawable.ic_alarm));
+                        	RoomService.getInstance().addAction(feature, new ScenarioModel(editActionName.getText().toString(), R.drawable.ic_alarm));
                         	mOnCloseListener.onClose();
                         }
                     }

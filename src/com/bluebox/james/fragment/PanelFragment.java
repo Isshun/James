@@ -18,7 +18,7 @@ import com.bluebox.james.activity.FeatureEditActivity;
 import com.bluebox.james.activity.TemperatureSceneActivity;
 import com.bluebox.james.adapter.OnSubItemClickListener;
 import com.bluebox.james.adapter.ScenarioAdapter;
-import com.bluebox.james.model.ActionModel;
+import com.bluebox.james.model.ScenarioModel;
 import com.bluebox.james.model.RoomModel;
 import com.bluebox.james.model.SceneLightModel;
 import com.bluebox.james.model.SceneTemperatureModel;
@@ -126,7 +126,7 @@ public class PanelFragment extends Fragment {
 	protected void toogleScene(View view, FeatureModel scene) {
 		View frame = view.findViewById(R.id.frame_scene);
 
-		ActionModel action = scene.nextAction();
+		ScenarioModel action = scene.nextAction();
 		RoomService.execute(action);
 		
 		frame.setBackgroundResource(action.getIcon());

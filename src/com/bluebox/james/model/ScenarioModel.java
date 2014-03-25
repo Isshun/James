@@ -5,30 +5,30 @@ import java.util.Map;
 
 import android.graphics.Color;
 
-public class ActionModel {
+public class ScenarioModel {
 	private static long						sCount;
-	private Map<DeviceModel, Integer>	mEquipments;
+	private Map<DeviceModel, Integer>		mDevice;
 	private String 							mName;
 	public int 								mIcon;
 	private int 							mColor = -1;
 	private long 							mId;
 	
-	public ActionModel(String name, int icon) {
+	public ScenarioModel(String name, int icon) {
 		mId = sCount++;
 		mName = name;
 		mIcon = icon;
 		mColor = Color.rgb(64, 138, 191);
-		mEquipments = new HashMap<DeviceModel, Integer>();
+		mDevice = new HashMap<DeviceModel, Integer>();
 	}
 
 	public void execute() {
-		for (DeviceModel equipment: mEquipments.keySet()) {
-			int value = mEquipments.get(equipment);
+		for (DeviceModel equipment: mDevice.keySet()) {
+			int value = mDevice.get(equipment);
 		}
 	}
 
 	public void addEquipment(DeviceModel equipment, int value) {
-		mEquipments.put(equipment, value);
+		mDevice.put(equipment, value);
 	}
 	
 	public int getIcon() {
@@ -36,7 +36,7 @@ public class ActionModel {
 	}
 
 	public Map<DeviceModel, Integer> getEquipments() {
-		return mEquipments;
+		return mDevice;
 	}
 
 	public String getName() {

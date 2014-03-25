@@ -6,7 +6,7 @@ import android.widget.EditText;
 
 import com.bluebox.james.R;
 import com.bluebox.james.Utils;
-import com.bluebox.james.model.ActionModel;
+import com.bluebox.james.model.ScenarioModel;
 import com.bluebox.james.model.DeviceModel;
 import com.bluebox.james.model.RoomModel;
 import com.bluebox.james.model.FeatureModel;
@@ -35,7 +35,7 @@ public class ScenarioEditActivity extends FragmentActivity {
         Bundle bundle = getIntent().getExtras();
         RoomModel room = RoomService.getInstance().getRoom(bundle.getLong("room_id"));
         FeatureModel scene = RoomService.getInstance().getFeature(bundle.getLong("scene_id"));
-        ActionModel action = RoomService.getInstance().getAction(bundle.getLong("action_id"));
+        ScenarioModel action = RoomService.getInstance().getAction(bundle.getLong("action_id"));
 
         int i = 0;
         for (DeviceModel device: action.getEquipments().keySet()) {

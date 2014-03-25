@@ -46,6 +46,10 @@
             android:name="com.bluebox.james.activity.AdminProbesActivity"
             android:label="@string/title_activity_probes" >
         </activity>
+        <activity
+            android:name="com.bluebox.james.activity.AdminSwitchsActivity"
+            android:label="@string/title_activity_switchs" >
+        </activity>
     </application>
 
 </manifest>
