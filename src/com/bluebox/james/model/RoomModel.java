@@ -3,35 +3,28 @@ package com.bluebox.james.model;
 import java.util.ArrayList;
 import java.util.List;
 
+public class RoomModel extends DBModel {
+	private String 					mName;
+	private List<FeatureBaseModel>	mFeatures;
+	private int 					mIcon;
 
-public class RoomModel {
-	private static long			sCount;
-	private String 				mName;
-	private List<FeatureModel>	mScenes;
-	private long 				mId;
-	private int 				mImgBackground;
-
-	public RoomModel(String name, int imgBackground) {
-		mId = sCount++;
+	public RoomModel(long id, String name, int icon) {
+		mDbId = id;
 		mName = name;
-		mScenes = new ArrayList<FeatureModel>();
-		mImgBackground = imgBackground;
+		mFeatures = new ArrayList<FeatureBaseModel>();
+		mIcon = icon;
 	}
 
-	public void addScene(FeatureModel scene) {
-		mScenes.add(scene);
+	public void addFeature(FeatureBaseModel feature) {
+		mFeatures.add(feature);
 	}
 	
-	public List<FeatureModel> getScenes() {
-		return mScenes;
+	public List<FeatureBaseModel> getFeatures() {
+		return mFeatures;
 	}
 
-	public long getId() {
-		return mId;
-	}
-
-	public FeatureModel getFeature(long id) {
-		for (FeatureModel scene: mScenes) {
+	public FeatureBaseModel getFeature(long id) {
+		for (FeatureBaseModel scene: mFeatures) {
 			if (scene.getId() == id) {
 				return scene;
 			}
@@ -44,6 +37,7 @@ public class RoomModel {
 	}
 
 	public int getImgBackground() {
-		return mImgBackground;
+		return mIcon;
 	}
+
 }

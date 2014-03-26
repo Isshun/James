@@ -3,40 +3,36 @@ package com.bluebox.james.model;
 import java.util.HashMap;
 import java.util.Map;
 
-import android.graphics.Color;
-
-public class ScenarioModel {
-	private static long						sCount;
-	private Map<DeviceModel, Integer>		mDevice;
+public class ScenarioModel extends DBModel {
+	private Map<DeviceBaseModel, Integer>	mDevices;
 	private String 							mName;
 	public int 								mIcon;
 	private int 							mColor = -1;
-	private long 							mId;
 	
-	public ScenarioModel(String name, int icon) {
-		mId = sCount++;
+	public ScenarioModel(long id, String name, int icon, int color) {
+		mDbId = id;
 		mName = name;
 		mIcon = icon;
-		mColor = Color.rgb(64, 138, 191);
-		mDevice = new HashMap<DeviceModel, Integer>();
+		mColor = color;//Color.rgb(64, 138, 191);
+		mDevices = new HashMap<DeviceBaseModel, Integer>();
 	}
 
 	public void execute() {
-		for (DeviceModel equipment: mDevice.keySet()) {
-			int value = mDevice.get(equipment);
+		for (DeviceBaseModel equipment: mDevices.keySet()) {
+			int value = mDevices.get(equipment);
 		}
 	}
 
-	public void addEquipment(DeviceModel equipment, int value) {
-		mDevice.put(equipment, value);
+	public void addDevice(DeviceBaseModel device, int value) {
+		mDevices.put(device, value);
 	}
 	
 	public int getIcon() {
 		return mIcon;
 	}
 
-	public Map<DeviceModel, Integer> getEquipments() {
-		return mDevice;
+	public Map<DeviceBaseModel, Integer> getDevices() {
+		return mDevices;
 	}
 
 	public String getName() {
@@ -45,10 +41,6 @@ public class ScenarioModel {
 
 	public int getColor() {
 		return mColor;
-	}
-
-	public long getId() {
-		return mId;
 	}
 
 	public void setColor(int color) {

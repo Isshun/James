@@ -19,7 +19,7 @@ import com.bluebox.james.dialog.ColorDialogFragment;
 import com.bluebox.james.dialog.EditScenarioDialogFragment;
 import com.bluebox.james.dialog.NewScenarioDialogFragment;
 import com.bluebox.james.model.ScenarioModel;
-import com.bluebox.james.model.FeatureModel;
+import com.bluebox.james.model.FeatureBaseModel;
 import com.bluebox.james.model.RoomModel;
 import com.bluebox.james.service.RoomService;
 
@@ -31,7 +31,7 @@ public class FeatureEditActivity extends FragmentActivity {
 
         Bundle bundle = getIntent().getExtras();
         final RoomModel room = RoomService.getInstance().getRoom(bundle.getLong(Application.ARG_ROOM_ID));
-        final FeatureModel feature = room.getFeature(bundle.getLong(Application.ARG_FEATURE_ID));
+        final FeatureBaseModel feature = room.getFeature(bundle.getLong(Application.ARG_FEATURE_ID));
 
         // "Scenario name" EditText
         EditText editSceneName = (EditText)findViewById(R.id.edit_scene_name);
@@ -48,7 +48,7 @@ public class FeatureEditActivity extends FragmentActivity {
         listAction.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
-				ScenarioModel action = feature.getActions().get(pos);
+				ScenarioModel action = feature.getScenarios().get(pos);
 //				Intent intent = new Intent(FeatureEditActivity.this, ScenarioEditActivity.class);
 //				startActivity(intent);
 				

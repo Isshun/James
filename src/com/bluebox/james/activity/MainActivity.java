@@ -15,7 +15,7 @@ import android.widget.ListView;
 import com.bluebox.james.R;
 import com.bluebox.james.adapter.RoomAdapter;
 import com.bluebox.james.fragment.RoomFragment;
-import com.bluebox.james.model.FeatureModel;
+import com.bluebox.james.model.FeatureBaseModel;
 
 public class MainActivity extends FragmentActivity {
 

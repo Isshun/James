@@ -10,13 +10,13 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
 import com.bluebox.james.R;
-import com.bluebox.james.SwitchModel;
-import com.bluebox.james.model.ProbeModel;
+import com.bluebox.james.model.DeviceProbeModel;
+import com.bluebox.james.model.DeviceSwitchModel;
 import com.bluebox.james.service.RoomService;
 
-public class SwitchListAdapter extends ArrayAdapter<SwitchModel> {
+public class SwitchListAdapter extends ArrayAdapter<DeviceSwitchModel> {
 
-	private List<SwitchModel> mSwitchList;
+	private List<DeviceSwitchModel> mSwitchList;
 
 	public SwitchListAdapter(Context context, int resource) {
 		super(context, resource);
@@ -30,7 +30,7 @@ public class SwitchListAdapter extends ArrayAdapter<SwitchModel> {
 	}
 
 	@Override
-	public SwitchModel getItem(int pos) {
+	public DeviceSwitchModel getItem(int pos) {
 		return mSwitchList.get(pos);
 	}
 
@@ -49,7 +49,7 @@ public class SwitchListAdapter extends ArrayAdapter<SwitchModel> {
 		EditText editName = (EditText) view.findViewById(R.id.edit_name);
 		EditText editId = (EditText) view.findViewById(R.id.edit_id);
 		
-		SwitchModel sw = mSwitchList.get(pos);
+		DeviceSwitchModel sw = mSwitchList.get(pos);
 		
 		editName.setText(sw.getName());
 		editId.setText(String.valueOf(sw.getId()));

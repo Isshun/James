@@ -10,12 +10,12 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
 import com.bluebox.james.R;
-import com.bluebox.james.model.ProbeModel;
+import com.bluebox.james.model.DeviceProbeModel;
 import com.bluebox.james.service.RoomService;
 
-public class ProbeListAdapter extends ArrayAdapter<ProbeModel> {
+public class ProbeListAdapter extends ArrayAdapter<DeviceProbeModel> {
 
-	private List<ProbeModel> mProbeList;
+	private List<DeviceProbeModel> mProbeList;
 
 	public ProbeListAdapter(Context context, int resource) {
 		super(context, resource);
@@ -29,7 +29,7 @@ public class ProbeListAdapter extends ArrayAdapter<ProbeModel> {
 	}
 
 	@Override
-	public ProbeModel getItem(int pos) {
+	public DeviceProbeModel getItem(int pos) {
 		return mProbeList.get(pos);
 	}
 
@@ -48,7 +48,7 @@ public class ProbeListAdapter extends ArrayAdapter<ProbeModel> {
 		EditText editName = (EditText) view.findViewById(R.id.edit_name);
 		EditText editId = (EditText) view.findViewById(R.id.edit_id);
 		
-		ProbeModel probe = mProbeList.get(pos);
+		DeviceProbeModel probe = mProbeList.get(pos);
 		
 		editName.setText(probe.getName());
 		editId.setText(String.valueOf(probe.getId()));

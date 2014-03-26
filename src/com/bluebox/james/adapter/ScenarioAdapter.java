@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.bluebox.james.R;
 import com.bluebox.james.model.ScenarioModel;
 import com.bluebox.james.model.RoomModel;
-import com.bluebox.james.model.FeatureModel;
+import com.bluebox.james.model.FeatureBaseModel;
 
 public class ScenarioAdapter extends BaseAdapter {
 
@@ -22,32 +22,32 @@ public class ScenarioAdapter extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-		return mRoom.getScenes().size();
+		return mRoom.getFeatures().size();
 	}
 
 	@Override
 	public Object getItem(int pos) {
-		return mRoom.getScenes().get(pos);
+		return mRoom.getFeatures().get(pos);
 	}
 
 	@Override
 	public long getItemId(int pos) {
-		return mRoom.getScenes().get(pos).getId();
+		return mRoom.getFeatures().get(pos).getId();
 	}
 
 	@Override
 	public int getItemViewType(int pos) {
-		return mRoom.getScenes().get(pos).getType();
+		return mRoom.getFeatures().get(pos).getType();
 	}
 
 	@Override
 	public int getViewTypeCount() {
-		return FeatureModel.SCENE_COUNT;
+		return FeatureBaseModel.SCENE_COUNT;
 	}
 
 	@Override
 	public View getView(final int pos, View view, ViewGroup viewgroup) {
-		final FeatureModel scene = mRoom.getScenes().get(pos);
+		final FeatureBaseModel scene = mRoom.getFeatures().get(pos);
 		
 		view = LayoutInflater.from(viewgroup.getContext()).inflate(R.layout.view_room_scene, null);
 //		switch (scene.getType()) {
@@ -89,7 +89,7 @@ public class ScenarioAdapter extends BaseAdapter {
 		
 		((TextView)view.findViewById(R.id.lb_name)).setText(scene.getName());
 
-		ScenarioModel action = scene.getAction();
+		ScenarioModel action = scene.getScenario();
 		if (action != null) {
 			view.findViewById(R.id.frame_scene).setBackgroundResource(action.getIcon());
 			((TextView)view.findViewById(R.id.lb_scene)).setText(action.getName());

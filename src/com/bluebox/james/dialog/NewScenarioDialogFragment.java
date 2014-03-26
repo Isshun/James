@@ -11,9 +11,8 @@ import android.widget.EditText;
 
 import com.bluebox.james.Application;
 import com.bluebox.james.R;
-import com.bluebox.james.activity.FeatureEditActivity;
+import com.bluebox.james.model.FeatureBaseModel;
 import com.bluebox.james.model.ScenarioModel;
-import com.bluebox.james.model.FeatureModel;
 import com.bluebox.james.service.RoomService;
 
 public class NewScenarioDialogFragment extends DialogFragment {
@@ -31,7 +30,7 @@ public class NewScenarioDialogFragment extends DialogFragment {
 	@Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final long featureId = getArguments().getLong(Application.ARG_FEATURE_ID);
-        final FeatureModel feature = RoomService.getInstance().getFeature(featureId);
+        final FeatureBaseModel feature = RoomService.getInstance().getFeature(featureId);
     	final View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_dialog_create_scenario, null, false);
     	
     	final EditText editActionName = (EditText)view.findViewById(R.id.edit_scenario_name);
@@ -42,7 +41,8 @@ public class NewScenarioDialogFragment extends DialogFragment {
                 .setPositiveButton("Create",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
-                        	RoomService.getInstance().addAction(feature, new ScenarioModel(editActionName.getText().toString(), R.drawable.ic_alarm));
+                        	ScenarioModel scenario = RoomService.getInstance().createScenario(editActionName.getText().toString(), R.drawable.ic_alarm);
+                        	RoomService.getInstance().addScenarioToFeature(feature, scenario);
                         	mOnCloseListener.onClose();
                         }
                     }

@@ -21,7 +21,7 @@ import com.bluebox.james.activity.TemperatureSceneActivity;
 import com.bluebox.james.adapter.ScenarioAdapter;
 import com.bluebox.james.model.ScenarioModel;
 import com.bluebox.james.model.RoomModel;
-import com.bluebox.james.model.FeatureModel;
+import com.bluebox.james.model.FeatureBaseModel;
 import com.bluebox.james.service.RoomService;
 
 public class RoomFragment extends Fragment {
@@ -31,7 +31,7 @@ public class RoomFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final RoomModel room = RoomService.getInstance().getRoom(getArguments().getInt(ARG_ROOM_ID));
+        final RoomModel room = RoomService.getInstance().getRoom(getArguments().getLong(ARG_ROOM_ID));
     	final View rootView = inflater.inflate(R.layout.fragment_room, container, false);
 
         ((TextView)rootView.findViewById(R.id.room_name)).setText(room.getName());
@@ -43,7 +43,7 @@ public class RoomFragment extends Fragment {
         grid.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
-				FeatureModel scene = room.getScenes().get(pos);
+				FeatureBaseModel scene = room.getFeatures().get(pos);
 				clickOnTile(view, scene);
 			}
 		});
@@ -52,7 +52,7 @@ public class RoomFragment extends Fragment {
         grid.setOnItemLongClickListener(new OnItemLongClickListener() {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view, int pos, long id) {
-				FeatureModel feature = room.getScenes().get(pos);
+				FeatureBaseModel feature = room.getFeatures().get(pos);
 				Intent intent = new Intent(RoomFragment.this.getActivity(), FeatureEditActivity.class);
 				intent.putExtra(ARG_ROOM_ID, room.getId());
 				intent.putExtra(ARG_FEATURE_ID, feature.getId());
@@ -74,9 +74,9 @@ public class RoomFragment extends Fragment {
         return rootView;
     }
 
-	protected void clickOnTile(View view, FeatureModel scene) {
+	protected void clickOnTile(View view, FeatureBaseModel scene) {
 		switch (scene.getType()) {
-		case FeatureModel.SCENE_TEMPERATURE:
+		case FeatureBaseModel.SCENE_TEMPERATURE:
 			Intent intent = new Intent(getActivity(), TemperatureSceneActivity.class);
 			startActivity(intent);
 			break;
@@ -86,12 +86,14 @@ public class RoomFragment extends Fragment {
 		}
 	}
 
-	protected void nextAction(View view, FeatureModel scene) {
-		ScenarioModel action = scene.nextAction();
-		RoomService.execute(action);
+	protected void nextAction(View view, FeatureBaseModel scene) {
+		ScenarioModel scenario = scene.nextScenario();
 		
-		view.findViewById(R.id.frame_scene).setBackgroundResource(action.getIcon());
-		((TextView)view.findViewById(R.id.lb_scene)).setText(action.getName());
+		if (scenario != null) {
+			RoomService.execute(scenario);
+			view.findViewById(R.id.frame_scene).setBackgroundResource(scenario.getIcon());
+			((TextView)view.findViewById(R.id.lb_scene)).setText(scenario.getName());
+		}
 	}
 
 	private void move(View view, int x) {

@@ -8,19 +8,19 @@ import android.widget.TextView;
 
 import com.bluebox.james.R;
 import com.bluebox.james.model.ScenarioModel;
-import com.bluebox.james.model.FeatureModel;
+import com.bluebox.james.model.FeatureBaseModel;
 
 public class ActionAdapter extends BaseAdapter {
 
-	private FeatureModel mScene;
+	private FeatureBaseModel mScene;
 
-	public ActionAdapter(FeatureModel scene) {
+	public ActionAdapter(FeatureBaseModel scene) {
 		mScene = scene;
 	}
 	
 	@Override
 	public int getCount() {
-		return mScene.getActions().size();
+		return mScene.getScenarios().size();
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class ActionAdapter extends BaseAdapter {
 	public View getView(int pos, View view, ViewGroup parent) {
 		view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_scene_action, null);
 		
-		ScenarioModel action = mScene.getActions().get(pos);
+		ScenarioModel action = mScene.getScenarios().get(pos);
 		
 		TextView lbScene = (TextView)view.findViewById(R.id.lb_scene);
 		lbScene.setText(action.getName());

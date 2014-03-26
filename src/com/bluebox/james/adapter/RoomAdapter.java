@@ -17,22 +17,22 @@ public class RoomAdapter extends FragmentPagerAdapter {
     }
 
     @Override
-    public Fragment getItem(int position) {
+    public Fragment getItem(int pos) {
         Fragment fragment = new RoomFragment();
         Bundle args = new Bundle();
-        args.putInt(RoomFragment.ARG_ROOM_ID, position);
+        args.putLong(RoomFragment.ARG_ROOM_ID, RoomService.getInstance().getRooms().get(pos).getId());
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public int getCount() {
-        return RoomService.getInstance().getCount();
+        return RoomService.getInstance().getRooms().size();
     }
 
     @Override
-    public CharSequence getPageTitle(int index) {
+    public CharSequence getPageTitle(int pos) {
         Locale l = Locale.getDefault();
-        return RoomService.getInstance().getRoom(index).getName().toUpperCase(l);
+        return RoomService.getInstance().getRooms().get(pos).getName().toUpperCase(l);
     }
 }
