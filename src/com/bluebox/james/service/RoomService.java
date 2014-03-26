@@ -97,8 +97,8 @@ public class RoomService {
 		return mFeatures.get(sceneId);
 	}
 
-	public ScenarioModel getScenario(long actionId) {
-		return mScenarios.get(actionId);
+	public ScenarioModel getScenario(long scenarioId) {
+		return mScenarios.get(scenarioId);
 	}
 
 	public void addScenarioToFeature(FeatureBaseModel feature, ScenarioModel scenario) {
@@ -151,6 +151,8 @@ public class RoomService {
 		mSwitchs = DBHelper.getInstance().getSwitchs();
 		mProbes = DBHelper.getInstance().getProbes();
 		mRooms = DBHelper.getInstance().getRooms();
+		mScenarios = DBHelper.getInstance().getScenarios();
+		mFeatures = DBHelper.getInstance().getFeatures();
 	}
 
 	public RoomModel createRoom(String name, int icon) {

@@ -62,7 +62,7 @@ public class FeatureEditActivity extends FragmentActivity {
 		    	Bundle args = new Bundle();
 				args.putLong(Application.ARG_ROOM_ID, room.getId());
 				args.putLong(Application.ARG_FEATURE_ID, feature.getId());
-				args.putLong(Application.ARG_ACTION_ID, action.getId());
+				args.putLong(Application.ARG_SCENARIO_ID, action.getId());
 		        f.setArguments(args);
 		        f.show(getFragmentManager().beginTransaction(), "dialog");
 			}

@@ -34,7 +34,7 @@ public class EditScenarioDialogFragment extends DialogFragment {
     	final View view = LayoutInflater.from(getActivity()).inflate(R.layout.activity_edit_scenario, null, false);
     	final RoomModel room = RoomService.getInstance().getRoom(getArguments().getLong(Application.ARG_ROOM_ID));
         final FeatureBaseModel scene = RoomService.getInstance().getFeature(getArguments().getLong(Application.ARG_FEATURE_ID));
-        final ScenarioModel scenario = RoomService.getInstance().getScenario(getArguments().getLong(Application.ARG_ACTION_ID));
+        final ScenarioModel scenario = RoomService.getInstance().getScenario(getArguments().getLong(Application.ARG_SCENARIO_ID));
 
         EditText editScenarioName = (EditText)view.findViewById(R.id.edit_scenario_name);
         editScenarioName.setText(scenario.getName());

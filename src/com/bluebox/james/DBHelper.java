@@ -29,6 +29,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
 	private Map<Long, DeviceSwitchModel> mSwitchs;
 
+	private HashMap<Long, ScenarioModel> mScenarios;
+
+	private HashMap<Long, FeatureBaseModel> mFeatures;
+
 	private static final int 	DB_VERSION = 1;
 	private static final String DB_NAME = "data.db";
 
@@ -295,8 +299,8 @@ public class DBHelper extends SQLiteOpenHelper {
 		Log.i("LOAD_DB", "load db");
 
 		mRooms = new HashMap<Long, RoomModel>();
-		Map<Long, FeatureBaseModel> features = new HashMap<Long, FeatureBaseModel>();
-		Map<Long, ScenarioModel> scenarios = new HashMap<Long, ScenarioModel>();
+		mFeatures = new HashMap<Long, FeatureBaseModel>();
+		mScenarios = new HashMap<Long, ScenarioModel>();
 		mSwitchs = new HashMap<Long, DeviceSwitchModel>();
 
 		{ // Get rooms
@@ -324,7 +328,7 @@ public class DBHelper extends SQLiteOpenHelper {
 					feature = new FeatureLightModel(c.getLong(0), c.getString(2), c.getInt(3));
 					break;
 				}
-				features.put(feature.getId(), feature);
+				mFeatures.put(feature.getId(), feature);
 			}
 			c.close();
 		}
@@ -335,7 +339,7 @@ public class DBHelper extends SQLiteOpenHelper {
 				Log.i("LOAD_DB", "Load scenario: " + c.getString(1));
 
 				ScenarioModel scenario = new ScenarioModel(c.getLong(0), c.getString(1), c.getInt(2), c.getInt(3));
-				scenarios.put(scenario.getId(), scenario);
+				mScenarios.put(scenario.getId(), scenario);
 			}
 			c.close();
 		}
@@ -357,7 +361,7 @@ public class DBHelper extends SQLiteOpenHelper {
 				Log.i("LOAD_DB", "Add feature: " + c.getString(1) + " to room: " + c.getString(0));
 
 				RoomModel room = mRooms.get(c.getLong(0));
-				FeatureBaseModel feature = features.get(c.getLong(1));
+				FeatureBaseModel feature = mFeatures.get(c.getLong(1));
 				room.addFeature(feature);
 			}
 			c.close();
@@ -368,8 +372,8 @@ public class DBHelper extends SQLiteOpenHelper {
 			while (c.moveToNext()) {
 				Log.i("LOAD_DB", "Add scenario: " + c.getString(1) + " to feature: " + c.getString(0));
 
-				FeatureBaseModel feature = features.get(c.getLong(0));
-				ScenarioModel scenario = scenarios.get(c.getLong(1));
+				FeatureBaseModel feature = mFeatures.get(c.getLong(0));
+				ScenarioModel scenario = mScenarios.get(c.getLong(1));
 				feature.addScenario(scenario);
 			}
 			c.close();
@@ -380,7 +384,7 @@ public class DBHelper extends SQLiteOpenHelper {
 			while (c.moveToNext()) {
 				Log.i("LOAD_DB", "Add device: " + c.getString(1) + " to scenario: " + c.getString(0));
 
-				ScenarioModel scenario = scenarios.get(c.getLong(0));
+				ScenarioModel scenario = mScenarios.get(c.getLong(0));
 				DeviceBaseModel device = mSwitchs.get(c.getLong(1));
 				scenario.addDevice(device, c.getInt(2));
 			}
@@ -399,6 +403,14 @@ public class DBHelper extends SQLiteOpenHelper {
 
 	public Map<Long, RoomModel> getRooms() {
 		return mRooms;
+	}
+
+	public Map<Long, ScenarioModel> getScenarios() {
+		return mScenarios;
+	}
+
+	public Map<Long, FeatureBaseModel> getFeatures() {
+		return mFeatures;
 	}
 
 }
