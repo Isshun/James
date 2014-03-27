@@ -1,9 +1,9 @@
 package com.bluebox.james.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
@@ -14,10 +14,8 @@ import android.widget.ListView;
 
 import com.bluebox.james.R;
 import com.bluebox.james.adapter.RoomAdapter;
-import com.bluebox.james.fragment.RoomFragment;
-import com.bluebox.james.model.FeatureBaseModel;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends Activity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -70,7 +68,7 @@ public class MainActivity extends FragmentActivity {
         
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the app.
-        mSectionsPagerAdapter = new RoomAdapter(getSupportFragmentManager());
+        mSectionsPagerAdapter = new RoomAdapter(getFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);

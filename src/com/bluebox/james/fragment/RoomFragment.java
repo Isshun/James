@@ -2,11 +2,12 @@ package com.bluebox.james.fragment;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -15,10 +16,13 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bluebox.james.Application;
 import com.bluebox.james.R;
 import com.bluebox.james.activity.FeatureEditActivity;
 import com.bluebox.james.activity.TemperatureSceneActivity;
 import com.bluebox.james.adapter.ScenarioAdapter;
+import com.bluebox.james.dialog.NewFeatureDialogFragment;
+import com.bluebox.james.dialog.NewScenarioDialogFragment;
 import com.bluebox.james.model.ScenarioModel;
 import com.bluebox.james.model.RoomModel;
 import com.bluebox.james.model.FeatureBaseModel;
@@ -37,8 +41,12 @@ public class RoomFragment extends Fragment {
         ((TextView)rootView.findViewById(R.id.room_name)).setText(room.getName());
         ((ImageView)rootView.findViewById(R.id.room_img)).setImageResource(room.getImgBackground());
     	
+        final ScenarioAdapter adapter = new ScenarioAdapter(room);
+
         GridView grid = (GridView) rootView.findViewById(R.id.grid_actions);
+        grid.setAdapter(adapter);
         
+
         // Item click
         grid.setOnItemClickListener(new OnItemClickListener() {
 			@Override
@@ -61,6 +69,24 @@ public class RoomFragment extends Fragment {
 			}
 		});
         
+        // Button "add feature"
+        rootView.findViewById(R.id.bt_add_feature).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				NewFeatureDialogFragment f = new NewFeatureDialogFragment();
+				f.setOnCloseListener(new NewFeatureDialogFragment.OnCloseListener() {
+					@Override
+					public void onClose() {
+						adapter.notifyDataSetChanged();
+					}
+				});
+		    	Bundle args = new Bundle();
+		        args.putLong(Application.ARG_ROOM_ID, room.getId());
+		        f.setArguments(args);
+		        f.show(getFragmentManager().beginTransaction(), "dialog");
+			}
+		});
+        
 //        // Item sub click
 //        adapter.setOnSubItemClickListener(new OnSubItemClickListener() {
 //			@Override
@@ -68,9 +94,7 @@ public class RoomFragment extends Fragment {
 //				SceneModel scene = room.getScenes().get(pos);
 //			}
 //		});
-        ScenarioAdapter adapter = new ScenarioAdapter(room);
-        grid.setAdapter(adapter);
-        
+
         return rootView;
     }
 

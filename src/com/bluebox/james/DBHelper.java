@@ -232,6 +232,8 @@ public class DBHelper extends SQLiteOpenHelper {
 		values.put(DBHelper.T_FEATURE_SCENARIOS_ID_SCENARIO, scenario.getId());
 
 		mDB.insert(DBHelper.T_FEATURE_SCENARIOS, null, values);
+		
+		mScenarios.put(scenario.getId(), scenario);
 	}
 
 	public void addDeviceToScenario(ScenarioModel scenario, DeviceBaseModel device, int value) {
@@ -242,6 +244,8 @@ public class DBHelper extends SQLiteOpenHelper {
 		values.put(DBHelper.T_SCENARIO_DEVICES_VALUE, value);
 
 		mDB.insert(DBHelper.T_SCENARIO_DEVICES, null, values);
+
+		//mSwitchs.put(device.getId(), device);
 	}
 
 	public void addFeatureToRoom(RoomModel room, FeatureBaseModel feature) {
@@ -251,6 +255,8 @@ public class DBHelper extends SQLiteOpenHelper {
 		values.put(DBHelper.T_ROOM_FEATURES_ID_FEATURE, feature.getId());
 
 		mDB.insert(DBHelper.T_ROOM_FEATURES, null, values);
+		
+		mFeatures.put(feature.getId(), feature);
 	}
 
 	public static DBHelper getInstance() {

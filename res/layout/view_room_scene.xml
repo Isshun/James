@@ -11,7 +11,14 @@
         android:id="@+id/frame_scene"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="@drawable/bg_light" >
+        android:background="#f00" >
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:background="#fff" >
+        </FrameLayout>
 
         <TextView
             android:id="@+id/lb_scene"
