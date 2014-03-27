@@ -14,6 +14,9 @@
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
+    <string name="title_dialog_select_color">Select color</string>
+    <string name="title_dialog_select_icon">Select icon</string>
+    <string name="title_dialog_create_feature">Create feature</string>
     <string name="title_activity_room">RoomActivity</string>
     <string name="title_activity_probes">Probes</string>
     <string name="title_activity_switchs">Switchs</string>

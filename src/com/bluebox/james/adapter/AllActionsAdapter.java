@@ -36,7 +36,7 @@ public class AllActionsAdapter extends BaseAdapter  {
 
 	@Override
 	public View getView(int pos, View view, ViewGroup parent) {
-		view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_scene_action, null);
+		view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_entry_scenario, null);
 		
 		ScenarioModel action = RoomService.getInstance().getAllActions().get(pos);
 		

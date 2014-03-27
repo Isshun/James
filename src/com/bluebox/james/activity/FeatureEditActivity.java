@@ -14,8 +14,8 @@ import android.widget.TextView;
 import com.bluebox.james.Application;
 import com.bluebox.james.R;
 import com.bluebox.james.Utils;
-import com.bluebox.james.adapter.ActionAdapter;
-import com.bluebox.james.dialog.ColorDialogFragment;
+import com.bluebox.james.adapter.ScenarioAdapter;
+import com.bluebox.james.dialog.SelectColorDialogFragment;
 import com.bluebox.james.dialog.EditScenarioDialogFragment;
 import com.bluebox.james.dialog.NewScenarioDialogFragment;
 import com.bluebox.james.model.ScenarioModel;
@@ -43,7 +43,7 @@ public class FeatureEditActivity extends FragmentActivity {
 
         // "Actions" ListView
         final ListView listAction = (ListView)findViewById(R.id.list_action);
-        final ActionAdapter actionsAdapter = new ActionAdapter(feature);
+        final ScenarioAdapter actionsAdapter = new ScenarioAdapter(feature);
         listAction.setAdapter(actionsAdapter);
         listAction.setOnItemClickListener(new OnItemClickListener() {
 			@Override
@@ -90,7 +90,7 @@ public class FeatureEditActivity extends FragmentActivity {
         findViewById(R.id.bt_scene_color).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-		    	DialogFragment f = new ColorDialogFragment();
+		    	DialogFragment f = new SelectColorDialogFragment();
 		        f.show(getFragmentManager().beginTransaction(), "dialog");
 			}
 		});

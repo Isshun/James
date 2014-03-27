@@ -43,21 +43,21 @@ public class Mock {
 			FeatureBaseModel ftLight = RoomService.getInstance().createFeature(FeatureBaseModel.SCENE_LIGHT, "Light", R.drawable.bg_light);
 			RoomService.getInstance().addFeatureToRoom(salon, ftLight);
 			
-			ScenarioModel scn1 = RoomService.getInstance().createScenario("Bright", R.drawable.bg_light);
+			ScenarioModel scn1 = RoomService.getInstance().createScenario("Bright", R.drawable.ic_light_on);
 			scn1.setColor(Color.rgb(223, 90, 72));
 			RoomService.getInstance().addDeviceToScenario(scn1, light1, 0);
 			RoomService.getInstance().addDeviceToScenario(scn1, light2, 100);
 			RoomService.getInstance().addDeviceToScenario(scn1, light3, 100);
 			RoomService.getInstance().addScenarioToFeature(ftLight, scn1);
 
-			ScenarioModel scn2 = RoomService.getInstance().createScenario("Medium", R.drawable.bg_light);
+			ScenarioModel scn2 = RoomService.getInstance().createScenario("Medium", R.drawable.ic_light_medium);
 			scn2.setColor(Color.rgb(223, 90, 72));
 			RoomService.getInstance().addDeviceToScenario(scn2, light1, 100);
 			RoomService.getInstance().addDeviceToScenario(scn2, light2, 0);
 			RoomService.getInstance().addDeviceToScenario(scn2, light3, 100);
 			RoomService.getInstance().addScenarioToFeature(ftLight, scn2);
 
-			ScenarioModel scn3 = RoomService.getInstance().createScenario("Light off", R.drawable.bg_light);
+			ScenarioModel scn3 = RoomService.getInstance().createScenario("Light off", R.drawable.ic_light_off);
 			scn3.setColor(Color.rgb(223, 90, 72));
 			RoomService.getInstance().addDeviceToScenario(scn3, light1, 0);
 			RoomService.getInstance().addDeviceToScenario(scn3, light2, 0);

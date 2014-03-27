@@ -7,7 +7,9 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.bluebox.james.Application;
 import com.bluebox.james.R;
@@ -38,6 +40,54 @@ public class EditScenarioDialogFragment extends DialogFragment {
 
         EditText editScenarioName = (EditText)view.findViewById(R.id.edit_scenario_name);
         editScenarioName.setText(scenario.getName());
+        
+        // "icon" image
+        final ImageView imgIcon = (ImageView)view.findViewById(R.id.img_icon);
+        imgIcon.setImageResource(scenario.getIcon());
+
+        // "select icon" dialog
+		final SelectIconDialogFragment f = new SelectIconDialogFragment();
+		f.setOnCloseListener(new SelectIconDialogFragment.OnCloseListener() {
+			@Override
+			public void onClose() {
+				if (f.getIcon() != -1) {
+			        imgIcon.setImageResource(f.getIcon());
+				}
+			}
+		});
+    	Bundle args = new Bundle();
+        args.putLong(Application.ARG_SCENARIO_ID, scenario.getId());
+        f.setArguments(args);
+        view.findViewById(R.id.bt_icon).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+		        f.show(getFragmentManager().beginTransaction(), "dialog");
+			}
+		});
+
+        // "color" button
+        final View btColor = view.findViewById(R.id.bt_color);
+        btColor.setBackgroundColor(scenario.getColor());
+
+        // "select color" dialog
+		final SelectColorDialogFragment colorDialog = new SelectColorDialogFragment();
+		f.setOnCloseListener(new SelectIconDialogFragment.OnCloseListener() {
+			@Override
+			public void onClose() {
+				if (colorDialog.getColor() != -1) {
+			        btColor.setBackgroundColor(colorDialog.getColor());
+				}
+			}
+		});
+//    	Bundle args = new Bundle();
+//        args.putLong(Application.ARG_SCENARIO_ID, scenario.getId());
+//        f.setArguments(args);
+        view.findViewById(R.id.bt_icon).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				colorDialog.show(getFragmentManager().beginTransaction(), "dialog");
+			}
+		});
 
         int i = 0;
         for (DeviceBaseModel device: scenario.getDevices().keySet()) {
@@ -74,9 +124,14 @@ public class EditScenarioDialogFragment extends DialogFragment {
         return new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.edit_scenario)
                 .setView(view)
-                .setPositiveButton("Create",
+                .setPositiveButton("Save",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
+
+                        	if (f.getIcon() != -1) {
+                        		scenario.setIcon(f.getIcon());
+                        	}
+
 //                        	RoomService.getInstance().addAction(feature, new ActionModel(editActionName.getText().toString(), R.drawable.ic_alarm));
                         	mOnCloseListener.onClose();
                         }

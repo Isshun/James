@@ -3,6 +3,8 @@ package com.bluebox.james.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.bluebox.james.DBHelper;
+
 public class ScenarioModel extends DBModel {
 	private Map<DeviceBaseModel, Integer>	mDevices;
 	private String 							mName;
@@ -45,5 +47,10 @@ public class ScenarioModel extends DBModel {
 
 	public void setColor(int color) {
 		mColor = color;
+	}
+
+	public void setIcon(int icon) {
+		mIcon = icon;
+		DBHelper.getInstance().updateScenario(this);
 	}
 }

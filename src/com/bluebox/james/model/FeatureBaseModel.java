@@ -3,6 +3,8 @@ package com.bluebox.james.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.graphics.Color;
+
 import com.bluebox.james.DBHelper;
 
 public class FeatureBaseModel extends DBModel {
@@ -92,5 +94,9 @@ public class FeatureBaseModel extends DBModel {
 
 	public int getIcon() {
 		return mIcon;
+	}
+
+	public int getColor() {
+		return Color.CYAN;
 	}
 }

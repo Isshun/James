@@ -11,7 +11,7 @@
         android:id="@+id/frame_scene"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="#f00" >
+        android:background="#888" >
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -42,6 +42,14 @@
             android:text="Action"
             android:textColor="#bbb"
             android:textSize="26sp" />
+
+        <ImageView
+            android:id="@+id/img_icon"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_gravity="right|center_vertical"
+            android:layout_margin="20dp"
+            android:src="@drawable/ic_unk" />
     </FrameLayout>
 
 </FrameLayout>

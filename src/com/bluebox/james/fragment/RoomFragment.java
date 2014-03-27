@@ -20,7 +20,7 @@ import com.bluebox.james.Application;
 import com.bluebox.james.R;
 import com.bluebox.james.activity.FeatureEditActivity;
 import com.bluebox.james.activity.TemperatureSceneActivity;
-import com.bluebox.james.adapter.ScenarioAdapter;
+import com.bluebox.james.adapter.FeatureAdapter;
 import com.bluebox.james.dialog.NewFeatureDialogFragment;
 import com.bluebox.james.dialog.NewScenarioDialogFragment;
 import com.bluebox.james.model.ScenarioModel;
@@ -41,7 +41,7 @@ public class RoomFragment extends Fragment {
         ((TextView)rootView.findViewById(R.id.room_name)).setText(room.getName());
         ((ImageView)rootView.findViewById(R.id.room_img)).setImageResource(room.getImgBackground());
     	
-        final ScenarioAdapter adapter = new ScenarioAdapter(room);
+        final FeatureAdapter adapter = new FeatureAdapter(room);
 
         GridView grid = (GridView) rootView.findViewById(R.id.grid_actions);
         grid.setAdapter(adapter);
@@ -115,7 +115,8 @@ public class RoomFragment extends Fragment {
 		
 		if (scenario != null) {
 			RoomService.execute(scenario);
-			view.findViewById(R.id.frame_scene).setBackgroundResource(scenario.getIcon());
+			((ImageView)view.findViewById(R.id.img_icon)).setImageResource(scenario.getIcon());
+			view.findViewById(R.id.frame_scene).setBackgroundColor(scenario.getColor());
 			((TextView)view.findViewById(R.id.lb_scene)).setText(scenario.getName());
 		}
 	}

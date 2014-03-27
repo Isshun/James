@@ -225,6 +225,16 @@ public class DBHelper extends SQLiteOpenHelper {
 		return dbId;
 	}
 
+	public int updateScenario(ScenarioModel scenario) {
+		ContentValues values = new ContentValues();
+		
+		values.put(DBHelper.T_SCENARIO_COL_NAME, scenario.getName());
+		values.put(DBHelper.T_SCENARIO_COL_ICON, scenario.getIcon());
+		values.put(DBHelper.T_SCENARIO_COL_COLOR, scenario.getColor());
+		
+		return mDB.update(DBHelper.T_SCENARIO, values, DBHelper.T_SCENARIO_COL_ID + " = " + scenario.getId(), null);
+	}
+
 	public void addScenarioToFeature(FeatureBaseModel feature, ScenarioModel scenario) {
 		ContentValues values = new ContentValues();
 		
