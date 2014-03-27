@@ -18,7 +18,7 @@
         android:layout_gravity="bottom"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        layout="@layout/view_panel_alarm" />
+        layout="@layout/wear_panel_alarm" />
 
     <TextView
         android:id="@+id/textView1"

@@ -15,7 +15,7 @@ public class AdminSwitchsActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_switchs);
 
-        ListAdapter adapter = new SwitchListAdapter(this, R.layout.view_switchs_list_entry);
+        ListAdapter adapter = new SwitchListAdapter(this, R.layout.list_entry_switchs);
         
         ListView list = (ListView)findViewById(R.id.list_probes);
         list.setAdapter(adapter);

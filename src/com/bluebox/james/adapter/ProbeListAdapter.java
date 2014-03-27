@@ -42,7 +42,7 @@ public class ProbeListAdapter extends ArrayAdapter<DeviceProbeModel> {
 	public View getView(int pos, View view, ViewGroup parent) {
 		
 		if (view == null) {
-			view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_probes_list_entry, null);
+			view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_entry_probes, null);
 		}
 		
 		EditText editName = (EditText) view.findViewById(R.id.edit_name);

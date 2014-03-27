@@ -17,7 +17,7 @@ public class AlarmPanelFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    	final View rootView = inflater.inflate(R.layout.view_panel_alarm, container, false);
+    	final View rootView = inflater.inflate(R.layout.wear_panel_alarm, container, false);
 
         return rootView;
     }

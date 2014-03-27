@@ -49,7 +49,7 @@ public class ScenarioAdapter extends BaseAdapter {
 	public View getView(final int pos, View view, ViewGroup viewgroup) {
 		final FeatureBaseModel scene = mRoom.getFeatures().get(pos);
 		
-		view = LayoutInflater.from(viewgroup.getContext()).inflate(R.layout.view_room_scene, null);
+		view = LayoutInflater.from(viewgroup.getContext()).inflate(R.layout.list_entry_feature, null);
 //		switch (scene.getType()) {
 //		case SceneModel.SCENE_UNKNOW:
 //			break;

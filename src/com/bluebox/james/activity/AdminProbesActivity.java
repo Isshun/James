@@ -15,7 +15,7 @@ public class AdminProbesActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_probes);
 
-        ListAdapter adapter = new ProbeListAdapter(this, R.layout.view_probes_list_entry);
+        ListAdapter adapter = new ProbeListAdapter(this, R.layout.list_entry_probes);
         
         ListView list = (ListView)findViewById(R.id.list_probes);
         list.setAdapter(adapter);

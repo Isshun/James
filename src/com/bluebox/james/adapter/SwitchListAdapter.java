@@ -43,7 +43,7 @@ public class SwitchListAdapter extends ArrayAdapter<DeviceSwitchModel> {
 	public View getView(int pos, View view, ViewGroup parent) {
 		
 		if (view == null) {
-			view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_switch_list_entry, null);
+			view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_entry_switch, null);
 		}
 		
 		EditText editName = (EditText) view.findViewById(R.id.edit_name);

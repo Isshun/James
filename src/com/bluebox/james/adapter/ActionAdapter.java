@@ -14,8 +14,8 @@ public class ActionAdapter extends BaseAdapter {
 
 	private FeatureBaseModel mScene;
 
-	public ActionAdapter(FeatureBaseModel scene) {
-		mScene = scene;
+	public ActionAdapter(FeatureBaseModel feature) {
+		mScene = feature;
 	}
 	
 	@Override

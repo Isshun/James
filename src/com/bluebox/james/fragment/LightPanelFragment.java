@@ -17,7 +17,7 @@ public class LightPanelFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    	final View rootView = inflater.inflate(R.layout.view_panel_light, container, false);
+    	final View rootView = inflater.inflate(R.layout.wear_panel_light, container, false);
 
         return rootView;
     }
