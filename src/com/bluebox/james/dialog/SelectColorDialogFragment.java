@@ -1,76 +1,48 @@
 package com.bluebox.james.dialog;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.ListAdapter;
-import android.widget.AdapterView.OnItemClickListener;
 
-import com.bluebox.james.Application;
 import com.bluebox.james.R;
-import com.bluebox.james.adapter.IconAdapter;
-import com.bluebox.james.dialog.SelectIconDialogFragment.OnCloseListener;
-import com.bluebox.james.model.ScenarioModel;
-import com.bluebox.james.service.RoomService;
+import com.bluebox.james.adapter.ColorAdapter;
 
-public class SelectColorDialogFragment extends DialogFragment {
+public class SelectColorDialogFragment extends BaseDialogFragment {
 	
-	private OnCloseListener mOnCloseListener;
-	protected Integer mIcon = -1;
+	protected int mColor = -1;
 
-	public static interface OnCloseListener {
-		void onClose();
-	}
-
-    public void setOnCloseListener(OnCloseListener onCloseListener) {
-    	mOnCloseListener = onCloseListener;
-	}
-    
-    public int getIcon() {
-    	return mIcon;
-	}
-    
 	@Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-    	final View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_dialog_create_feature, null, false);
-        return new AlertDialog.Builder(getActivity())
-                .setTitle(R.string.title_dialog_select_color)
-                .setView(view)
-//                .setPositiveButton("Create",
-//                    new DialogInterface.OnClickListener() {
-//                        public void onClick(DialogInterface dialog, int whichButton) {
-//                        	mOnCloseListener.onClose();
-//                        }
-//                    }
-//                )
-                .setNegativeButton("Cancel", null)
-                .create();
+	protected void onCreateDialog() {
+        final ListAdapter adapter = new ColorAdapter();
+        final GridView grid = new GridView(getActivity());
+		grid.setColumnWidth(110);
+        grid.setVerticalSpacing(10);
+		grid.setNumColumns(GridView.AUTO_FIT);
+		grid.setAdapter(adapter);
+		grid.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
+				mColor = (Integer)adapter.getItem(pos);
+				save();
+			}
+		});
+		
+		setTitle(R.string.title_dialog_select_color);
+		setView(grid);
+		setNegativeButton(R.string.bt_dialog_cancel);
     }
-}
-//
-//public class SelectColorDialogFragment extends DialogFragment {
-//
-//	protected int mColor = -1;
-//	
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//    }
-//
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//        View v = inflater.inflate(R.layout.fragment_dialog_color, container, false);
-//        return v;
-//    }
-//
-//	public int getColor() {
-//		return mColor;
-//	}
-//}
 
+	public int getColor() {
+		return mColor;
+	}
+
+	@Override
+	protected void onCancel() {
+	}
+
+	@Override
+	protected void onSave() {
+	}
+}

@@ -3,8 +3,8 @@ package com.bluebox.james.model;
 
 public class FeatureSwitchModel extends FeatureBaseModel {
 	
-	public FeatureSwitchModel(long id, String name, int icon) {
-		super(FeatureBaseModel.SCENE_UNKNOW, id, name, icon);
+	public FeatureSwitchModel(long id, String name, int icon, int color) {
+		super(FeatureBaseModel.SCENE_UNKNOW, id, name, icon, color);
 	}
 
 	@Override

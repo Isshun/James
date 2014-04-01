@@ -40,7 +40,7 @@ public class Mock {
 
 			RoomModel salon = RoomService.getInstance().createRoom("Living Room", R.drawable.bg_living);
 
-			FeatureBaseModel ftLight = RoomService.getInstance().createFeature(FeatureBaseModel.SCENE_LIGHT, "Light", R.drawable.bg_light);
+			FeatureBaseModel ftLight = RoomService.getInstance().createFeature(FeatureBaseModel.SCENE_LIGHT, "Light", R.drawable.bg_light, Color.RED);
 			RoomService.getInstance().addFeatureToRoom(salon, ftLight);
 			
 			ScenarioModel scn1 = RoomService.getInstance().createScenario("Bright", R.drawable.ic_light_on);
@@ -65,7 +65,7 @@ public class Mock {
 			RoomService.getInstance().addScenarioToFeature(ftLight, scn3);
 
 						
-			FeatureBaseModel ampli = RoomService.getInstance().createFeature(FeatureBaseModel.SCENE_SWITCH, "Ampli", R.drawable.bg_switch);
+			FeatureBaseModel ampli = RoomService.getInstance().createFeature(FeatureBaseModel.SCENE_SWITCH, "Ampli", R.drawable.bg_switch, Color.RED);
 			RoomService.getInstance().addFeatureToRoom(salon, ampli);
 			DeviceBaseModel eAmpli = RoomService.getInstance().createDevice("Light desk", 19);
 			ScenarioModel ampliA1 = RoomService.getInstance().createScenario("Off", R.drawable.bg_switch);

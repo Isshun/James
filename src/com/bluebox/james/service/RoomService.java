@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import android.graphics.Color;
-import android.os.Bundle;
 import android.util.Log;
 
 import com.androidquery.AQuery;
@@ -14,13 +13,13 @@ import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
 import com.bluebox.james.Application;
 import com.bluebox.james.DBHelper;
-import com.bluebox.james.model.FeatureLightModel;
-import com.bluebox.james.model.ScenarioModel;
 import com.bluebox.james.model.DeviceBaseModel;
-import com.bluebox.james.model.FeatureBaseModel;
 import com.bluebox.james.model.DeviceProbeModel;
-import com.bluebox.james.model.RoomModel;
 import com.bluebox.james.model.DeviceSwitchModel;
+import com.bluebox.james.model.FeatureBaseModel;
+import com.bluebox.james.model.FeatureLightModel;
+import com.bluebox.james.model.RoomModel;
+import com.bluebox.james.model.ScenarioModel;
 
 public class RoomService {
 
@@ -171,15 +170,15 @@ public class RoomService {
 		return scenario;
 	}
 
-	public FeatureBaseModel createFeature(int type, String name, int icon) {
+	public FeatureBaseModel createFeature(int type, String name, int icon, int color) {
 		FeatureBaseModel feature = null;
 		
 		switch (type) {
 		case FeatureBaseModel.SCENE_LIGHT:
-			feature = new FeatureLightModel(-1, name, icon);
+			feature = new FeatureLightModel(-1, name, icon, color);
 			break;
 		default:
-			feature = new FeatureLightModel(-1, name, icon);
+			feature = new FeatureLightModel(-1, name, icon, color);
 			break;
 		}
 		

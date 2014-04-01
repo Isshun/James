@@ -20,6 +20,10 @@
     <string name="title_activity_room">RoomActivity</string>
     <string name="title_activity_probes">Probes</string>
     <string name="title_activity_switchs">Switchs</string>
+    <string name="bt_dialog_ok">OK</string>
+    <string name="bt_dialog_create">Create</string>
+    <string name="bt_dialog_cancel">Cancel</string>
+    <string name="bt_dialog_save">Save</string>
     <string name="hello_world">Hello world!</string>
     <string name="edit_feature">Edit feature</string>
     <string name="edit_scenario">Edit scenario</string>

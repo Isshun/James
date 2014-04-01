@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,6 @@ import com.bluebox.james.Application;
 import com.bluebox.james.R;
 import com.bluebox.james.model.FeatureBaseModel;
 import com.bluebox.james.model.RoomModel;
-import com.bluebox.james.model.ScenarioModel;
 import com.bluebox.james.service.RoomService;
 
 public class NewFeatureDialogFragment extends DialogFragment {
@@ -42,7 +42,7 @@ public class NewFeatureDialogFragment extends DialogFragment {
                 .setPositiveButton("Create",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
-                        	FeatureBaseModel feature = RoomService.getInstance().createFeature(FeatureBaseModel.SCENE_LIGHT, editActionName.getText().toString(), R.drawable.ic_alarm);
+                        	FeatureBaseModel feature = RoomService.getInstance().createFeature(FeatureBaseModel.SCENE_LIGHT, editActionName.getText().toString(), R.drawable.ic_alarm, Color.GRAY);
                         	RoomService.getInstance().addFeatureToRoom(room, feature);
                         	mOnCloseListener.onClose();
                         }

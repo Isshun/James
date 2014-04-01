@@ -3,8 +3,6 @@ package com.bluebox.james.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.graphics.Color;
-
 import com.bluebox.james.DBHelper;
 
 public class FeatureBaseModel extends DBModel {
@@ -16,7 +14,6 @@ public class FeatureBaseModel extends DBModel {
 	public final static int SCENE_ALARM = 4;
 	public final static int SCENE_SWITCH = 5;
 	
-	private static long				sCount;
 	public String 					mName;
 	public List<DeviceBaseModel>	mEquipments;
 	protected List<ScenarioModel> 	mScenario;
@@ -26,12 +23,14 @@ public class FeatureBaseModel extends DBModel {
 	private int 					mNbSwitch;
 	private ScenarioModel 			mCurrentScenario;
 	private int 					mIcon;
+	private int 					mColor;
 	
-	public FeatureBaseModel(int type, long id, String name, int icon) {
+	public FeatureBaseModel(int type, long id, String name, int icon, int color) {
 		mDbId = id;
 		mType = type;
 		mName = name;
 		mIcon = icon;
+		mColor = color;
 		mScenario = new ArrayList<ScenarioModel>();
 	}
 	
@@ -97,6 +96,18 @@ public class FeatureBaseModel extends DBModel {
 	}
 
 	public int getColor() {
-		return Color.CYAN;
+		return mColor;
+	}
+
+	public void setType(int type) {
+		mType = type;
+	}
+
+	public void commit() {
+		DBHelper.getInstance().updateFeature(this);
+	}
+
+	public void setColor(int color) {
+		mColor = color;
 	}
 }

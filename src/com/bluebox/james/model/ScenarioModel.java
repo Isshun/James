@@ -51,6 +51,10 @@ public class ScenarioModel extends DBModel {
 
 	public void setIcon(int icon) {
 		mIcon = icon;
+	}
+	
+	public void commit() {
 		DBHelper.getInstance().updateScenario(this);
 	}
+
 }

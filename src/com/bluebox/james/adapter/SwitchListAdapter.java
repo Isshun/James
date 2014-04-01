@@ -10,7 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
 import com.bluebox.james.R;
-import com.bluebox.james.model.DeviceProbeModel;
 import com.bluebox.james.model.DeviceSwitchModel;
 import com.bluebox.james.service.RoomService;
 

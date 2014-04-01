@@ -4,12 +4,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bluebox.james.R;
-import com.bluebox.james.model.ScenarioModel;
-import com.bluebox.james.model.RoomModel;
 import com.bluebox.james.model.FeatureBaseModel;
+import com.bluebox.james.model.RoomModel;
+import com.bluebox.james.model.ScenarioModel;
 
 public class FeatureAdapter extends BaseAdapter {
 
@@ -92,12 +93,14 @@ public class FeatureAdapter extends BaseAdapter {
 		ScenarioModel scenario = feature.getScenario();
 		if (scenario != null) {
 			view.findViewById(R.id.frame_scene).setBackgroundColor(scenario.getColor());
+			((ImageView)view.findViewById(R.id.img_icon)).setImageResource(scenario.getIcon());
 			((TextView)view.findViewById(R.id.lb_scene)).setText(scenario.getName());
 			if (scenario.getColor() != -1) {
 				((TextView)view.findViewById(R.id.lb_scene)).setTextColor(scenario.getColor());
 			}
 		} else {
 			view.findViewById(R.id.frame_scene).setBackgroundColor(feature.getColor());
+			((ImageView)view.findViewById(R.id.img_icon)).setImageResource(feature.getIcon());
 			((TextView)view.findViewById(R.id.lb_scene)).setText(feature.getName());
 		}
 		

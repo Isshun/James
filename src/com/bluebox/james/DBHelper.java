@@ -50,9 +50,11 @@ public class DBHelper extends SQLiteOpenHelper {
 	private static final String T_FEATURE_COL_TYPE = "Type";
 	private static final String T_FEATURE_COL_NAME = "Name";
 	private static final String T_FEATURE_COL_ICON = "Icon";
+	private static final String T_FEATURE_COL_COLOR = "Color";
 	private static final String CREATE_TABLE_FEATURE = "CREATE TABLE " + T_FEATURE + " ("
 			+ T_FEATURE_COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
 			+ T_FEATURE_COL_TYPE + " LONG NOT NULL, "
+			+ T_FEATURE_COL_COLOR + " INTEGER NOT NULL, "
 			+ T_FEATURE_COL_ICON + " INTEGER NOT NULL, "
 			+ T_FEATURE_COL_NAME + " TEXT NOT NULL);";
  
@@ -204,6 +206,7 @@ public class DBHelper extends SQLiteOpenHelper {
 		
 		values.put(DBHelper.T_FEATURE_COL_NAME, feature.getName());
 		values.put(DBHelper.T_FEATURE_COL_ICON, feature.getIcon());
+		values.put(DBHelper.T_FEATURE_COL_COLOR, feature.getColor());
 		values.put(DBHelper.T_FEATURE_COL_TYPE, feature.getType());
 
 		long dbId = mDB.insert(DBHelper.T_FEATURE, null, values);
@@ -233,6 +236,17 @@ public class DBHelper extends SQLiteOpenHelper {
 		values.put(DBHelper.T_SCENARIO_COL_COLOR, scenario.getColor());
 		
 		return mDB.update(DBHelper.T_SCENARIO, values, DBHelper.T_SCENARIO_COL_ID + " = " + scenario.getId(), null);
+	}
+
+	public int updateFeature(FeatureBaseModel feature) {
+		ContentValues values = new ContentValues();
+		
+		values.put(DBHelper.T_FEATURE_COL_NAME, feature.getName());
+		values.put(DBHelper.T_FEATURE_COL_ICON, feature.getIcon());
+		values.put(DBHelper.T_FEATURE_COL_COLOR, feature.getColor());
+		values.put(DBHelper.T_FEATURE_COL_TYPE, feature.getType());
+		
+		return mDB.update(DBHelper.T_FEATURE, values, DBHelper.T_FEATURE_COL_ID + " = " + feature.getId(), null);
 	}
 
 	public void addScenarioToFeature(FeatureBaseModel feature, ScenarioModel scenario) {
@@ -331,17 +345,17 @@ public class DBHelper extends SQLiteOpenHelper {
 		}
 
 		{ // Get features
-			Cursor c = mDB.query(T_FEATURE, new String[] {T_FEATURE_COL_ID, T_FEATURE_COL_TYPE, T_FEATURE_COL_NAME, T_FEATURE_COL_ICON}, null, null, null, null, null);
+			Cursor c = mDB.query(T_FEATURE, new String[] {T_FEATURE_COL_ID, T_FEATURE_COL_TYPE, T_FEATURE_COL_NAME, T_FEATURE_COL_ICON, T_FEATURE_COL_COLOR}, null, null, null, null, null);
 			while (c.moveToNext()) {
 				Log.i("LOAD_DB", "Load feature: " + c.getString(2));
 				
 				FeatureBaseModel feature = null;
 				switch (c.getInt(1)) {
 				case FeatureBaseModel.SCENE_LIGHT:
-					feature = new FeatureLightModel(c.getLong(0), c.getString(2), c.getInt(3));
+					feature = new FeatureLightModel(c.getLong(0), c.getString(2), c.getInt(3), c.getInt(4));
 					break;
 				default:
-					feature = new FeatureLightModel(c.getLong(0), c.getString(2), c.getInt(3));
+					feature = new FeatureLightModel(c.getLong(0), c.getString(2), c.getInt(3), c.getInt(4));
 					break;
 				}
 				mFeatures.put(feature.getId(), feature);

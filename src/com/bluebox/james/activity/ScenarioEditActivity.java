@@ -6,10 +6,10 @@ import android.widget.EditText;
 
 import com.bluebox.james.R;
 import com.bluebox.james.Utils;
-import com.bluebox.james.model.ScenarioModel;
 import com.bluebox.james.model.DeviceBaseModel;
-import com.bluebox.james.model.RoomModel;
 import com.bluebox.james.model.FeatureBaseModel;
+import com.bluebox.james.model.RoomModel;
+import com.bluebox.james.model.ScenarioModel;
 import com.bluebox.james.service.RoomService;
 
 public class ScenarioEditActivity extends FragmentActivity {

@@ -6,8 +6,8 @@ public class FeatureTemperatureModel extends FeatureBaseModel {
 	private float mCurrent;
 	private float mExpected; 
 	
-	public FeatureTemperatureModel(long id, String name, int icon) {
-		super(FeatureBaseModel.SCENE_TEMPERATURE, id, name, icon);
+	public FeatureTemperatureModel(long id, String name, int icon, int color) {
+		super(FeatureBaseModel.SCENE_TEMPERATURE, id, name, icon, color);
 		
 		mExpected = 24f;
 	}

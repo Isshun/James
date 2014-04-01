@@ -1,6 +1,5 @@
 package com.bluebox.james.activity;
 
-import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -15,12 +14,13 @@ import com.bluebox.james.Application;
 import com.bluebox.james.R;
 import com.bluebox.james.Utils;
 import com.bluebox.james.adapter.ScenarioAdapter;
-import com.bluebox.james.dialog.SelectColorDialogFragment;
+import com.bluebox.james.dialog.BaseDialogFragment.OnCloseListener;
 import com.bluebox.james.dialog.EditScenarioDialogFragment;
 import com.bluebox.james.dialog.NewScenarioDialogFragment;
-import com.bluebox.james.model.ScenarioModel;
+import com.bluebox.james.dialog.SelectColorDialogFragment;
 import com.bluebox.james.model.FeatureBaseModel;
 import com.bluebox.james.model.RoomModel;
+import com.bluebox.james.model.ScenarioModel;
 import com.bluebox.james.service.RoomService;
 
 public class FeatureEditActivity extends FragmentActivity {
@@ -33,6 +33,22 @@ public class FeatureEditActivity extends FragmentActivity {
         final RoomModel room = RoomService.getInstance().getRoom(bundle.getLong(Application.ARG_ROOM_ID));
         final FeatureBaseModel feature = room.getFeature(bundle.getLong(Application.ARG_FEATURE_ID));
 
+        findViewById(R.id.bt_set_switch).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				feature.setType(FeatureBaseModel.SCENE_LIGHT);
+				feature.commit();
+			}
+		});
+
+        findViewById(R.id.bt_set_temp).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				feature.setType(FeatureBaseModel.SCENE_TEMPERATURE);
+				feature.commit();
+			}
+		});
+        
         // "Scenario name" EditText
         EditText editSceneName = (EditText)findViewById(R.id.edit_scene_name);
         editSceneName.setText(feature.getName());
@@ -87,11 +103,22 @@ public class FeatureEditActivity extends FragmentActivity {
 		});
         
         // Action on "select color" button
+		findViewById(R.id.bt_scene_color).setBackgroundColor(feature.getColor());
         findViewById(R.id.bt_scene_color).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-		    	DialogFragment f = new SelectColorDialogFragment();
+				final SelectColorDialogFragment f = new SelectColorDialogFragment();
 		        f.show(getFragmentManager().beginTransaction(), "dialog");
+		        f.setOnCloseListener(new OnCloseListener() {
+					@Override
+					public void onClose() {
+						if (f.getColor() != -1) {
+							findViewById(R.id.bt_scene_color).setBackgroundColor(f.getColor());
+							feature.setColor(f.getColor());
+							feature.commit();
+						}
+					}
+				});
 			}
 		});
 

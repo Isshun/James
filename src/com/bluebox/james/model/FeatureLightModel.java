@@ -4,8 +4,8 @@ public class FeatureLightModel extends FeatureBaseModel {
 	private float 	mValue;
 	private boolean	mIsVariometer;
 	
-	public FeatureLightModel(long id, String name, int icon) {
-		super(FeatureBaseModel.SCENE_LIGHT, id, name, icon);
+	public FeatureLightModel(long id, String name, int icon, int color) {
+		super(FeatureBaseModel.SCENE_LIGHT, id, name, icon, color);
 		
 		mValue = 1f;
 	}

@@ -22,10 +22,9 @@ import com.bluebox.james.activity.FeatureEditActivity;
 import com.bluebox.james.activity.TemperatureSceneActivity;
 import com.bluebox.james.adapter.FeatureAdapter;
 import com.bluebox.james.dialog.NewFeatureDialogFragment;
-import com.bluebox.james.dialog.NewScenarioDialogFragment;
-import com.bluebox.james.model.ScenarioModel;
-import com.bluebox.james.model.RoomModel;
 import com.bluebox.james.model.FeatureBaseModel;
+import com.bluebox.james.model.RoomModel;
+import com.bluebox.james.model.ScenarioModel;
 import com.bluebox.james.service.RoomService;
 
 public class RoomFragment extends Fragment {
@@ -117,7 +116,9 @@ public class RoomFragment extends Fragment {
 			RoomService.execute(scenario);
 			((ImageView)view.findViewById(R.id.img_icon)).setImageResource(scenario.getIcon());
 			view.findViewById(R.id.frame_scene).setBackgroundColor(scenario.getColor());
-			((TextView)view.findViewById(R.id.lb_scene)).setText(scenario.getName());
+			TextView lbScenario = (TextView) view.findViewById(R.id.lb_scene);
+			lbScenario.setText(scenario.getName());
+			lbScenario.setTextColor(scenario.getColor());
 		}
 	}
 
