@@ -70,7 +70,7 @@ public class FeatureBaseModel extends DBModel {
 		
 		// Set next scenario
 		int index = (mScenarios.indexOf(mScenario) + 1) % mScenarios.size();
-		mScenario = mScenarios.get(index);
+		setScenario(mScenarios.get(index));
 		mOn = index == 0;
 		return mScenario;
 	}
@@ -84,6 +84,7 @@ public class FeatureBaseModel extends DBModel {
 			mScenario = scenario;
 		}
 		mScenarios.add(scenario);
+		scenario.setFeature(this);
 	}
 
 	public ScenarioModel getScenario() {
@@ -116,5 +117,13 @@ public class FeatureBaseModel extends DBModel {
 
 	public boolean isType(int type) {
 		return mType == type;
+	}
+	
+	public boolean isToggleButtons() {
+		return true;
+	}
+
+	public String getFormattedValue() {
+		return null;
 	}
 }

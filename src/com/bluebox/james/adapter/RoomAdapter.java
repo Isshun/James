@@ -27,7 +27,10 @@ public class RoomAdapter extends FragmentPagerAdapter {
     
     @Override
     public long getItemId(int pos) {
-    	return DoomService.getInstance().getRooms().get(pos).getId();
+    	if (DoomService.getInstance().getRooms().size() > pos) {
+        	return DoomService.getInstance().getRooms().get(pos).getId();
+    	}
+    	return -1;
     }
 
     @Override

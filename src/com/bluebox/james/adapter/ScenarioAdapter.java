@@ -42,8 +42,10 @@ public class ScenarioAdapter extends BaseAdapter {
 		TextView lbScene = (TextView)view.findViewById(R.id.lb_scene);
 		lbScene.setText(scenario.getName());
 		
-		ImageView imgIcon = (ImageView)view.findViewById(R.id.img_icon);
-		imgIcon.setImageResource(scenario.getIcon());
+		if (scenario.getIcon() != -1) {
+			ImageView imgIcon = (ImageView)view.findViewById(R.id.img_icon);
+			imgIcon.setImageResource(scenario.getIcon());
+		}
 		
 		return view;
 	}

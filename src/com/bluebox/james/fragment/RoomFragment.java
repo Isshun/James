@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -16,13 +15,11 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bluebox.james.Application;
 import com.bluebox.james.R;
 import com.bluebox.james.activity.FeatureEditActivity;
 import com.bluebox.james.activity.TemperatureSceneActivity;
 import com.bluebox.james.adapter.FeatureAdapter;
 import com.bluebox.james.adapter.OnScenarioClickListener;
-import com.bluebox.james.dialog.NewFeatureDialogFragment;
 import com.bluebox.james.model.FeatureBaseModel;
 import com.bluebox.james.model.RoomModel;
 import com.bluebox.james.model.ScenarioModel;
@@ -51,28 +48,32 @@ public class RoomFragment extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
 				FeatureBaseModel scene = room.getFeatures().get(pos);
+				ScenarioModel fromScenario = scene.getScenario();
 				clickOnTile(view, scene);
+				ScenarioModel toScenario = scene.getScenario();
+				adapter.startAnim(fromScenario, toScenario);
 				adapter.notifyDataSetChanged();
 			}
 		});
         
-        // Item long click
-        grid.setOnItemLongClickListener(new OnItemLongClickListener() {
-			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view, int pos, long id) {
-				FeatureBaseModel feature = room.getFeatures().get(pos);
-				Intent intent = new Intent(RoomFragment.this.getActivity(), FeatureEditActivity.class);
-				intent.putExtra(ARG_ROOM_ID, room.getId());
-				intent.putExtra(ARG_FEATURE_ID, feature.getId());
-				startActivity(intent);
-				return true;
-			}
-		});
+//        // Item long click
+//        grid.setOnItemLongClickListener(new OnItemLongClickListener() {
+//			@Override
+//			public boolean onItemLongClick(AdapterView<?> parent, View view, int pos, long id) {
+//				FeatureBaseModel feature = room.getFeatures().get(pos);
+//				Intent intent = new Intent(RoomFragment.this.getActivity(), FeatureEditActivity.class);
+//				intent.putExtra(ARG_ROOM_ID, room.getId());
+//				intent.putExtra(ARG_FEATURE_ID, feature.getId());
+//				startActivity(intent);
+//				return true;
+//			}
+//		});
         
         // Item sub click
         adapter.setOnScenarioClickListener(new OnScenarioClickListener() {
 			@Override
 			public void onScenarioClick(FeatureBaseModel feature, ScenarioModel scenario) {
+				adapter.startAnim(feature.getScenario(), scenario);
 				feature.setScenario(scenario);
 				DoomService.execute(scenario);
 				adapter.notifyDataSetChanged();

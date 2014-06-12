@@ -1,10 +1,15 @@
 package com.bluebox.james.adapter;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
+import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.graphics.Color;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.BaseAdapter;
@@ -14,13 +19,23 @@ import android.widget.TextView;
 
 import com.bluebox.james.R;
 import com.bluebox.james.model.FeatureBaseModel;
+import com.bluebox.james.model.FeatureTemperatureModel;
 import com.bluebox.james.model.RoomModel;
 import com.bluebox.james.model.ScenarioModel;
 
 public class FeatureAdapter extends BaseAdapter {
-
-	private RoomModel mRoom;
+	private static class ViewHolder {
+		public TextView		mName;
+		public ImageView 	mIcon;
+		public LinearLayout mOptions;
+		public View 		mLayout;
+		public TextView 	mValue;
+	}
+	
+	private RoomModel 				mRoom;
 	private OnScenarioClickListener mScenarioClickListener;
+	private ScenarioModel 			mAnimFromScenario;
+	private ScenarioModel 			mAnimToScenario;
 
 	public FeatureAdapter(RoomModel room) {
 		mRoom = room;
@@ -55,46 +70,63 @@ public class FeatureAdapter extends BaseAdapter {
 	public View getView(final int pos, View view, ViewGroup viewgroup) {
 		final FeatureBaseModel feature = mRoom.getFeatures().get(pos);
 		final ScenarioModel currentScenario = feature.getScenario();
-
-		int color = Color.WHITE;
-		if (currentScenario != null && currentScenario.getColor() != -1) {
-			color = currentScenario.getColor();
-		} else if (feature.getColor() != -1) {
-			color = feature.getColor();
-		}
+		ViewHolder holder = null;
 		
-		int icon = -1;
-		if (currentScenario != null && currentScenario.getIcon() != -1) {
-			icon = currentScenario.getIcon();
-		} else if (feature.getIcon() != -1) {
-			icon = feature.getIcon();
-		}
-		
-		view = LayoutInflater.from(viewgroup.getContext()).inflate(R.layout.list_entry_feature, null);
-		view.findViewById(R.id.frame_scene).setBackgroundColor(color);
-		if (icon != -1) {
-			((ImageView)view.findViewById(R.id.img_icon)).setImageResource(icon);
+		if (view == null) {
+			view = LayoutInflater.from(viewgroup.getContext()).inflate(R.layout.list_entry_feature, null);
+			holder = new ViewHolder();
+			holder.mLayout = view.findViewById(R.id.frame_scene);
+			holder.mName = ((TextView)view.findViewById(R.id.lb_name));
+			holder.mIcon = ((ImageView)view.findViewById(R.id.img_icon));
+			holder.mValue = ((TextView)view.findViewById(R.id.lb_value));
+			holder.mOptions = (LinearLayout)view.findViewById(R.id.list_entry_options);
+			view.setTag(holder);
 		} else {
-			((ImageView)view.findViewById(R.id.img_icon)).setImageDrawable(null);
+			holder = (ViewHolder)view.getTag();
 		}
-		((TextView)view.findViewById(R.id.lb_name)).setText(feature.getName());
 		
+		final int color = currentScenario.getColor();
+
+		holder.mLayout.setBackgroundColor(color);
+		holder.mName.setText(feature.getName());
+
+		// Set icon
+		if (currentScenario != null && currentScenario.getIcon() != -1) {
+			holder.mIcon.setImageResource(currentScenario.getIcon());
+			holder.mIcon.setVisibility(View.VISIBLE);
+		} else if (feature.getIcon() != -1) {
+			holder.mIcon.setImageResource(feature.getIcon());
+			holder.mIcon.setVisibility(View.VISIBLE);
+		} else {
+			holder.mIcon.setVisibility(View.GONE);
+		}
+		
+		// Feature is temperature probe
 		if (feature.isType(FeatureBaseModel.SCENE_TEMPERATURE)) {
-			((TextView)view.findViewById(R.id.lb_value)).setText("23°");
+			FeatureTemperatureModel featureTemperature = (FeatureTemperatureModel)feature;
+			holder.mValue.setText(featureTemperature.getExpected() + "°");
+			holder.mIcon.setVisibility(View.GONE);
 		}
 		
 		// Options layout
-		final LinearLayout optionsLayout = (LinearLayout)view.findViewById(R.id.list_entry_options);
-		optionsLayout.setBackgroundColor(Color.argb(100, 255, 255, 255));
+		holder.mOptions.removeAllViews();
+		final ViewHolder h = holder;
 		int i = 0;
 		for (ScenarioModel scenario: feature.getScenarios()) {
+			final ScenarioModel finalScenario = scenario;
+			final int optionIndex = i;
+			
+			// Separator
+			if (i++ > 0) {
+				View separator = new View(view.getContext());
+				int width = (int)view.getContext().getResources().getDimension(R.dimen.list_entry_feature_option_separator);
+				separator.setLayoutParams(new LinearLayout.LayoutParams(width, LinearLayout.LayoutParams.MATCH_PARENT));
+				separator.setBackgroundResource(R.color.list_entry_option);
+				holder.mOptions.addView(separator);
+			}
+
 			LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 			lp.weight = 1;
-			lp.topMargin = 6;
-			if (i++ > 0) {
-				lp.leftMargin = 6;
-			}
-			final ScenarioModel s = scenario;
 			final TextView lbOption = new TextView(view.getContext());
 			lbOption.setText(scenario.getName());
 			lbOption.setTextSize(20);
@@ -102,17 +134,61 @@ public class FeatureAdapter extends BaseAdapter {
 			lbOption.setGravity(Gravity.CENTER);
 			lbOption.setLayoutParams(lp);
 			lbOption.setPadding(0, 0, 0, 6);
-			if (scenario != currentScenario) {
-				lbOption.setBackgroundColor(color);
+			if (feature.isToggleButtons() == false || scenario != currentScenario) {
+				lbOption.setBackgroundResource(R.drawable.bg_list_entry_selected_option);
+				lbOption.setActivated(true);
+			} else {
+				lbOption.setBackgroundResource(R.drawable.bg_list_entry_resting_option);
+				lbOption.setActivated(false);
 			}
+			
 			lbOption.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					mScenarioClickListener.onScenarioClick(feature, s);					
+					if (finalScenario.getOnClickListener() != null) {
+						finalScenario.getOnClickListener().onClick(v);
+					}
+					mScenarioClickListener.onScenarioClick(feature, finalScenario);
 				}
 			});
-			optionsLayout.addView(lbOption);
+			final Handler handler = new Handler();
+			lbOption.setOnLongClickListener(new OnLongClickListener() {
+				@Override
+				public boolean onLongClick(final View v) {
+					handler.post(new Runnable() {
+						@Override
+						public void run() {
+							if (lbOption.isPressed()) {
+								if (finalScenario.getOnClickListener() != null) {
+									finalScenario.getOnClickListener().onClick(v);
+								}
+								if (feature.getFormattedValue() != null)
+								h.mValue.setText(feature.getFormattedValue());
+								handler.postDelayed(this, 250);
+							}
+						}
+					});
+					return false;
+				}
+			});
+			holder.mOptions.addView(lbOption);
 		}
+		
+		// Color change animation
+		if (mAnimFromScenario != null && mAnimToScenario != null && currentScenario == mAnimToScenario) {
+			final ViewHolder finalHolder = holder;
+			Integer colorFrom = mAnimFromScenario.getColor();
+			Integer colorTo = mAnimToScenario.getColor();
+			ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+			colorAnimation.addUpdateListener(new AnimatorUpdateListener() {
+			    @Override
+			    public void onAnimationUpdate(ValueAnimator animator) {
+			        finalHolder.mLayout.setBackgroundColor((Integer)animator.getAnimatedValue());
+			    }
+			});
+			colorAnimation.start();
+		}
+
 		
 //		switch (scene.getType()) {
 //		case SceneModel.SCENE_UNKNOW:
@@ -156,6 +232,11 @@ public class FeatureAdapter extends BaseAdapter {
 
 	public void setOnScenarioClickListener(OnScenarioClickListener scenarioClickListener) {
 		mScenarioClickListener = scenarioClickListener;
+	}
+
+	public void startAnim(ScenarioModel fromScenario, ScenarioModel toScenario) {
+		mAnimFromScenario = fromScenario;
+		mAnimToScenario = toScenario;
 	}
 
 }

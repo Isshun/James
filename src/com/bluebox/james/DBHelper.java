@@ -70,14 +70,14 @@ public class DBHelper extends SQLiteOpenHelper {
 			+ T_SCENARIO_COL_ICON + " INTEGER NOT NULL, "
 			+ T_SCENARIO_COL_NAME + " TEXT NOT NULL);";
 
-	private static final String T_PROBE = "t_probe";
-	private static final String T_PROBE_COL_ID = "Id";
-	private static final String T_PROBE_COL_DEVICE_ID = "DeviceId";
-	private static final String T_PROBE_COL_DEVICE_NAME = "Name";
-	private static final String CREATE_TABLE_PROBE = "CREATE TABLE " + T_PROBE + " ("
-			+ T_PROBE_COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-			+ T_PROBE_COL_DEVICE_ID + " LONG NOT NULL, "
-			+ T_PROBE_COL_DEVICE_NAME + " TEXT NOT NULL);";
+//	private static final String T_PROBE = "t_probe";
+//	private static final String T_PROBE_COL_ID = "Id";
+//	private static final String T_PROBE_COL_DEVICE_ID = "DeviceId";
+//	private static final String T_PROBE_COL_DEVICE_NAME = "Name";
+//	private static final String CREATE_TABLE_PROBE = "CREATE TABLE " + T_PROBE + " ("
+//			+ T_PROBE_COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+//			+ T_PROBE_COL_DEVICE_ID + " LONG NOT NULL, "
+//			+ T_PROBE_COL_DEVICE_NAME + " TEXT NOT NULL);";
 	 
 	private static final String T_SWITCH = "t_switch";
 	private static final String T_SWITCH_COL_ID = "Id";
@@ -118,10 +118,15 @@ public class DBHelper extends SQLiteOpenHelper {
 	public void open() {
 		mDB = getWritableDatabase();
 	}
- 
+	
 	public void close() {
 		mDB.close();
 		mDB = null;
+	}
+	
+	public boolean isExists() {
+		Cursor c = mDB.query("sqlite_master WHERE type='table' AND name='" + T_ROOM + "';", null, null, null, null, null, null);
+		return c.getCount() > 0;
 	}
 
 	@Override
@@ -154,17 +159,17 @@ public class DBHelper extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 
-	public long createProbe(DeviceProbeModel device) {
-		ContentValues values = new ContentValues();
-		
-		values.put(DBHelper.T_PROBE_COL_DEVICE_ID, device.getDeviceId());
-		values.put(DBHelper.T_PROBE_COL_DEVICE_NAME, device.getName());
-
-		long dbId = mDB.insert(DBHelper.T_PROBE, null, values);
-		device.setId(dbId);
-
-		return mDB.insert(DBHelper.T_PROBE, null, values);
-	}
+//	public long createProbe(DeviceProbeModel device) {
+//		ContentValues values = new ContentValues();
+//		
+//		values.put(DBHelper.T_PROBE_COL_DEVICE_ID, device.getDeviceId());
+//		values.put(DBHelper.T_PROBE_COL_DEVICE_NAME, device.getName());
+//
+//		long dbId = mDB.insert(DBHelper.T_PROBE, null, values);
+//		device.setId(dbId);
+//
+//		return mDB.insert(DBHelper.T_PROBE, null, values);
+//	}
 
 	public long createSwitch(DeviceSwitchModel device) {
 		ContentValues values = new ContentValues();
@@ -309,22 +314,22 @@ public class DBHelper extends SQLiteOpenHelper {
 //		return switchs;
 	}
 
-	public Map<Long, DeviceProbeModel> getProbes() {
-		Map<Long, DeviceProbeModel> probes = new HashMap<Long, DeviceProbeModel>();
-		
-		Cursor c = mDB.query(T_PROBE, new String[] {T_PROBE_COL_ID, T_PROBE_COL_DEVICE_ID, T_PROBE_COL_DEVICE_NAME}, null, null, null, null, null);
-
-		if (c.getCount() == 0)
-			return probes;
-
-		while (c.moveToNext()) {
-			DeviceProbeModel probe = new DeviceProbeModel(c.getInt(0), c.getString(2), c.getLong(1));
-			probes.put(probe.getId(), probe);
-		}
-		c.close();
-
-		return probes;
-	}
+//	public Map<Long, DeviceProbeModel> getProbes() {
+//		Map<Long, DeviceProbeModel> probes = new HashMap<Long, DeviceProbeModel>();
+//		
+//		Cursor c = mDB.query(T_PROBE, new String[] {T_PROBE_COL_ID, T_PROBE_COL_DEVICE_ID, T_PROBE_COL_DEVICE_NAME}, null, null, null, null, null);
+//
+//		if (c.getCount() == 0)
+//			return probes;
+//
+//		while (c.moveToNext()) {
+//			DeviceProbeModel probe = new DeviceProbeModel(c.getInt(0), c.getString(2), c.getLong(1));
+//			probes.put(probe.getId(), probe);
+//		}
+//		c.close();
+//
+//		return probes;
+//	}
 
 	public void load() {
 		Log.i("LOAD_DB", "load db");

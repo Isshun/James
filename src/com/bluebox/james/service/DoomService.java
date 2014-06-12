@@ -122,7 +122,7 @@ public class DoomService {
 	public void addProbe(DeviceProbeModel device) {
 		mProbes.put(device.getId(), device);
 		
-		DBHelper.getInstance().createProbe(device);
+//		DBHelper.getInstance().createProbe(device);
 	}
 
 	public void addSwitch(DeviceSwitchModel device) {
@@ -145,10 +145,15 @@ public class DoomService {
 
 	public void init() {
 		DBHelper.getInstance().open();
-		//DBHelper.getInstance().reset(DBHelper.getInstance().getWritableDatabase());
+//		if (DBHelper.getInstance().isExists() == false) {
+//			DBHelper.getInstance().onCreate(DBHelper.getInstance().getWritableDatabase());
+//		}
+//		DBHelper.getInstance().onCreate(DBHelper.getInstance().getWritableDatabase());
+//		DBHelper.getInstance().reset(DBHelper.getInstance().getWritableDatabase());
+
 		DBHelper.getInstance().load();
 		mSwitchs = DBHelper.getInstance().getSwitchs();
-		mProbes = DBHelper.getInstance().getProbes();
+//		mProbes = DBHelper.getInstance().getProbes();
 		mRooms = DBHelper.getInstance().getRooms();
 		mScenarios = DBHelper.getInstance().getScenarios();
 		mFeatures = DBHelper.getInstance().getFeatures();

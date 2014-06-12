@@ -3,6 +3,8 @@ package com.bluebox.james.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.view.View.OnClickListener;
+
 import com.bluebox.james.DBHelper;
 
 public class ScenarioModel extends DBModel {
@@ -10,6 +12,8 @@ public class ScenarioModel extends DBModel {
 	private String 							mName;
 	public int 								mIcon;
 	private int 							mColor = -1;
+	private FeatureBaseModel 				mFeature;
+	private OnClickListener 				mOnClickListener;
 	
 	public ScenarioModel(long id, String name, int icon, int color) {
 		mDbId = id;
@@ -42,7 +46,7 @@ public class ScenarioModel extends DBModel {
 	}
 
 	public int getColor() {
-		return mColor;
+		return mColor != -1 ? mColor : mFeature.getColor();
 	}
 
 	public void setColor(int color) {
@@ -57,4 +61,15 @@ public class ScenarioModel extends DBModel {
 		DBHelper.getInstance().updateScenario(this);
 	}
 
+	public void setFeature(FeatureBaseModel feature) {
+		mFeature = feature;
+	}
+
+	public OnClickListener getOnClickListener() {
+		return mOnClickListener;
+	}
+
+	public void setOnClickListener(OnClickListener onClickListener) {
+		mOnClickListener = onClickListener;		
+	}
 }
