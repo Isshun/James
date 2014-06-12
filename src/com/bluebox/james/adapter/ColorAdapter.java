@@ -21,9 +21,9 @@ public class ColorAdapter extends BaseAdapter {
 		case 2: return Color.rgb(100, 50, 0);
 		case 3: return Color.rgb(150, 50, 0);
 		case 4: return Color.rgb(200, 50, 0);
-		case 5: return Color.rgb(250, 50, 0);
-		case 6: return Color.rgb(24, 189, 160);
-		case 7: return Color.rgb(164, 64, 130);
+		case 5: return Color.rgb(240, 192, 0);
+		case 6: return Color.rgb(58, 61, 182);
+		case 7: return Color.rgb(58, 137, 182);
 		case 8: return Color.rgb(64, 64, 130);
 		case 9: return Color.rgb(130, 189, 200);
 		case 10: return Color.rgb(80, 189, 100);

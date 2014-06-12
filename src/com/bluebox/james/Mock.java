@@ -7,16 +7,16 @@ import com.bluebox.james.model.DeviceBaseModel;
 import com.bluebox.james.model.FeatureBaseModel;
 import com.bluebox.james.model.RoomModel;
 import com.bluebox.james.model.ScenarioModel;
-import com.bluebox.james.service.RoomService;
+import com.bluebox.james.service.DoomService;
 
 public class Mock {
 
 	public static void init() {
 		
 //		DBHelper.getInstance().reset(DBHelper.getInstance().getWritableDatabase());
-		RoomService.getInstance().init();
+		DoomService.getInstance().init();
 		
-		if (RoomService.getInstance().getCount() != 0) {
+		if (DoomService.getInstance().getCount() != 0) {
 			Log.i("LOAD_DB", "load ok");
 			return;
 		}
@@ -34,49 +34,49 @@ public class Mock {
 
 		// Salon
 		{
-			DeviceBaseModel light1 = RoomService.getInstance().createDevice("Light bed", 4);
-			DeviceBaseModel light2 = RoomService.getInstance().createDevice("Light lounge", 8);
-			DeviceBaseModel light3 = RoomService.getInstance().createDevice("Light desk", 20);
+			DeviceBaseModel light1 = DoomService.getInstance().createDevice("Light bed", 4);
+			DeviceBaseModel light2 = DoomService.getInstance().createDevice("Light lounge", 8);
+			DeviceBaseModel light3 = DoomService.getInstance().createDevice("Light desk", 20);
 
-			RoomModel salon = RoomService.getInstance().createRoom("Living Room", R.drawable.bg_living);
+			RoomModel salon = DoomService.getInstance().createRoom("Living Room", R.drawable.bg_living);
 
-			FeatureBaseModel ftLight = RoomService.getInstance().createFeature(FeatureBaseModel.SCENE_LIGHT, "Light", R.drawable.bg_light, Color.RED);
-			RoomService.getInstance().addFeatureToRoom(salon, ftLight);
+			FeatureBaseModel ftLight = DoomService.getInstance().createFeature(FeatureBaseModel.SCENE_LIGHT, "Light", R.drawable.bg_light, Color.RED);
+			DoomService.getInstance().addFeatureToRoom(salon, ftLight);
 			
-			ScenarioModel scn1 = RoomService.getInstance().createScenario("Bright", R.drawable.ic_light_on);
+			ScenarioModel scn1 = DoomService.getInstance().createScenario("Bright", R.drawable.ic_light_on);
 			scn1.setColor(Color.rgb(223, 90, 72));
-			RoomService.getInstance().addDeviceToScenario(scn1, light1, 0);
-			RoomService.getInstance().addDeviceToScenario(scn1, light2, 100);
-			RoomService.getInstance().addDeviceToScenario(scn1, light3, 100);
-			RoomService.getInstance().addScenarioToFeature(ftLight, scn1);
+			DoomService.getInstance().addDeviceToScenario(scn1, light1, 0);
+			DoomService.getInstance().addDeviceToScenario(scn1, light2, 100);
+			DoomService.getInstance().addDeviceToScenario(scn1, light3, 100);
+			DoomService.getInstance().addScenarioToFeature(ftLight, scn1);
 
-			ScenarioModel scn2 = RoomService.getInstance().createScenario("Medium", R.drawable.ic_light_medium);
+			ScenarioModel scn2 = DoomService.getInstance().createScenario("Medium", R.drawable.ic_light_medium);
 			scn2.setColor(Color.rgb(223, 90, 72));
-			RoomService.getInstance().addDeviceToScenario(scn2, light1, 100);
-			RoomService.getInstance().addDeviceToScenario(scn2, light2, 0);
-			RoomService.getInstance().addDeviceToScenario(scn2, light3, 100);
-			RoomService.getInstance().addScenarioToFeature(ftLight, scn2);
+			DoomService.getInstance().addDeviceToScenario(scn2, light1, 100);
+			DoomService.getInstance().addDeviceToScenario(scn2, light2, 0);
+			DoomService.getInstance().addDeviceToScenario(scn2, light3, 100);
+			DoomService.getInstance().addScenarioToFeature(ftLight, scn2);
 
-			ScenarioModel scn3 = RoomService.getInstance().createScenario("Light off", R.drawable.ic_light_off);
+			ScenarioModel scn3 = DoomService.getInstance().createScenario("Light off", R.drawable.ic_light_off);
 			scn3.setColor(Color.rgb(223, 90, 72));
-			RoomService.getInstance().addDeviceToScenario(scn3, light1, 0);
-			RoomService.getInstance().addDeviceToScenario(scn3, light2, 0);
-			RoomService.getInstance().addDeviceToScenario(scn3, light3, 0);
-			RoomService.getInstance().addScenarioToFeature(ftLight, scn3);
+			DoomService.getInstance().addDeviceToScenario(scn3, light1, 0);
+			DoomService.getInstance().addDeviceToScenario(scn3, light2, 0);
+			DoomService.getInstance().addDeviceToScenario(scn3, light3, 0);
+			DoomService.getInstance().addScenarioToFeature(ftLight, scn3);
 
 						
-			FeatureBaseModel ampli = RoomService.getInstance().createFeature(FeatureBaseModel.SCENE_SWITCH, "Ampli", R.drawable.bg_switch, Color.RED);
-			RoomService.getInstance().addFeatureToRoom(salon, ampli);
-			DeviceBaseModel eAmpli = RoomService.getInstance().createDevice("Light desk", 19);
-			ScenarioModel ampliA1 = RoomService.getInstance().createScenario("Off", R.drawable.bg_switch);
+			FeatureBaseModel ampli = DoomService.getInstance().createFeature(FeatureBaseModel.SCENE_SWITCH, "Ampli", R.drawable.bg_switch, Color.RED);
+			DoomService.getInstance().addFeatureToRoom(salon, ampli);
+			DeviceBaseModel eAmpli = DoomService.getInstance().createDevice("Light desk", 19);
+			ScenarioModel ampliA1 = DoomService.getInstance().createScenario("Off", R.drawable.bg_switch);
 			ampliA1.setColor(Color.rgb(234, 188, 48));
-			RoomService.getInstance().addDeviceToScenario(ampliA1, eAmpli, 0);
-			RoomService.getInstance().addScenarioToFeature(ampli, ampliA1);
+			DoomService.getInstance().addDeviceToScenario(ampliA1, eAmpli, 0);
+			DoomService.getInstance().addScenarioToFeature(ampli, ampliA1);
 
-			ScenarioModel ampliA2 = RoomService.getInstance().createScenario("On", R.drawable.bg_switch);
+			ScenarioModel ampliA2 = DoomService.getInstance().createScenario("On", R.drawable.bg_switch);
 			ampliA2.setColor(Color.rgb(234, 188, 48));
-			RoomService.getInstance().addDeviceToScenario(ampliA2, eAmpli, 100);
-			RoomService.getInstance().addScenarioToFeature(ampli, ampliA2);
+			DoomService.getInstance().addDeviceToScenario(ampliA2, eAmpli, 100);
+			DoomService.getInstance().addScenarioToFeature(ampli, ampliA2);
 		}
 
 //			{
@@ -160,7 +160,7 @@ public class Mock {
 		
 		// Cuisine
 		{
-			RoomService.getInstance().createRoom("Kitchen", R.drawable.bg_kitchen);
+			DoomService.getInstance().createRoom("Kitchen", R.drawable.bg_kitchen);
 		}
 	}
 	

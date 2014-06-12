@@ -11,7 +11,7 @@ import android.widget.EditText;
 
 import com.bluebox.james.R;
 import com.bluebox.james.model.DeviceProbeModel;
-import com.bluebox.james.service.RoomService;
+import com.bluebox.james.service.DoomService;
 
 public class ProbeListAdapter extends ArrayAdapter<DeviceProbeModel> {
 
@@ -20,7 +20,7 @@ public class ProbeListAdapter extends ArrayAdapter<DeviceProbeModel> {
 	public ProbeListAdapter(Context context, int resource) {
 		super(context, resource);
 
-		mProbeList = RoomService.getInstance().getProbeList();
+		mProbeList = DoomService.getInstance().getProbeList();
 	}
 	
 	@Override

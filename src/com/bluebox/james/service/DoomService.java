@@ -21,16 +21,16 @@ import com.bluebox.james.model.FeatureLightModel;
 import com.bluebox.james.model.RoomModel;
 import com.bluebox.james.model.ScenarioModel;
 
-public class RoomService {
+public class DoomService {
 
-	private static RoomService 			sRoomService;
+	private static DoomService 			sRoomService;
 	private Map<Long, RoomModel> 		mRooms;
 	private Map<Long, ScenarioModel> 	mScenarios;
 	private Map<Long, FeatureBaseModel> mFeatures;
 	private Map<Long, DeviceProbeModel> mProbes;
 	private Map<Long,DeviceSwitchModel> mSwitchs;
 
-	private RoomService() {
+	private DoomService() {
 		mRooms = new HashMap<Long, RoomModel>();
 		mFeatures = new HashMap<Long, FeatureBaseModel>();
 		mScenarios = new HashMap<Long, ScenarioModel>();
@@ -38,9 +38,9 @@ public class RoomService {
 		mSwitchs = new HashMap<Long, DeviceSwitchModel>();
 	}
 
-	public static RoomService getInstance() {
+	public static DoomService getInstance() {
 		if (sRoomService == null) {
-			sRoomService = new RoomService();
+			sRoomService = new DoomService();
 		}
 		return sRoomService;
 	}

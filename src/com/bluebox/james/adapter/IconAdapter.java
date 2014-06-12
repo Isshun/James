@@ -12,7 +12,7 @@ public class IconAdapter extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-		return 4;
+		return 5;
 	}
 
 	@Override
@@ -22,6 +22,7 @@ public class IconAdapter extends BaseAdapter {
 		case 1: return R.drawable.ic_light_2;
 		case 2: return R.drawable.ic_light_3;
 		case 3: return R.drawable.ic_temp;
+		case 4: return R.drawable.bg_light;
 		}
 		return -1;
 	}

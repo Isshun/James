@@ -12,8 +12,10 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.bluebox.james.Application;
 import com.bluebox.james.R;
 import com.bluebox.james.adapter.RoomAdapter;
+import com.bluebox.james.dialog.NewFeatureDialogFragment;
 
 public class MainActivity extends Activity {
 
@@ -104,6 +106,21 @@ public class MainActivity extends Activity {
 			Intent intent = new Intent(MainActivity.this, AdminSwitchsActivity.class);
 			startActivity(intent);
             return true;
+        }
+        case R.id.action_add_feature: {
+			NewFeatureDialogFragment f = new NewFeatureDialogFragment();
+			f.setOnCloseListener(new NewFeatureDialogFragment.OnCloseListener() {
+				@Override
+				public void onClose() {
+					mSectionsPagerAdapter.notifyDataSetChanged();
+					//adapter.notifyDataSetChanged();
+				}
+			});
+	    	Bundle args = new Bundle();
+	    	long roomId = mSectionsPagerAdapter.getItemId(mViewPager.getCurrentItem());
+	        args.putLong(Application.ARG_ROOM_ID, roomId);
+	        f.setArguments(args);
+	        f.show(getFragmentManager().beginTransaction(), "dialog");
         }
         default:
             return super.onOptionsItemSelected(item);

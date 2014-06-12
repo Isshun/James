@@ -31,5 +31,6 @@
     <string name="add_feature">Add new feature</string>
     <string name="add_scenario">Add new scenario</string>
     <string name="add_action">Add new action</string>
+    <string name="action_save">Save</string>
 
 </resources>

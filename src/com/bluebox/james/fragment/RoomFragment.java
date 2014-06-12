@@ -21,11 +21,12 @@ import com.bluebox.james.R;
 import com.bluebox.james.activity.FeatureEditActivity;
 import com.bluebox.james.activity.TemperatureSceneActivity;
 import com.bluebox.james.adapter.FeatureAdapter;
+import com.bluebox.james.adapter.OnScenarioClickListener;
 import com.bluebox.james.dialog.NewFeatureDialogFragment;
 import com.bluebox.james.model.FeatureBaseModel;
 import com.bluebox.james.model.RoomModel;
 import com.bluebox.james.model.ScenarioModel;
-import com.bluebox.james.service.RoomService;
+import com.bluebox.james.service.DoomService;
 
 public class RoomFragment extends Fragment {
 
@@ -34,7 +35,7 @@ public class RoomFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final RoomModel room = RoomService.getInstance().getRoom(getArguments().getLong(ARG_ROOM_ID));
+        final RoomModel room = DoomService.getInstance().getRoom(getArguments().getLong(ARG_ROOM_ID));
     	final View rootView = inflater.inflate(R.layout.fragment_room, container, false);
 
         ((TextView)rootView.findViewById(R.id.room_name)).setText(room.getName());
@@ -42,16 +43,16 @@ public class RoomFragment extends Fragment {
     	
         final FeatureAdapter adapter = new FeatureAdapter(room);
 
-        GridView grid = (GridView) rootView.findViewById(R.id.grid_actions);
+        final GridView grid = (GridView) rootView.findViewById(R.id.grid_actions);
         grid.setAdapter(adapter);
         
-
         // Item click
         grid.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
 				FeatureBaseModel scene = room.getFeatures().get(pos);
 				clickOnTile(view, scene);
+				adapter.notifyDataSetChanged();
 			}
 		});
         
@@ -68,31 +69,15 @@ public class RoomFragment extends Fragment {
 			}
 		});
         
-        // Button "add feature"
-        rootView.findViewById(R.id.bt_add_feature).setOnClickListener(new OnClickListener() {
+        // Item sub click
+        adapter.setOnScenarioClickListener(new OnScenarioClickListener() {
 			@Override
-			public void onClick(View view) {
-				NewFeatureDialogFragment f = new NewFeatureDialogFragment();
-				f.setOnCloseListener(new NewFeatureDialogFragment.OnCloseListener() {
-					@Override
-					public void onClose() {
-						adapter.notifyDataSetChanged();
-					}
-				});
-		    	Bundle args = new Bundle();
-		        args.putLong(Application.ARG_ROOM_ID, room.getId());
-		        f.setArguments(args);
-		        f.show(getFragmentManager().beginTransaction(), "dialog");
+			public void onScenarioClick(FeatureBaseModel feature, ScenarioModel scenario) {
+				feature.setScenario(scenario);
+				DoomService.execute(scenario);
+				adapter.notifyDataSetChanged();
 			}
 		});
-        
-//        // Item sub click
-//        adapter.setOnSubItemClickListener(new OnSubItemClickListener() {
-//			@Override
-//			public void onSubItemClick(AdapterView<?> parent, View view, View sub, int pos, long id) {
-//				SceneModel scene = room.getScenes().get(pos);
-//			}
-//		});
 
         return rootView;
     }
@@ -113,12 +98,7 @@ public class RoomFragment extends Fragment {
 		ScenarioModel scenario = scene.nextScenario();
 		
 		if (scenario != null) {
-			RoomService.execute(scenario);
-			((ImageView)view.findViewById(R.id.img_icon)).setImageResource(scenario.getIcon());
-			view.findViewById(R.id.frame_scene).setBackgroundColor(scenario.getColor());
-			TextView lbScenario = (TextView) view.findViewById(R.id.lb_scene);
-			lbScenario.setText(scenario.getName());
-			lbScenario.setTextColor(scenario.getColor());
+			DoomService.execute(scenario);
 		}
 	}
 

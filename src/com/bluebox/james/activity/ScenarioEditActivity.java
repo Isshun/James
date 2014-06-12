@@ -10,7 +10,7 @@ import com.bluebox.james.model.DeviceBaseModel;
 import com.bluebox.james.model.FeatureBaseModel;
 import com.bluebox.james.model.RoomModel;
 import com.bluebox.james.model.ScenarioModel;
-import com.bluebox.james.service.RoomService;
+import com.bluebox.james.service.DoomService;
 
 public class ScenarioEditActivity extends FragmentActivity {
 
@@ -33,9 +33,9 @@ public class ScenarioEditActivity extends FragmentActivity {
 //        ab.setDisplayShowCustomEnabled(true);
 
         Bundle bundle = getIntent().getExtras();
-        RoomModel room = RoomService.getInstance().getRoom(bundle.getLong("room_id"));
-        FeatureBaseModel scene = RoomService.getInstance().getFeature(bundle.getLong("scene_id"));
-        ScenarioModel action = RoomService.getInstance().getScenario(bundle.getLong("action_id"));
+        RoomModel room = DoomService.getInstance().getRoom(bundle.getLong("room_id"));
+        FeatureBaseModel scene = DoomService.getInstance().getFeature(bundle.getLong("scene_id"));
+        ScenarioModel action = DoomService.getInstance().getScenario(bundle.getLong("action_id"));
 
         int i = 0;
         for (DeviceBaseModel device: action.getDevices().keySet()) {

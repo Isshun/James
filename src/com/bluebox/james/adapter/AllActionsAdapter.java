@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.bluebox.james.R;
 import com.bluebox.james.model.ScenarioModel;
-import com.bluebox.james.service.RoomService;
+import com.bluebox.james.service.DoomService;
 
 public class AllActionsAdapter extends BaseAdapter  {
 
@@ -21,24 +21,24 @@ public class AllActionsAdapter extends BaseAdapter  {
 	
 	@Override
 	public int getCount() {
-		return RoomService.getInstance().getAllActions().size();
+		return DoomService.getInstance().getAllActions().size();
 	}
 
 	@Override
 	public Object getItem(int pos) {
-		return RoomService.getInstance().getAllActions().get(pos);
+		return DoomService.getInstance().getAllActions().get(pos);
 	}
 
 	@Override
 	public long getItemId(int pos) {
-		return RoomService.getInstance().getAllActions().get(pos).getId();
+		return DoomService.getInstance().getAllActions().get(pos).getId();
 	}
 
 	@Override
 	public View getView(int pos, View view, ViewGroup parent) {
 		view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_entry_scenario, null);
 		
-		ScenarioModel action = RoomService.getInstance().getAllActions().get(pos);
+		ScenarioModel action = DoomService.getInstance().getAllActions().get(pos);
 		
 		TextView lbScene = (TextView)view.findViewById(R.id.lb_scene);
 		lbScene.setText(action.getName());

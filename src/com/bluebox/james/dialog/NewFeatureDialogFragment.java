@@ -14,7 +14,7 @@ import com.bluebox.james.Application;
 import com.bluebox.james.R;
 import com.bluebox.james.model.FeatureBaseModel;
 import com.bluebox.james.model.RoomModel;
-import com.bluebox.james.service.RoomService;
+import com.bluebox.james.service.DoomService;
 
 public class NewFeatureDialogFragment extends DialogFragment {
 	
@@ -31,7 +31,7 @@ public class NewFeatureDialogFragment extends DialogFragment {
 	@Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final long roomId = getArguments().getLong(Application.ARG_ROOM_ID);
-        final RoomModel room = RoomService.getInstance().getRoom(roomId);
+        final RoomModel room = DoomService.getInstance().getRoom(roomId);
     	final View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_dialog_create_feature, null, false);
     	
     	final EditText editActionName = (EditText)view.findViewById(R.id.edit_feature_name);
@@ -42,8 +42,8 @@ public class NewFeatureDialogFragment extends DialogFragment {
                 .setPositiveButton("Create",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
-                        	FeatureBaseModel feature = RoomService.getInstance().createFeature(FeatureBaseModel.SCENE_LIGHT, editActionName.getText().toString(), R.drawable.ic_alarm, Color.GRAY);
-                        	RoomService.getInstance().addFeatureToRoom(room, feature);
+                        	FeatureBaseModel feature = DoomService.getInstance().createFeature(FeatureBaseModel.SCENE_LIGHT, editActionName.getText().toString(), R.drawable.ic_alarm, Color.GRAY);
+                        	DoomService.getInstance().addFeatureToRoom(room, feature);
                         	mOnCloseListener.onClose();
                         }
                     }

@@ -16,12 +16,10 @@ public class FeatureBaseModel extends DBModel {
 	
 	public String 					mName;
 	public List<DeviceBaseModel>	mEquipments;
-	protected List<ScenarioModel> 	mScenario;
+	protected List<ScenarioModel> 	mScenarios;
+	private ScenarioModel 			mScenario;
 	protected boolean 				mOn;
 	private int 					mType;
-	private int 					mCurrentSwitch;
-	private int 					mNbSwitch;
-	private ScenarioModel 			mCurrentScenario;
 	private int 					mIcon;
 	private int 					mColor;
 	
@@ -31,7 +29,7 @@ public class FeatureBaseModel extends DBModel {
 		mName = name;
 		mIcon = icon;
 		mColor = color;
-		mScenario = new ArrayList<ScenarioModel>();
+		mScenarios = new ArrayList<ScenarioModel>();
 	}
 	
 	public FeatureBaseModel(String name) {
@@ -58,7 +56,7 @@ public class FeatureBaseModel extends DBModel {
 	}
 	
 	public List<ScenarioModel> getScenarios() {
-		return mScenario;
+		return mScenarios;
 	}
 	
 	public List<DeviceBaseModel> getEquipments() {
@@ -66,13 +64,15 @@ public class FeatureBaseModel extends DBModel {
 	}
 
 	public ScenarioModel nextScenario() {
-		if (mNbSwitch > 0) {
-			mCurrentSwitch = (mCurrentSwitch + 1) % mNbSwitch;
-			mOn = mCurrentSwitch == 0;
-			mCurrentScenario = mScenario.get(mCurrentSwitch);
-			return mCurrentScenario;
+		if (mScenarios.size() == 0) {
+			return null;
 		}
-		return null;
+		
+		// Set next scenario
+		int index = (mScenarios.indexOf(mScenario) + 1) % mScenarios.size();
+		mScenario = mScenarios.get(index);
+		mOn = index == 0;
+		return mScenario;
 	}
 	
 	public boolean isOn() {
@@ -80,15 +80,14 @@ public class FeatureBaseModel extends DBModel {
 	}
 
 	public void addScenario(ScenarioModel scenario) {
-		if (mScenario.size() == 0) {
-			mCurrentScenario = scenario;
+		if (mScenarios.size() == 0) {
+			mScenario = scenario;
 		}
-		mScenario.add(scenario);
-		mNbSwitch++;
+		mScenarios.add(scenario);
 	}
 
 	public ScenarioModel getScenario() {
-		return mCurrentScenario;
+		return mScenario;
 	}
 
 	public int getIcon() {
@@ -109,5 +108,13 @@ public class FeatureBaseModel extends DBModel {
 
 	public void setColor(int color) {
 		mColor = color;
+	}
+
+	public void setScenario(ScenarioModel scenario) {
+		mScenario = scenario;
+	}
+
+	public boolean isType(int type) {
+		return mType == type;
 	}
 }

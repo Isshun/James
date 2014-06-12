@@ -11,7 +11,7 @@ import android.widget.EditText;
 
 import com.bluebox.james.R;
 import com.bluebox.james.model.DeviceSwitchModel;
-import com.bluebox.james.service.RoomService;
+import com.bluebox.james.service.DoomService;
 
 public class SwitchListAdapter extends ArrayAdapter<DeviceSwitchModel> {
 
@@ -20,7 +20,7 @@ public class SwitchListAdapter extends ArrayAdapter<DeviceSwitchModel> {
 	public SwitchListAdapter(Context context, int resource) {
 		super(context, resource);
 
-		mSwitchList = RoomService.getInstance().getSwitchList();
+		mSwitchList = DoomService.getInstance().getSwitchList();
 	}
 	
 	@Override

@@ -9,10 +9,10 @@ public class FeatureSwitchModel extends FeatureBaseModel {
 
 	@Override
 	public ScenarioModel nextScenario() {
-		if (mScenario.size() == 2) {
+		if (mScenarios.size() == 2) {
 			mOn = !mOn;
 			int index = mOn ? 1 : 0;
-			return mScenario.get(index);
+			return mScenarios.get(index);
 		}
 		return null;
 	}

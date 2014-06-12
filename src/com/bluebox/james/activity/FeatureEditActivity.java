@@ -2,6 +2,8 @@ package com.bluebox.james.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -21,50 +23,54 @@ import com.bluebox.james.dialog.SelectColorDialogFragment;
 import com.bluebox.james.model.FeatureBaseModel;
 import com.bluebox.james.model.RoomModel;
 import com.bluebox.james.model.ScenarioModel;
-import com.bluebox.james.service.RoomService;
+import com.bluebox.james.service.DoomService;
 
 public class FeatureEditActivity extends FragmentActivity {
+	private FeatureBaseModel mFeature;
+	private RoomModel mRoom;
+	private EditText editSceneName;
+
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_feature);
 
         Bundle bundle = getIntent().getExtras();
-        final RoomModel room = RoomService.getInstance().getRoom(bundle.getLong(Application.ARG_ROOM_ID));
-        final FeatureBaseModel feature = room.getFeature(bundle.getLong(Application.ARG_FEATURE_ID));
+        mRoom = DoomService.getInstance().getRoom(bundle.getLong(Application.ARG_ROOM_ID));
+        mFeature = mRoom.getFeature(bundle.getLong(Application.ARG_FEATURE_ID));
 
         findViewById(R.id.bt_set_switch).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				feature.setType(FeatureBaseModel.SCENE_LIGHT);
-				feature.commit();
+				mFeature.setType(FeatureBaseModel.SCENE_LIGHT);
+				mFeature.commit();
 			}
 		});
 
         findViewById(R.id.bt_set_temp).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				feature.setType(FeatureBaseModel.SCENE_TEMPERATURE);
-				feature.commit();
+				mFeature.setType(FeatureBaseModel.SCENE_TEMPERATURE);
+				mFeature.commit();
 			}
 		});
         
         // "Scenario name" EditText
-        EditText editSceneName = (EditText)findViewById(R.id.edit_scene_name);
-        editSceneName.setText(feature.getName());
+        editSceneName = (EditText)findViewById(R.id.edit_scene_name);
+        editSceneName.setText(mFeature.getName());
 
         // "Feature name" Label
         TextView lbFeature = (TextView)findViewById(R.id.lb_feature);
-        lbFeature.setText(feature.getTypeName());
+        lbFeature.setText(mFeature.getTypeName());
 
         // "Actions" ListView
         final ListView listAction = (ListView)findViewById(R.id.list_action);
-        final ScenarioAdapter actionsAdapter = new ScenarioAdapter(feature);
+        final ScenarioAdapter actionsAdapter = new ScenarioAdapter(mFeature);
         listAction.setAdapter(actionsAdapter);
         listAction.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
-				ScenarioModel action = feature.getScenarios().get(pos);
+				ScenarioModel action = mFeature.getScenarios().get(pos);
 //				Intent intent = new Intent(FeatureEditActivity.this, ScenarioEditActivity.class);
 //				startActivity(intent);
 				
@@ -76,8 +82,8 @@ public class FeatureEditActivity extends FragmentActivity {
 					}
 				});
 		    	Bundle args = new Bundle();
-				args.putLong(Application.ARG_ROOM_ID, room.getId());
-				args.putLong(Application.ARG_FEATURE_ID, feature.getId());
+				args.putLong(Application.ARG_ROOM_ID, mRoom.getId());
+				args.putLong(Application.ARG_FEATURE_ID, mFeature.getId());
 				args.putLong(Application.ARG_SCENARIO_ID, action.getId());
 		        f.setArguments(args);
 		        f.show(getFragmentManager().beginTransaction(), "dialog");
@@ -96,14 +102,14 @@ public class FeatureEditActivity extends FragmentActivity {
 					}
 				});
 		    	Bundle args = new Bundle();
-		        args.putLong(Application.ARG_FEATURE_ID, feature.getId());
+		        args.putLong(Application.ARG_FEATURE_ID, mFeature.getId());
 		        f.setArguments(args);
 		        f.show(getFragmentManager().beginTransaction(), "dialog");
 			}
 		});
         
         // Action on "select color" button
-		findViewById(R.id.bt_scene_color).setBackgroundColor(feature.getColor());
+		findViewById(R.id.bt_scene_color).setBackgroundColor(mFeature.getColor());
         findViewById(R.id.bt_scene_color).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -114,8 +120,8 @@ public class FeatureEditActivity extends FragmentActivity {
 					public void onClose() {
 						if (f.getColor() != -1) {
 							findViewById(R.id.bt_scene_color).setBackgroundColor(f.getColor());
-							feature.setColor(f.getColor());
-							feature.commit();
+							mFeature.setColor(f.getColor());
+							mFeature.commit();
 						}
 					}
 				});
@@ -125,4 +131,23 @@ public class FeatureEditActivity extends FragmentActivity {
         Utils.hideKeyboard(this);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.feature, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+        case R.id.action_save_feature: {
+        	mFeature.mName = editSceneName.getText().toString();
+        	mFeature.commit();
+        }
+        default:
+            return super.onOptionsItemSelected(item);
+        }
+    }
 }

@@ -1,5 +1,6 @@
 package com.bluebox.james.dialog;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,7 @@ import com.bluebox.james.Application;
 import com.bluebox.james.R;
 import com.bluebox.james.model.DeviceBaseModel;
 import com.bluebox.james.model.ScenarioModel;
-import com.bluebox.james.service.RoomService;
+import com.bluebox.james.service.DoomService;
 
 public class EditScenarioDialogFragment extends BaseDialogFragment {
 	
@@ -22,7 +23,7 @@ public class EditScenarioDialogFragment extends BaseDialogFragment {
     @Override
 	protected void onCreateDialog() {
     	final View view = LayoutInflater.from(getActivity()).inflate(R.layout.activity_edit_scenario, null, false);
-        mScenario = RoomService.getInstance().getScenario(getArguments().getLong(Application.ARG_SCENARIO_ID));
+        mScenario = DoomService.getInstance().getScenario(getArguments().getLong(Application.ARG_SCENARIO_ID));
 
         // Cutomize dialog
         setTitle(R.string.edit_scenario);
@@ -44,6 +45,8 @@ public class EditScenarioDialogFragment extends BaseDialogFragment {
 			public void onClose() {
 				if (mSelectIconDialog.getIcon() != -1) {
 			        imgIcon.setImageResource(mSelectIconDialog.getIcon());
+				} else {
+					imgIcon.setImageDrawable(null);
 				}
 			}
 		});
@@ -66,9 +69,7 @@ public class EditScenarioDialogFragment extends BaseDialogFragment {
 		mSelectColorDialog.setOnCloseListener(new SelectColorDialogFragment.OnCloseListener() {
 			@Override
 			public void onClose() {
-				if (mSelectColorDialog.getColor() != -1) {
-			        btColor.setBackgroundColor(mSelectColorDialog.getColor());
-				}
+		        btColor.setBackgroundColor(mSelectColorDialog.getColor() != -1 ? mSelectColorDialog.getColor() : Color.TRANSPARENT);
 			}
 		});
 //    	Bundle args = new Bundle();
@@ -114,12 +115,8 @@ public class EditScenarioDialogFragment extends BaseDialogFragment {
 	
 	@Override
 	protected void onSave() {
-    	if (mSelectIconDialog.getIcon() != -1) {
-    		mScenario.setIcon(mSelectIconDialog.getIcon());
-    	}
-    	if (mSelectColorDialog.getColor() != -1) {
-    		mScenario.setColor(mSelectColorDialog.getColor());
-    	}
+		mScenario.setIcon(mSelectIconDialog.getIcon());
+		mScenario.setColor(mSelectColorDialog.getColor());
     	mScenario.commit();
 	}
 
