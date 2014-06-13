@@ -56,7 +56,6 @@ public class ScenarioTemperature extends ScenarioBase {
 	@Override
 	public void commit() {
 		// TODO Auto-generated method stub
-		
 	}
 
 }

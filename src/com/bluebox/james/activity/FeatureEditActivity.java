@@ -20,6 +20,7 @@ import com.bluebox.james.dialog.BaseDialogFragment.OnCloseListener;
 import com.bluebox.james.dialog.EditScenarioDialogFragment;
 import com.bluebox.james.dialog.NewScenarioDialogFragment;
 import com.bluebox.james.dialog.SelectColorDialogFragment;
+import com.bluebox.james.dialog.SelectIconDialogFragment;
 import com.bluebox.james.model.FeatureModel;
 import com.bluebox.james.model.RoomModel;
 import com.bluebox.james.model.ScenarioOptionModel;
@@ -34,6 +35,7 @@ public class FeatureEditActivity extends FragmentActivity {
 	private View btScenario;
 	private ListView listAction;
 	private ScenarioAdapter actionsAdapter;
+	private SelectIconDialogFragment mSelectIconDialog;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +70,28 @@ public class FeatureEditActivity extends FragmentActivity {
 //				colorAnimation.start();
 //			}
 //		};
+        
+        // "select icon" dialog
+		mSelectIconDialog = new SelectIconDialogFragment();
+		mSelectIconDialog.setOnCloseListener(new SelectIconDialogFragment.OnCloseListener() {
+			@Override
+			public void onClose() {
+				if (mSelectIconDialog.hasBeenActivated()) {
+					mFeature.setIcon(mSelectIconDialog.getIcon());
+			        //imgIcon.setImageResource(mSelectIconDialog.getIcon());
+				} else {
+					//imgIcon.setImageDrawable(null);
+				}
+			}
+		});
+        View btIcon = findViewById(R.id.bt_icon);
+        btIcon.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				mSelectIconDialog.show(getFragmentManager().beginTransaction(), "dialog");
+			}
+		});
+
         
         btSwitch = findViewById(R.id.bt_type_switch);
         btTemp = findViewById(R.id.bt_type_temp);

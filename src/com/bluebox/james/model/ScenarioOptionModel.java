@@ -12,7 +12,7 @@ public class ScenarioOptionModel extends DBModel {
 	private Map<DeviceBaseModel, Integer>	mDevices;
 	private String 							mLabel;
 	public int 								mIcon;
-	private int 							mColor = -1;
+	private int 							mColor;
 	private FeatureModel 					mFeature;
 	private OnClickListener 				mOnClickListener;
 	private DeviceBaseModel 				mDevice;

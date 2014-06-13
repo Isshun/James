@@ -57,9 +57,6 @@ public class EditScenarioDialogFragment extends BaseDialogFragment {
 				}
 			}
 		});
-    	Bundle args = new Bundle();
-        args.putLong(Application.ARG_SCENARIO_POS, optionIndex);
-        mSelectIconDialog.setArguments(args);
         view.findViewById(R.id.bt_icon).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {

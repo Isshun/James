@@ -96,6 +96,12 @@
                     android:background="#4dcab9" />
             </LinearLayout>
 
+            <Button
+                android:id="@+id/bt_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Set icon" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >

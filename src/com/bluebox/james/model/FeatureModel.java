@@ -164,4 +164,8 @@ public class FeatureModel extends DBModel {
 	public void setScenario(ScenarioBase scenario) {
 		mScenario = scenario;
 	}
+
+	public void setIcon(int icon) {
+		mIcon = icon;
+	}
 }
