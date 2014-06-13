@@ -14,5 +14,9 @@ public class ScenarioCustom extends ScenarioBase {
 	public void commit() {
 		DBHelper.getInstance().updateScenario(this);
 	}
+	
+	public ScenarioCustom asCustom() {
+		return (ScenarioCustom)this;
+	}
 
 }

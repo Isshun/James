@@ -58,4 +58,8 @@ public class ScenarioTemperature extends ScenarioBase {
 		// TODO Auto-generated method stub
 	}
 
+	public ScenarioTemperature asTemperature() {
+		return (ScenarioTemperature)this;
+	}
+
 }

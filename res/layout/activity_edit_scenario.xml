@@ -11,45 +11,90 @@
         android:layout_weight="1" >
 
         <LinearLayout
+            android:id="@+id/dialog"
             android:layout_width="match_parent"
             android:layout_height="0dip"
+            android:layout_marginBottom="@dimen/dialog_padding"
             android:orientation="vertical" >
 
-            <EditText
-                android:id="@+id/edit_scenario_name"
+            <FrameLayout
+                android:id="@+id/frame_preview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Name" />
+                android:layout_height="75dp"
+                android:layout_margin="@dimen/dialog_padding" >
+
+                <EditText
+                    android:id="@+id/edit_scenario_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Name"
+                    android:textColor="#fff"
+                    android:textColorLink="@android:color/transparent"
+                    android:textSize="42sp" />
+
+                <ImageView
+                    android:id="@+id/img_icon"
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right|bottom"
+                    android:src="@drawable/ic_unk" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:layout_marginLeft="@dimen/dialog_padding"
+                android:layout_marginRight="@dimen/dialog_padding" >
+
+                <Button
+                    android:id="@+id/bt_icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_feature_type"
+                    android:text="Change icon" />
+
+                <View
+                    android:layout_width="@dimen/dialog_padding"
+                    android:layout_height="match_parent" />
+
+                <Button
+                    android:id="@+id/bt_color"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_feature_type"
+                    android:text="Change color" />
+            </LinearLayout>
 
             <View
-                android:id="@+id/bt_color"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_margin="5dp"
-                android:background="#846" />
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginTop="@dimen/dialog_padding"
+                android:background="#ddd" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/dialog_padding"
+                android:text="On action"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
 
-                <Button
-                    android:id="@+id/bt_icon"
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/TextView02"
+                    android:layout_width="170dp"
                     android:layout_height="wrap_content"
-                    android:text="Icon" />
-
-                <ImageView
-                    android:id="@+id/img_icon"
-                    android:layout_width="42dp"
-                    android:layout_height="42dp"
-                    android:layout_gravity="right|center_vertical"
-                    android:src="@drawable/ic_unk" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="42dp" >
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/dialog_padding"
+                    android:text="Do"
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/TextView01"
@@ -57,100 +102,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="5dp"
-                    android:text="Device"
+                    android:text="On"
                     android:textSize="18sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="42dp"
-                android:layout_margin="5dp" >
-
-                <EditText
-                    android:id="@+id/edit_device_1_id"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="ID" />
-
-                <EditText
-                    android:id="@+id/edit_device_1_value"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="Value"
-                    android:inputType="number" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="42dp"
-                android:layout_margin="5dp" >
-
-                <EditText
-                    android:id="@+id/edit_device_2_id"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="ID" />
-
-                <EditText
-                    android:id="@+id/edit_device_2_value"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="Value"
-                    android:inputType="number" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="42dp"
-                android:layout_margin="5dp" >
-
-                <EditText
-                    android:id="@+id/edit_device_3_id"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="ID" />
-
-                <EditText
-                    android:id="@+id/edit_device_3_value"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="Value"
-                    android:inputType="number" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="42dp"
-                android:layout_margin="5dp" >
-
-                <EditText
-                    android:id="@+id/edit_device_4_id"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="ID" />
-
-                <EditText
-                    android:id="@+id/edit_device_4_value"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="Value"
-                    android:inputType="number" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

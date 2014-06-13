@@ -68,7 +68,18 @@ public abstract class ScenarioBase {
 
 	public abstract void commit();
 
+	// TODO: remove
 	public ScenarioSwitch asSwitch() {
+		return null;
+	}
+
+	// TODO: remove
+	public ScenarioCustom asCustom() {
+		return null;
+	}
+
+	// TODO: remove
+	public ScenarioTemperature asTemperature() {
 		return null;
 	}
 }

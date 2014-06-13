@@ -27,7 +27,9 @@ import com.bluebox.james.dialog.SelectIconDialogFragment;
 import com.bluebox.james.model.FeatureModel;
 import com.bluebox.james.model.RoomModel;
 import com.bluebox.james.model.ScenarioOptionModel;
+import com.bluebox.james.model.scenario.ScenarioCustom;
 import com.bluebox.james.model.scenario.ScenarioSwitch;
+import com.bluebox.james.model.scenario.ScenarioTemperature;
 import com.bluebox.james.service.DoomService;
 
 public class FeatureEditActivity extends FragmentActivity {
@@ -97,10 +99,8 @@ public class FeatureEditActivity extends FragmentActivity {
 			}
 		});
 
-        
+        // Button switch
         btSwitch = findViewById(R.id.bt_type_switch);
-        btTemp = findViewById(R.id.bt_type_temp);
-        btScenario = findViewById(R.id.bt_type_scenario);
         btSwitch.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
@@ -108,6 +108,9 @@ public class FeatureEditActivity extends FragmentActivity {
 				refresh();
 			}
 		});
+        
+        // Button temperature
+        btTemp = findViewById(R.id.bt_type_temp);
         btTemp.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
@@ -115,6 +118,9 @@ public class FeatureEditActivity extends FragmentActivity {
 				refresh();
 			}
 		});
+
+        // Button custom scenario
+        btScenario = findViewById(R.id.bt_type_scenario);
         btScenario.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
@@ -131,18 +137,6 @@ public class FeatureEditActivity extends FragmentActivity {
         TextView lbFeature = (TextView)findViewById(R.id.lb_feature);
         lbFeature.setText(mFeature.getTypeName());
 
-        switch (mFeature.getType()) {
-		case FeatureModel.SCENE_SWITCH:
-			createSwitchOptions(mFeature.getCurrentScenario().asSwitch(), LayoutInflater.from(this).inflate(R.layout.view_feature_switch_options, null));
-			break;
-		case FeatureModel.SCENE_SCENARIO:
-			createScenarioOptions(LayoutInflater.from(this).inflate(R.layout.view_feature_custom_options, null));
-			break;
-		case FeatureModel.SCENE_TEMPERATURE:
-			createSwitchOptions(null, LayoutInflater.from(this).inflate(R.layout.view_feature_temperature_options, null));
-			break;
-		}
-        
         // Action on "select color" button
 		findViewById(R.id.bt_scene_color).setBackgroundColor(mFeature.getColor());
         findViewById(R.id.bt_scene_color).setOnClickListener(new OnClickListener() {
@@ -168,7 +162,33 @@ public class FeatureEditActivity extends FragmentActivity {
         refresh();
     }
 
-	private void createScenarioOptions(View view) {
+	private void createFromType(int type) {
+        switch (type) {
+		case FeatureModel.SCENE_SWITCH:
+			createSwitchOptions(mFeature.getCurrentScenario().asSwitch(), LayoutInflater.from(this).inflate(R.layout.view_feature_switch_options, null));
+			break;
+		case FeatureModel.SCENE_SCENARIO:
+			createScenarioOptions(mFeature.getCurrentScenario().asCustom(), LayoutInflater.from(this).inflate(R.layout.view_feature_custom_options, null));
+			break;
+		case FeatureModel.SCENE_TEMPERATURE:
+			createTemperatureOptions(mFeature.getCurrentScenario().asTemperature(), LayoutInflater.from(this).inflate(R.layout.view_feature_temperature_options, null));
+			break;
+		}
+	}
+
+	private void createTemperatureOptions(final ScenarioTemperature scenario, View view) {
+        mFrameOptions = (ViewGroup)findViewById(R.id.frame_options);
+        mFrameOptions.removeAllViews();
+        mFrameOptions.addView(view);
+
+        if (scenario.getCurrent().getDevice() != null) {
+            ((TextView)view.findViewById(R.id.lb_temperature)).setText(scenario.getCurrent().getDevice().getValue() + "°");
+        } else {
+            ((TextView)view.findViewById(R.id.lb_temperature)).setText("No sensor");
+        }
+	}
+
+	private void createScenarioOptions(final ScenarioCustom scenario, View view) {
         mFrameOptions = (ViewGroup)findViewById(R.id.frame_options);
         mFrameOptions.removeAllViews();
         mFrameOptions.addView(view);
@@ -259,6 +279,8 @@ public class FeatureEditActivity extends FragmentActivity {
         btScenario.setBackgroundResource(mFeature.isType(FeatureModel.SCENE_SCENARIO) ? R.drawable.button_selected : R.drawable.button_resting);
         btTemp.setBackgroundResource(mFeature.isType(FeatureModel.SCENE_TEMPERATURE) ? R.drawable.button_selected : R.drawable.button_resting);
         
+        createFromType(mFeature.getType());
+
         if (actionsAdapter != null) {
             actionsAdapter.notifyDataSetChanged();
         }

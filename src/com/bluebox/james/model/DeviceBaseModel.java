@@ -26,4 +26,8 @@ public abstract class DeviceBaseModel extends DBModel {
 		return mDeviceId;
 	}
 
+	public double getValue() {
+		return 23.5;
+	}
+
 }
