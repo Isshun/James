@@ -1,6 +1,7 @@
 package com.bluebox.james.service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -204,6 +205,10 @@ public class DoomService {
 	// TODO: dirty
 	public List<RoomModel> getRooms() {
 		return new ArrayList<RoomModel>(mRooms.values());
+	}
+
+	public List<DeviceBaseModel> getDevices() {
+		return new ArrayList<DeviceBaseModel>(mSwitchs.values());
 	}
 
 }

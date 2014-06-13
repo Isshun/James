@@ -3,6 +3,8 @@ package com.bluebox.james.model.scenario;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.view.View;
+
 import com.bluebox.james.model.FeatureModel;
 import com.bluebox.james.model.ScenarioOptionModel;
 
@@ -65,4 +67,8 @@ public abstract class ScenarioBase {
 	}
 
 	public abstract void commit();
+
+	public ScenarioSwitch asSwitch() {
+		return null;
+	}
 }

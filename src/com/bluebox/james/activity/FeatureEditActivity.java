@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -23,10 +22,12 @@ import com.bluebox.james.dialog.BaseDialogFragment.OnCloseListener;
 import com.bluebox.james.dialog.EditScenarioDialogFragment;
 import com.bluebox.james.dialog.NewScenarioDialogFragment;
 import com.bluebox.james.dialog.SelectColorDialogFragment;
+import com.bluebox.james.dialog.SelectDeviceDialogFragment;
 import com.bluebox.james.dialog.SelectIconDialogFragment;
 import com.bluebox.james.model.FeatureModel;
 import com.bluebox.james.model.RoomModel;
 import com.bluebox.james.model.ScenarioOptionModel;
+import com.bluebox.james.model.scenario.ScenarioSwitch;
 import com.bluebox.james.service.DoomService;
 
 public class FeatureEditActivity extends FragmentActivity {
@@ -132,13 +133,13 @@ public class FeatureEditActivity extends FragmentActivity {
 
         switch (mFeature.getType()) {
 		case FeatureModel.SCENE_SWITCH:
-			createOptions(LayoutInflater.from(this).inflate(R.layout.view_feature_switch_options, null));
+			createSwitchOptions(mFeature.getCurrentScenario().asSwitch(), LayoutInflater.from(this).inflate(R.layout.view_feature_switch_options, null));
 			break;
 		case FeatureModel.SCENE_SCENARIO:
 			createScenarioOptions(LayoutInflater.from(this).inflate(R.layout.view_feature_custom_options, null));
 			break;
 		case FeatureModel.SCENE_TEMPERATURE:
-			createOptions(LayoutInflater.from(this).inflate(R.layout.view_feature_temperature_options, null));
+			createSwitchOptions(null, LayoutInflater.from(this).inflate(R.layout.view_feature_temperature_options, null));
 			break;
 		}
         
@@ -172,6 +173,59 @@ public class FeatureEditActivity extends FragmentActivity {
         mFrameOptions.removeAllViews();
         mFrameOptions.addView(view);
 
+        // Action on "add actions" button
+        findViewById(R.id.bt_new_scenario).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				NewScenarioDialogFragment f = new NewScenarioDialogFragment();
+				f.setOnCloseListener(new NewScenarioDialogFragment.OnCloseListener() {
+					@Override
+					public void onClose() {
+						actionsAdapter.notifyDataSetChanged();
+					}
+				});
+		    	Bundle args = new Bundle();
+		        args.putLong(Application.ARG_FEATURE_ID, mFeature.getId());
+		        f.setArguments(args);
+		        f.show(getFragmentManager().beginTransaction(), "dialog");
+			}
+		});
+
+        createListActions(view);
+	}
+
+	private void createSwitchOptions(final ScenarioSwitch scenario, View view) {
+        mFrameOptions = (ViewGroup)findViewById(R.id.frame_options);
+        mFrameOptions.removeAllViews();
+        mFrameOptions.addView(view);
+
+        View btDevice = findViewById(R.id.bt_device);
+        btDevice.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				final SelectDeviceDialogFragment f = new SelectDeviceDialogFragment();
+		        f.show(getFragmentManager().beginTransaction(), "dialog");
+		        f.setOnCloseListener(new OnCloseListener() {
+					@Override
+					public void onClose() {
+						if (f.hasBeenActivated()) {
+							scenario.setDevice(f.getDevice());
+							mFeature.commit();
+						}
+					}
+				});
+			}
+		});
+
+        createListActions(view);
+	}
+
+	/**
+	 * List all options for scenario, used by switch and custom scenario feature
+	 * 
+	 * @param view
+	 */
+	private void createListActions(View view) {
         // "Actions" ListView
         listAction = (ListView)view.findViewById(R.id.list_action);
         actionsAdapter = new ScenarioAdapter(mFeature);
@@ -196,49 +250,6 @@ public class FeatureEditActivity extends FragmentActivity {
 				args.putInt(Application.ARG_SCENARIO_POS, pos);
 		        f.setArguments(args);
 		        f.show(getFragmentManager().beginTransaction(), "dialog");
-			}
-		});
-        
-        // Action on "add actions" button
-        findViewById(R.id.bt_new_scenario).setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				NewScenarioDialogFragment f = new NewScenarioDialogFragment();
-				f.setOnCloseListener(new NewScenarioDialogFragment.OnCloseListener() {
-					@Override
-					public void onClose() {
-						actionsAdapter.notifyDataSetChanged();
-					}
-				});
-		    	Bundle args = new Bundle();
-		        args.putLong(Application.ARG_FEATURE_ID, mFeature.getId());
-		        f.setArguments(args);
-		        f.show(getFragmentManager().beginTransaction(), "dialog");
-			}
-		});
-	}
-
-	private void createOptions(View view) {
-        mFrameOptions = (ViewGroup)findViewById(R.id.frame_options);
-        mFrameOptions.removeAllViews();
-        mFrameOptions.addView(view);
-
-        View btDevice = findViewById(R.id.bt_device);
-        btDevice.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				final SelectColorDialogFragment f = new SelectColorDialogFragment();
-		        f.show(getFragmentManager().beginTransaction(), "dialog");
-		        f.setOnCloseListener(new OnCloseListener() {
-					@Override
-					public void onClose() {
-						if (f.getColor() != -1) {
-							findViewById(R.id.bt_scene_color).setBackgroundColor(f.getColor());
-							mFeature.setColor(f.getColor());
-							mFeature.commit();
-						}
-					}
-				});
 			}
 		});
 	}

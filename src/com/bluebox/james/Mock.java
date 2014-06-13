@@ -68,7 +68,7 @@ public class Mock {
 						
 			FeatureModel ampli = DoomService.getInstance().createFeature(FeatureModel.SCENE_SWITCH, "Ampli", R.drawable.bg_temp, Color.RED);
 			DoomService.getInstance().addFeatureToRoom(salon, ampli);
-			DeviceBaseModel eAmpli = DoomService.getInstance().createDevice("Light desk", 19);
+			DeviceBaseModel eAmpli = DoomService.getInstance().createDevice("ampli", 19);
 			ScenarioBase ampliA1 = DoomService.getInstance().createScenarioSwitch(ampli, eAmpli);
 			//ampliA1.setColor(Color.rgb(234, 188, 48));
 //			DoomService.getInstance().addDeviceToScenario(ampliA1, eAmpli, 0);

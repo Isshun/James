@@ -29,4 +29,10 @@
             android:text="Set device" />
     </LinearLayout>
 
-</LinearLayout>
+    <ListView
+        android:id="@+id/list_action"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none" >
+    </ListView>
+</LinearLayout>

@@ -168,4 +168,8 @@ public class FeatureModel extends DBModel {
 	public void setIcon(int icon) {
 		mIcon = icon;
 	}
+
+	public ScenarioBase getCurrentScenario() {
+		return mScenario;
+	}
 }

@@ -3,10 +3,12 @@ package com.bluebox.james.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.view.View;
 import android.view.View.OnClickListener;
 
 import com.bluebox.james.DBHelper;
 import com.bluebox.james.model.scenario.ScenarioBase;
+import com.bluebox.james.model.scenario.ScenarioSwitch;
 
 public class ScenarioOptionModel extends DBModel {
 	private Map<DeviceBaseModel, Integer>	mDevices;

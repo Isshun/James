@@ -12,9 +12,9 @@ public class ScenarioSwitch extends ScenarioBase {
 
 	public ScenarioSwitch(FeatureModel feature, DeviceBaseModel device) {
 		super(feature);
-		
+
 		mDevice = device;
-		
+
 		mOn = new ScenarioOptionModel(this, device, 0, "On", -1, -1);
 		mOn.setFeature(feature);
 		mOn.addDevice(device, 100);
@@ -38,12 +38,17 @@ public class ScenarioSwitch extends ScenarioBase {
 	public void commit() {
 		DBHelper.getInstance().updateScenario(this);
 	}
-	
+
 	public DeviceBaseModel getDevice() {
 		return mDevice;
 	}
 
 	public void setDevice(DeviceBaseModel device) {
 		mDevice = device;
+	}
+
+	@Override
+	public ScenarioSwitch asSwitch() {
+		return (ScenarioSwitch)this;
 	}
 }
