@@ -25,6 +25,7 @@ public class SelectColorDialogFragment extends BaseDialogFragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
 				mColor = (Integer)adapter.getItem(pos);
+				mHasBeenActivated = true;
 				save();
 			}
 		});

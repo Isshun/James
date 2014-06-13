@@ -12,7 +12,7 @@ import android.widget.EditText;
 
 import com.bluebox.james.Application;
 import com.bluebox.james.R;
-import com.bluebox.james.model.FeatureBaseModel;
+import com.bluebox.james.model.FeatureModel;
 import com.bluebox.james.model.RoomModel;
 import com.bluebox.james.service.DoomService;
 
@@ -42,7 +42,7 @@ public class NewFeatureDialogFragment extends DialogFragment {
                 .setPositiveButton("Create",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
-                        	FeatureBaseModel feature = DoomService.getInstance().createFeature(FeatureBaseModel.SCENE_SCENARIO, editActionName.getText().toString(), R.drawable.ic_alarm, Color.GRAY);
+                        	FeatureModel feature = DoomService.getInstance().createFeature(FeatureModel.SCENE_SCENARIO, editActionName.getText().toString(), R.drawable.ic_alarm, Color.GRAY);
                         	DoomService.getInstance().addFeatureToRoom(room, feature);
                         	mOnCloseListener.onClose();
                         }

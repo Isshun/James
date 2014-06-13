@@ -4,9 +4,10 @@ import android.graphics.Color;
 import android.util.Log;
 
 import com.bluebox.james.model.DeviceBaseModel;
-import com.bluebox.james.model.FeatureBaseModel;
+import com.bluebox.james.model.FeatureModel;
 import com.bluebox.james.model.RoomModel;
 import com.bluebox.james.model.ScenarioModel;
+import com.bluebox.james.model.scenario.ScenarioBase;
 import com.bluebox.james.service.DoomService;
 
 public class Mock {
@@ -40,7 +41,7 @@ public class Mock {
 
 			RoomModel salon = DoomService.getInstance().createRoom("Living Room", R.drawable.bg_living);
 
-			FeatureBaseModel ftLight = DoomService.getInstance().createFeature(FeatureBaseModel.SCENE_SCENARIO, "Light", R.drawable.bg_light, Color.RED);
+			FeatureModel ftLight = DoomService.getInstance().createFeature(FeatureModel.SCENE_SCENARIO, "Light", R.drawable.bg_light, Color.RED);
 			DoomService.getInstance().addFeatureToRoom(salon, ftLight);
 			
 			ScenarioModel scn1 = DoomService.getInstance().createScenario("Bright", R.drawable.ic_light_on);
@@ -65,18 +66,18 @@ public class Mock {
 			DoomService.getInstance().addScenarioToFeature(ftLight, scn3);
 
 						
-			FeatureBaseModel ampli = DoomService.getInstance().createFeature(FeatureBaseModel.SCENE_SWITCH, "Ampli", R.drawable.bg_switch, Color.RED);
+			FeatureModel ampli = DoomService.getInstance().createFeature(FeatureModel.SCENE_SWITCH, "Ampli", R.drawable.bg_switch, Color.RED);
 			DoomService.getInstance().addFeatureToRoom(salon, ampli);
 			DeviceBaseModel eAmpli = DoomService.getInstance().createDevice("Light desk", 19);
-			ScenarioModel ampliA1 = DoomService.getInstance().createScenario("Off", R.drawable.bg_switch);
-			ampliA1.setColor(Color.rgb(234, 188, 48));
-			DoomService.getInstance().addDeviceToScenario(ampliA1, eAmpli, 0);
-			DoomService.getInstance().addScenarioToFeature(ampli, ampliA1);
+			ScenarioBase ampliA1 = DoomService.getInstance().createScenarioSwitch(ampli, eAmpli);
+			//ampliA1.setColor(Color.rgb(234, 188, 48));
+//			DoomService.getInstance().addDeviceToScenario(ampliA1, eAmpli, 0);
+			//DoomService.getInstance().addScenarioToFeature(ampli, ampliA1);
 
-			ScenarioModel ampliA2 = DoomService.getInstance().createScenario("On", R.drawable.bg_switch);
-			ampliA2.setColor(Color.rgb(234, 188, 48));
-			DoomService.getInstance().addDeviceToScenario(ampliA2, eAmpli, 100);
-			DoomService.getInstance().addScenarioToFeature(ampli, ampliA2);
+//			ScenarioModel ampliA2 = DoomService.getInstance().createScenario("On", R.drawable.bg_switch);
+//			ampliA2.setColor(Color.rgb(234, 188, 48));
+//			DoomService.getInstance().addDeviceToScenario(ampliA2, eAmpli, 100);
+//			DoomService.getInstance().addScenarioToFeature(ampli, ampliA2);
 		}
 
 //			{

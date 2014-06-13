@@ -9,16 +9,18 @@ import com.bluebox.james.DBHelper;
 
 public class ScenarioModel extends DBModel {
 	private Map<DeviceBaseModel, Integer>	mDevices;
-	private String 							mName;
+	private String 							mLabel;
 	public int 								mIcon;
 	private int 							mColor = -1;
-	private FeatureBaseModel 				mFeature;
+	private FeatureModel 					mFeature;
 	private OnClickListener 				mOnClickListener;
+	private DeviceBaseModel mDevice;
 	
-	public ScenarioModel(long id, String name, int icon, int color) {
+	public ScenarioModel(DeviceBaseModel device, long id, String label, int icon, int color) {
 		mDbId = id;
-		mName = name;
+		mLabel = label;
 		mIcon = icon;
+		mDevice = device;
 		mColor = color;//Color.rgb(64, 138, 191);
 		mDevices = new HashMap<DeviceBaseModel, Integer>();
 	}
@@ -41,8 +43,8 @@ public class ScenarioModel extends DBModel {
 		return mDevices;
 	}
 
-	public String getName() {
-		return mName;
+	public String getLabel() {
+		return mLabel;
 	}
 
 	public int getColor() {
@@ -61,7 +63,7 @@ public class ScenarioModel extends DBModel {
 		DBHelper.getInstance().updateScenario(this);
 	}
 
-	public void setFeature(FeatureBaseModel feature) {
+	public void setFeature(FeatureModel feature) {
 		mFeature = feature;
 	}
 
@@ -71,5 +73,13 @@ public class ScenarioModel extends DBModel {
 
 	public void setOnClickListener(OnClickListener onClickListener) {
 		mOnClickListener = onClickListener;		
+	}
+
+	public DeviceBaseModel getDevice() {
+		return mDevice;
+	}
+
+	public void setLabel(String label) {
+		mLabel = label;
 	}
 }

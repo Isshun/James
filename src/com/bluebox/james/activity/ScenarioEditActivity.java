@@ -7,7 +7,7 @@ import android.widget.EditText;
 import com.bluebox.james.R;
 import com.bluebox.james.Utils;
 import com.bluebox.james.model.DeviceBaseModel;
-import com.bluebox.james.model.FeatureBaseModel;
+import com.bluebox.james.model.FeatureModel;
 import com.bluebox.james.model.RoomModel;
 import com.bluebox.james.model.ScenarioModel;
 import com.bluebox.james.service.DoomService;
@@ -15,7 +15,7 @@ import com.bluebox.james.service.DoomService;
 public class ScenarioEditActivity extends FragmentActivity {
 
     private RoomModel 	mRoom;
-    private FeatureBaseModel 	mScene;
+    private FeatureModel 	mScene;
     
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +34,7 @@ public class ScenarioEditActivity extends FragmentActivity {
 
         Bundle bundle = getIntent().getExtras();
         RoomModel room = DoomService.getInstance().getRoom(bundle.getLong("room_id"));
-        FeatureBaseModel scene = DoomService.getInstance().getFeature(bundle.getLong("scene_id"));
+        FeatureModel scene = DoomService.getInstance().getFeature(bundle.getLong("scene_id"));
         ScenarioModel action = DoomService.getInstance().getScenario(bundle.getLong("action_id"));
 
         int i = 0;

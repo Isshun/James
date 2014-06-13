@@ -1,11 +1,14 @@
 package com.bluebox.james.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.bluebox.james.DBHelper;
+import com.bluebox.james.model.scenario.ScenarioBase;
+import com.bluebox.james.model.scenario.ScenarioCustom;
+import com.bluebox.james.model.scenario.ScenarioSwitch;
+import com.bluebox.james.model.scenario.ScenarioTemperature;
 
-public class FeatureBaseModel extends DBModel {
+public class FeatureModel extends DBModel {
 	
 	public final static int	SCENE_UNKNOW = 0;
 	public final static int	SCENE_SCENARIO = 1;
@@ -16,25 +19,39 @@ public class FeatureBaseModel extends DBModel {
 	
 	public String 					mName;
 	public List<DeviceBaseModel>	mEquipments;
-	protected List<ScenarioModel> 	mScenarios;
-	protected ScenarioModel 		mScenario;
 	protected boolean 				mOn;
 	private int 					mType;
 	private int 					mIcon;
 	private int 					mColor;
-	private List<ScenarioModel> 	mCustomScenarios;
+	private ScenarioBase			mScenario;
+	private ScenarioBase			mCustomScenario;
+	private DeviceBaseModel mDevice;
 	
-	public FeatureBaseModel(int type, long id, String name, int icon, int color) {
+	public FeatureModel(int type, long id, String name, int icon, int color) {
 		mDbId = id;
 		mType = type;
 		mName = name;
 		mIcon = icon;
 		mColor = color;
-		mScenarios = new ArrayList<ScenarioModel>();
-		mCustomScenarios = new ArrayList<ScenarioModel>();
+		
+		// TODO
+		switch (type) {
+		case SCENE_SCENARIO:
+			mScenario = new ScenarioCustom(this);
+			mCustomScenario = mScenario;
+			break;
+		case SCENE_SWITCH:
+			mScenario = new ScenarioSwitch(this, null);
+			mCustomScenario = new ScenarioCustom(this);
+			break;
+		case SCENE_TEMPERATURE:
+			mScenario = new ScenarioTemperature(this);
+			mCustomScenario = new ScenarioCustom(this);
+			break;
+		}
 	}
 	
-	public FeatureBaseModel(String name) {
+	public FeatureModel(String name) {
 		mType = SCENE_UNKNOW;
 		mName = name;
 	}
@@ -58,7 +75,7 @@ public class FeatureBaseModel extends DBModel {
 	}
 	
 	public List<ScenarioModel> getScenarios() {
-		return mScenarios;
+		return mScenario.getOptions();
 	}
 	
 	public List<DeviceBaseModel> getEquipments() {
@@ -66,15 +83,7 @@ public class FeatureBaseModel extends DBModel {
 	}
 
 	public ScenarioModel nextScenario() {
-		if (mScenarios.size() == 0) {
-			return null;
-		}
-		
-		// Set next scenario
-		int index = (mScenarios.indexOf(mScenario) + 1) % mScenarios.size();
-		setScenario(mScenarios.get(index));
-		mOn = index == 0;
-		return mScenario;
+		return mScenario.next();
 	}
 	
 	public boolean isOn() {
@@ -82,15 +91,12 @@ public class FeatureBaseModel extends DBModel {
 	}
 
 	public void addScenario(ScenarioModel scenario) {
-		if (mScenarios.size() == 0) {
-			mScenario = scenario;
-		}
-		mScenarios.add(scenario);
+		mScenario.add(scenario);
 		scenario.setFeature(this);
 	}
 
 	public ScenarioModel getScenario() {
-		return mScenario;
+		return mScenario.getCurrent();
 	}
 
 	public int getIcon() {
@@ -101,25 +107,20 @@ public class FeatureBaseModel extends DBModel {
 		return mColor;
 	}
 
-	public FeatureBaseModel setType(int type) {
+	public FeatureModel setType(int type) {
 		if (mType == type) {
 			return this;
 		}
 		
-		mScenarios.clear();
 		switch (type) {
-		case FeatureBaseModel.SCENE_SWITCH:
-			addScenario(new ScenarioModel(-1, "On", -1, -1));
-			addScenario(new ScenarioModel(-1, "Off", -1, -1));
+		case FeatureModel.SCENE_SWITCH:
+			mScenario = new ScenarioSwitch(this, null);
 			break;
-		case FeatureBaseModel.SCENE_SCENARIO:
-			for (ScenarioModel scenario: mCustomScenarios) {
-				addScenario(scenario);
-			}
+		case FeatureModel.SCENE_SCENARIO:
+			mScenario = mCustomScenario;
 			break;
-		case FeatureBaseModel.SCENE_TEMPERATURE:
-			addScenario(new ScenarioModel(-1, "Decrease", -1, -1));
-			addScenario(new ScenarioModel(-1, "Increase", -1, -1));
+		case FeatureModel.SCENE_TEMPERATURE:
+			mScenario = new ScenarioTemperature(this);
 			break;
 		}
 			
@@ -128,6 +129,9 @@ public class FeatureBaseModel extends DBModel {
 	}
 
 	public void commit() {
+		if (mScenario != null) {
+			mScenario.commit();
+		}
 		DBHelper.getInstance().updateFeature(this);
 	}
 
@@ -135,26 +139,28 @@ public class FeatureBaseModel extends DBModel {
 		mColor = color;
 	}
 
-	public void setScenario(ScenarioModel scenario) {
-		mScenario = scenario;
-	}
-
 	public boolean isType(int type) {
 		return mType == type;
 	}
 	
 	public boolean isToggleButtons() {
-		return true;
+		return mType == SCENE_TEMPERATURE ? false : true;
 	}
 
 	public String getFormattedValue() {
-		return null;
+		return mScenario.getFormatterValue();
 	}
 
 	public void addCustomScenario(ScenarioModel scenario) {
-		mCustomScenarios.add(scenario);
-		if (mType == SCENE_SCENARIO) {
-			addScenario(scenario);
-		}
+		mCustomScenario.add(scenario);
+		scenario.setFeature(this);
+	}
+
+	public void setScenario(ScenarioModel scenario) {
+		mScenario.setCurrentOption(scenario);
+	}
+
+	public void setScenario(ScenarioBase scenario) {
+		mScenario = scenario;
 	}
 }

@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import com.bluebox.james.Application;
 import com.bluebox.james.R;
 import com.bluebox.james.model.DeviceBaseModel;
+import com.bluebox.james.model.FeatureModel;
 import com.bluebox.james.model.ScenarioModel;
 import com.bluebox.james.service.DoomService;
 
@@ -19,20 +20,28 @@ public class EditScenarioDialogFragment extends BaseDialogFragment {
 	private SelectIconDialogFragment 	mSelectIconDialog;
 	private SelectColorDialogFragment 	mSelectColorDialog;
 	private ScenarioModel 				mScenario;
+	private FeatureModel 				mFeature;
+	private EditText mEditScenarioName;
 
     @Override
 	protected void onCreateDialog() {
     	final View view = LayoutInflater.from(getActivity()).inflate(R.layout.activity_edit_scenario, null, false);
-        mScenario = DoomService.getInstance().getScenario(getArguments().getLong(Application.ARG_SCENARIO_ID));
-
+        mFeature = DoomService.getInstance().getFeature(getArguments().getLong(Application.ARG_FEATURE_ID));
+        
+        if (mFeature.isType(FeatureModel.SCENE_SCENARIO)) {
+            mScenario = DoomService.getInstance().getScenario(getArguments().getLong(Application.ARG_SCENARIO_ID));
+        } else {
+        	mScenario = mFeature.getScenarios().get((int)getArguments().getLong(Application.ARG_SCENARIO_ID));
+        }
+        		
         // Cutomize dialog
         setTitle(R.string.edit_scenario);
         setView(view);
 		setNegativeButton(R.string.bt_dialog_cancel);
 		setPositiveButton(R.string.bt_dialog_save);
         
-        EditText editScenarioName = (EditText)view.findViewById(R.id.edit_scenario_name);
-        editScenarioName.setText(mScenario.getName());
+        mEditScenarioName = (EditText)view.findViewById(R.id.edit_scenario_name);
+        mEditScenarioName.setText(mScenario.getLabel());
         
         // "icon" image
         final ImageView imgIcon = (ImageView)view.findViewById(R.id.img_icon);
@@ -117,8 +126,19 @@ public class EditScenarioDialogFragment extends BaseDialogFragment {
 	
 	@Override
 	protected void onSave() {
-		mScenario.setIcon(mSelectIconDialog.getIcon());
-		mScenario.setColor(mSelectColorDialog.getColor());
+		// Set label
+		mScenario.setLabel(mEditScenarioName.getText().toString());
+		
+		// Set icon
+		if (mSelectIconDialog.hasBeenActivated()) {
+			mScenario.setIcon(mSelectIconDialog.getIcon());
+		}
+		
+		// Set color
+		if (mSelectColorDialog.hasBeenActivated()) {
+			mScenario.setColor(mSelectColorDialog.getColor());
+		}
+		
     	mScenario.commit();
 	}
 

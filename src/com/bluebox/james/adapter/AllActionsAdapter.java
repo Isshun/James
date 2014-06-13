@@ -41,7 +41,7 @@ public class AllActionsAdapter extends BaseAdapter  {
 		ScenarioModel action = DoomService.getInstance().getAllActions().get(pos);
 		
 		TextView lbScene = (TextView)view.findViewById(R.id.lb_scene);
-		lbScene.setText(action.getName());
+		lbScene.setText(action.getLabel());
 		
 		return view;
 	}

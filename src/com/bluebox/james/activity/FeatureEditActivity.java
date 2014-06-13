@@ -1,8 +1,5 @@
 package com.bluebox.james.activity;
 
-import android.animation.IntEvaluator;
-import android.animation.ValueAnimator;
-import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
@@ -12,7 +9,6 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -24,13 +20,13 @@ import com.bluebox.james.dialog.BaseDialogFragment.OnCloseListener;
 import com.bluebox.james.dialog.EditScenarioDialogFragment;
 import com.bluebox.james.dialog.NewScenarioDialogFragment;
 import com.bluebox.james.dialog.SelectColorDialogFragment;
-import com.bluebox.james.model.FeatureBaseModel;
+import com.bluebox.james.model.FeatureModel;
 import com.bluebox.james.model.RoomModel;
 import com.bluebox.james.model.ScenarioModel;
 import com.bluebox.james.service.DoomService;
 
 public class FeatureEditActivity extends FragmentActivity {
-	private FeatureBaseModel mFeature;
+	private FeatureModel mFeature;
 	private RoomModel mRoom;
 	private EditText editSceneName;
 	private View btSwitch;
@@ -79,21 +75,21 @@ public class FeatureEditActivity extends FragmentActivity {
         btSwitch.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				mFeature.setType(FeatureBaseModel.SCENE_SWITCH).commit();
+				mFeature.setType(FeatureModel.SCENE_SWITCH).commit();
 				refresh();
 			}
 		});
         btTemp.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				mFeature.setType(FeatureBaseModel.SCENE_TEMPERATURE).commit();
+				mFeature.setType(FeatureModel.SCENE_TEMPERATURE).commit();
 				refresh();
 			}
 		});
         btScenario.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				mFeature.setType(FeatureBaseModel.SCENE_SCENARIO).commit();
+				mFeature.setType(FeatureModel.SCENE_SCENARIO).commit();
 				refresh();
 			}
 		});
@@ -177,9 +173,9 @@ public class FeatureEditActivity extends FragmentActivity {
     }
 
 	protected void refresh() {
-        btSwitch.setBackgroundResource(mFeature.isType(FeatureBaseModel.SCENE_SWITCH) ? R.drawable.button_selected : R.drawable.button_resting);
-        btScenario.setBackgroundResource(mFeature.isType(FeatureBaseModel.SCENE_SCENARIO) ? R.drawable.button_selected : R.drawable.button_resting);
-        btTemp.setBackgroundResource(mFeature.isType(FeatureBaseModel.SCENE_TEMPERATURE) ? R.drawable.button_selected : R.drawable.button_resting);
+        btSwitch.setBackgroundResource(mFeature.isType(FeatureModel.SCENE_SWITCH) ? R.drawable.button_selected : R.drawable.button_resting);
+        btScenario.setBackgroundResource(mFeature.isType(FeatureModel.SCENE_SCENARIO) ? R.drawable.button_selected : R.drawable.button_resting);
+        btTemp.setBackgroundResource(mFeature.isType(FeatureModel.SCENE_TEMPERATURE) ? R.drawable.button_selected : R.drawable.button_resting);
         actionsAdapter.notifyDataSetChanged();
 	}
 	

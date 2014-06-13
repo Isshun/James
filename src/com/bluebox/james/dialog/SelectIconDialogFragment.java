@@ -35,6 +35,7 @@ public class SelectIconDialogFragment extends BaseDialogFragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
 				mIcon = (Integer)adapter.getItem(pos);
+				mHasBeenActivated = true;
 				save();
 			}
 		});
@@ -47,6 +48,7 @@ public class SelectIconDialogFragment extends BaseDialogFragment {
 			@Override
 			public void onClick(View arg0) {
 				mIcon = -1;
+				mHasBeenActivated = true;
 				save();
 			}
 		});

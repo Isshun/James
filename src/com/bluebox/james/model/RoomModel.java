@@ -5,26 +5,26 @@ import java.util.List;
 
 public class RoomModel extends DBModel {
 	private String 					mName;
-	private List<FeatureBaseModel>	mFeatures;
+	private List<FeatureModel>	mFeatures;
 	private int 					mIcon;
 
 	public RoomModel(long id, String name, int icon) {
 		mDbId = id;
 		mName = name;
-		mFeatures = new ArrayList<FeatureBaseModel>();
+		mFeatures = new ArrayList<FeatureModel>();
 		mIcon = icon;
 	}
 
-	public void addFeature(FeatureBaseModel feature) {
+	public void addFeature(FeatureModel feature) {
 		mFeatures.add(feature);
 	}
 	
-	public List<FeatureBaseModel> getFeatures() {
+	public List<FeatureModel> getFeatures() {
 		return mFeatures;
 	}
 
-	public FeatureBaseModel getFeature(long id) {
-		for (FeatureBaseModel scene: mFeatures) {
+	public FeatureModel getFeature(long id) {
+		for (FeatureModel scene: mFeatures) {
 			if (scene.getId() == id) {
 				return scene;
 			}

@@ -10,11 +10,12 @@ import android.view.View;
 public abstract class BaseDialogFragment extends DialogFragment {
 
 	private OnCloseListener	mOnCloseListener;
+	protected boolean 		mHasBeenActivated;
 	private int				mTitle = -1;
 	private int 			mNegativeLabel = -1;
 	private int 			mPositiveLabel = -1;
 	private View 			mView;
-	
+
 	protected abstract void onCreateDialog();
 	protected abstract void onCancel();
 	protected abstract void onSave();
@@ -98,6 +99,10 @@ public abstract class BaseDialogFragment extends DialogFragment {
 	protected void cancel() {
 		onCancel();
 		dismiss();
+	}
+
+	public boolean hasBeenActivated() {
+		return mHasBeenActivated;
 	}
 
 }

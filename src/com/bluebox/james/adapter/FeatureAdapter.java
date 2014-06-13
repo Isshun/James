@@ -18,8 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bluebox.james.R;
-import com.bluebox.james.model.FeatureBaseModel;
-import com.bluebox.james.model.FeatureTemperatureModel;
+import com.bluebox.james.model.FeatureModel;
 import com.bluebox.james.model.RoomModel;
 import com.bluebox.james.model.ScenarioModel;
 
@@ -63,12 +62,12 @@ public class FeatureAdapter extends BaseAdapter {
 
 	@Override
 	public int getViewTypeCount() {
-		return FeatureBaseModel.SCENE_COUNT;
+		return FeatureModel.SCENE_COUNT;
 	}
 
 	@Override
 	public View getView(final int pos, View view, ViewGroup viewgroup) {
-		final FeatureBaseModel feature = mRoom.getFeatures().get(pos);
+		final FeatureModel feature = mRoom.getFeatures().get(pos);
 		final ScenarioModel currentScenario = feature.getScenario();
 		ViewHolder holder = null;
 		
@@ -102,10 +101,10 @@ public class FeatureAdapter extends BaseAdapter {
 		}
 		
 		// Feature is temperature probe
-		if (feature.isType(FeatureBaseModel.SCENE_TEMPERATURE)) {
-			FeatureTemperatureModel featureTemperature = (FeatureTemperatureModel)feature;
-			holder.mValue.setText(featureTemperature.getExpected() + "°");
-			holder.mIcon.setVisibility(View.GONE);
+		if (feature.isType(FeatureModel.SCENE_TEMPERATURE)) {
+//			FeatureTemperatureModel featureTemperature = (FeatureTemperatureModel)feature;
+//			holder.mValue.setText(featureTemperature.getExpected() + "°");
+//			holder.mIcon.setVisibility(View.GONE);
 		}
 		
 		// Options layout
@@ -128,7 +127,7 @@ public class FeatureAdapter extends BaseAdapter {
 			LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 			lp.weight = 1;
 			final TextView lbOption = new TextView(view.getContext());
-			lbOption.setText(scenario.getName());
+			lbOption.setText(scenario.getLabel());
 			lbOption.setTextSize(20);
 			lbOption.setTextColor(Color.WHITE);
 			lbOption.setGravity(Gravity.CENTER);

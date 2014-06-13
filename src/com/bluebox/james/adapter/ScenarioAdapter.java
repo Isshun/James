@@ -8,14 +8,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bluebox.james.R;
-import com.bluebox.james.model.FeatureBaseModel;
+import com.bluebox.james.model.FeatureModel;
 import com.bluebox.james.model.ScenarioModel;
 
 public class ScenarioAdapter extends BaseAdapter {
 
-	private FeatureBaseModel mScene;
+	private FeatureModel mScene;
 
-	public ScenarioAdapter(FeatureBaseModel feature) {
+	public ScenarioAdapter(FeatureModel feature) {
 		mScene = feature;
 	}
 	
@@ -40,7 +40,7 @@ public class ScenarioAdapter extends BaseAdapter {
 		ScenarioModel scenario = mScene.getScenarios().get(pos);
 		
 		TextView lbScene = (TextView)view.findViewById(R.id.lb_scene);
-		lbScene.setText(scenario.getName());
+		lbScene.setText(scenario.getLabel());
 		
 		if (scenario.getIcon() != -1) {
 			ImageView imgIcon = (ImageView)view.findViewById(R.id.img_icon);
