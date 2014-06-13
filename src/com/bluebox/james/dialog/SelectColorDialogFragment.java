@@ -17,9 +17,10 @@ public class SelectColorDialogFragment extends BaseDialogFragment {
 	protected void onCreateDialog() {
         final ListAdapter adapter = new ColorAdapter();
         final GridView grid = new GridView(getActivity());
-		grid.setColumnWidth(110);
-        grid.setVerticalSpacing(10);
-		grid.setNumColumns(GridView.AUTO_FIT);
+		grid.setColumnWidth(70);
+        grid.setVerticalSpacing(0);
+//		grid.setNumColumns(GridView.AUTO_FIT);
+		grid.setNumColumns(9);
 		grid.setAdapter(adapter);
 		grid.setOnItemClickListener(new OnItemClickListener() {
 			@Override
