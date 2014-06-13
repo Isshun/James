@@ -107,6 +107,11 @@ public class MainActivity extends Activity {
 			startActivity(intent);
             return true;
         }
+        case R.id.action_settings: {
+			Intent intent = new Intent(MainActivity.this, AdminActivity.class);
+			startActivity(intent);
+            return true;
+        }
         case R.id.action_add_feature: {
 			NewFeatureDialogFragment f = new NewFeatureDialogFragment();
 			f.setOnCloseListener(new NewFeatureDialogFragment.OnCloseListener() {

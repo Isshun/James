@@ -31,6 +31,14 @@
             android:label="@string/app_name" >
         </activity>
         <activity
+            android:name="com.bluebox.james.activity.AdminActivity"
+            android:label="@string/title_activity_admin" >
+        </activity>
+        <activity
+            android:name="com.bluebox.james.activity.AdminRoomsActivity"
+            android:label="@string/title_activity_admin_rooms" >
+        </activity>
+        <activity
             android:name="com.bluebox.james.activity.FeatureEditActivity"
             android:label="@string/edit_feature" >
         </activity>

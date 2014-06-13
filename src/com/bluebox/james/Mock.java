@@ -15,6 +15,8 @@ public class Mock {
 	public static void init() {
 		
 //		DBHelper.getInstance().reset(DBHelper.getInstance().getWritableDatabase());
+
+		
 		DoomService.getInstance().init();
 		
 		if (DoomService.getInstance().getCount() != 0) {

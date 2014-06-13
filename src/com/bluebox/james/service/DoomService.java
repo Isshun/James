@@ -1,7 +1,6 @@
 package com.bluebox.james.service;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,12 +17,14 @@ import com.bluebox.james.model.DeviceBaseModel;
 import com.bluebox.james.model.DeviceProbeModel;
 import com.bluebox.james.model.DeviceSwitchModel;
 import com.bluebox.james.model.FeatureModel;
+import com.bluebox.james.model.FloorModel;
 import com.bluebox.james.model.RoomModel;
 import com.bluebox.james.model.ScenarioOptionModel;
 import com.bluebox.james.model.scenario.ScenarioBase;
 import com.bluebox.james.model.scenario.ScenarioSwitch;
 
 public class DoomService {
+	private List<FloorModel>	mFloors;
 
 	private static DoomService 			sRoomService;
 	private Map<Long, RoomModel> 		mRooms;
@@ -33,6 +34,11 @@ public class DoomService {
 	private Map<Long,DeviceSwitchModel> mSwitchs;
 
 	private DoomService() {
+		mFloors = new ArrayList<FloorModel>();
+		mFloors.add(new FloorModel(0, "Basement"));
+		mFloors.add(new FloorModel(1, "Ground floor"));
+		mFloors.add(new FloorModel(2, "2nd floor"));
+
 		mRooms = new HashMap<Long, RoomModel>();
 		mFeatures = new HashMap<Long, FeatureModel>();
 		mScenarios = new HashMap<Long, ScenarioOptionModel>();
@@ -55,25 +61,25 @@ public class DoomService {
 		return new ArrayList<ScenarioOptionModel>(mScenarios.values());
 	}
 
-//	public List<RoomModel> getRoomList() {
-//		return new ArrayList<RoomModel>(mRooms.values());
-//	}
+	//	public List<RoomModel> getRoomList() {
+	//		return new ArrayList<RoomModel>(mRooms.values());
+	//	}
 
 	public static void execute(ScenarioOptionModel scenario) {
 		final AQuery aquery = new AQuery(Application.getContext());
-		
+
 		scenario.execute(new OnExecuteListener() {
 			@Override
 			public void execute(String url, int value) {
 				if (url != null) {
 					// Execute url
 					Log.d("RoomService", "RoomService: execute " + url);
-					
+
 					aquery.ajax(url, String.class, new AjaxCallback<String>() {
 						@Override
-				        public void callback(String url, String html, AjaxStatus status) {
+						public void callback(String url, String html, AjaxStatus status) {
 							Log.d("CALLBACK", "callback: " + status.getCode());
-				        }
+						}
 					});
 				} else {
 					Log.e("RoomService", "RoomService: no url fo current value");
@@ -84,7 +90,7 @@ public class DoomService {
 
 	public void addRoom(RoomModel room) {
 		mRooms.put(room.getId(), room);
-		
+
 		for (FeatureModel scene: room.getFeatures()) {
 			mFeatures.put(scene.getId(), scene);
 
@@ -105,7 +111,7 @@ public class DoomService {
 	public void addScenarioToFeature(FeatureModel feature, ScenarioOptionModel scenario) {
 		mScenarios.put(scenario.getId(), scenario);
 		feature.addCustomScenario(scenario);
-		
+
 		DBHelper.getInstance().addScenarioToFeature(feature, scenario);
 	}
 
@@ -123,8 +129,8 @@ public class DoomService {
 
 	public void addProbe(DeviceProbeModel device) {
 		mProbes.put(device.getId(), device);
-		
-//		DBHelper.getInstance().createProbe(device);
+
+		//		DBHelper.getInstance().createProbe(device);
 	}
 
 	public void addSwitch(DeviceSwitchModel device) {
@@ -138,7 +144,7 @@ public class DoomService {
 
 		room.addFeature(feature);
 	}
-	
+
 	public void addDeviceToScenario(ScenarioOptionModel scenario, DeviceBaseModel device, int value) {
 		DBHelper.getInstance().addDeviceToScenario(scenario, device, value);
 
@@ -147,15 +153,21 @@ public class DoomService {
 
 	public void init() {
 		DBHelper.getInstance().open();
-//		if (DBHelper.getInstance().isExists() == false) {
-//			DBHelper.getInstance().onCreate(DBHelper.getInstance().getWritableDatabase());
-//		}
-//		DBHelper.getInstance().onCreate(DBHelper.getInstance().getWritableDatabase());
-//		DBHelper.getInstance().reset(DBHelper.getInstance().getWritableDatabase());
+		//		if (DBHelper.getInstance().isExists() == false) {
+		//			DBHelper.getInstance().onCreate(DBHelper.getInstance().getWritableDatabase());
+		//		}
+		//		DBHelper.getInstance().onCreate(DBHelper.getInstance().getWritableDatabase());
+		//		DBHelper.getInstance().reset(DBHelper.getInstance().getWritableDatabase());
 
-		DBHelper.getInstance().load();
+		try {
+			DBHelper.getInstance().load();
+		} catch (Exception e) {
+			e.printStackTrace();
+			DBHelper.getInstance().reset(DBHelper.getInstance().getWritableDatabase());
+			DBHelper.getInstance().load();
+		}
 		mSwitchs = DBHelper.getInstance().getSwitchs();
-//		mProbes = DBHelper.getInstance().getProbes();
+		//		mProbes = DBHelper.getInstance().getProbes();
 		mRooms = DBHelper.getInstance().getRooms();
 		mScenarios = DBHelper.getInstance().getScenarios();
 		mFeatures = DBHelper.getInstance().getFeatures();
@@ -163,25 +175,25 @@ public class DoomService {
 
 	public RoomModel createRoom(String name, int icon) {
 		RoomModel room = new RoomModel(-1, name, icon);
-		
+
 		DBHelper.getInstance().createRoom(room);
-		
+
 		return room;
 	}
 
 	public ScenarioOptionModel createScenario(String name, int icon) {
 		ScenarioOptionModel scenario = new ScenarioOptionModel(null, null, -1, name, icon, Color.RED);
-		
+
 		DBHelper.getInstance().createScenario(scenario);
-		
+
 		return scenario;
 	}
 
 	public ScenarioBase createScenarioSwitch(FeatureModel feature, DeviceBaseModel device) {
 		ScenarioSwitch scenarioSwitch = new ScenarioSwitch(feature, device);
-		
+
 		DBHelper.getInstance().createScenarioSwitch(scenarioSwitch);
-		
+
 		return scenarioSwitch;
 	}
 
@@ -190,7 +202,7 @@ public class DoomService {
 
 		feature = new FeatureModel(type, -1, name, icon, color);
 		DBHelper.getInstance().createFeature(feature);
-		
+
 		return feature;
 	}
 
@@ -198,7 +210,7 @@ public class DoomService {
 		DeviceSwitchModel device = new DeviceSwitchModel(-1, name, deviceId);
 
 		DBHelper.getInstance().createSwitch(device);
-		
+
 		return device;
 	}
 
@@ -209,6 +221,23 @@ public class DoomService {
 
 	public List<DeviceBaseModel> getDevices() {
 		return new ArrayList<DeviceBaseModel>(mSwitchs.values());
+	}
+
+	public List<FloorModel> getFloors() {
+		List<FloorModel> floors = new ArrayList<FloorModel>();
+		for (FloorModel floor: mFloors) {
+			floors.add(floor);
+		}
+		return floors;
+	}
+
+	public FloorModel getFloor(long id) {
+		for (FloorModel floor: mFloors) {
+			if (floor.getId() == id) {
+				return floor;
+			}
+		}
+		return null;
 	}
 
 }
