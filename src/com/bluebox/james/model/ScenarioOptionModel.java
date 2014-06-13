@@ -3,12 +3,11 @@ package com.bluebox.james.model;
 import java.util.HashMap;
 import java.util.Map;
 
-import android.view.View;
 import android.view.View.OnClickListener;
 
-import com.bluebox.james.DBHelper;
+import com.bluebox.james.model.scenario.Log;
 import com.bluebox.james.model.scenario.ScenarioBase;
-import com.bluebox.james.model.scenario.ScenarioSwitch;
+import com.bluebox.james.service.OnExecuteListener;
 
 public class ScenarioOptionModel extends DBModel {
 	private Map<DeviceBaseModel, Integer>	mDevices;
@@ -30,13 +29,19 @@ public class ScenarioOptionModel extends DBModel {
 		mScenario = scenario;
 	}
 
-	public void execute() {
+	public void execute(OnExecuteListener executeListener) {
 		for (DeviceBaseModel equipment: mDevices.keySet()) {
 			int value = mDevices.get(equipment);
+			String url = equipment.getUrl(value);
+			executeListener.execute(url, value);
 		}
 	}
 
 	public void addDevice(DeviceBaseModel device, int value) {
+		if (device == null) {
+			Log.error("Cannot add null device to scenario option");
+			return;
+		}
 		mDevices.put(device, value);
 	}
 	

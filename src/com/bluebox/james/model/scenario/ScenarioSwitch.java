@@ -45,6 +45,10 @@ public class ScenarioSwitch extends ScenarioBase {
 
 	public void setDevice(DeviceBaseModel device) {
 		mDevice = device;
+		mOn.getDevices().clear();
+		mOn.addDevice(device, 100);
+		mOff.getDevices().clear();
+		mOff.addDevice(device, 0);
 	}
 
 	@Override

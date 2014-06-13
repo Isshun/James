@@ -25,7 +25,6 @@ public class FeatureModel extends DBModel {
 	private int 					mColor;
 	private ScenarioBase			mScenario;
 	private ScenarioBase			mCustomScenario;
-	private DeviceBaseModel 		mDevice;
 	
 	public FeatureModel(int type, long id, String name, int icon, int color) {
 		mDbId = id;
@@ -45,7 +44,7 @@ public class FeatureModel extends DBModel {
 			mCustomScenario = new ScenarioCustom(this);
 			break;
 		case SCENE_TEMPERATURE:
-			mScenario = new ScenarioTemperature(this);
+			mScenario = new ScenarioTemperature(this, null);
 			mCustomScenario = new ScenarioCustom(this);
 			break;
 		}
@@ -112,15 +111,17 @@ public class FeatureModel extends DBModel {
 			return this;
 		}
 		
+		DeviceBaseModel device = mScenario != null ? mScenario.getDevice() : null;
+		
 		switch (type) {
 		case FeatureModel.SCENE_SWITCH:
-			mScenario = new ScenarioSwitch(this, mDevice);
+			mScenario = new ScenarioSwitch(this, device);
 			break;
 		case FeatureModel.SCENE_SCENARIO:
 			mScenario = mCustomScenario;
 			break;
 		case FeatureModel.SCENE_TEMPERATURE:
-			mScenario = new ScenarioTemperature(this);
+			mScenario = new ScenarioTemperature(this, device);
 			break;
 		}
 			

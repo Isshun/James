@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.view.View;
 
+import com.bluebox.james.model.DeviceBaseModel;
 import com.bluebox.james.model.FeatureModel;
 import com.bluebox.james.model.ScenarioOptionModel;
 
@@ -82,4 +83,6 @@ public abstract class ScenarioBase {
 	public ScenarioTemperature asTemperature() {
 		return null;
 	}
+
+	public abstract DeviceBaseModel getDevice();
 }

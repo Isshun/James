@@ -60,26 +60,26 @@ public class DoomService {
 //	}
 
 	public static void execute(ScenarioOptionModel scenario) {
-		AQuery aquery = new AQuery(Application.getContext());
+		final AQuery aquery = new AQuery(Application.getContext());
 		
-		Map<DeviceBaseModel, Integer> devices = scenario.getDevices();
-		for (DeviceBaseModel device: devices.keySet()) {
-			int value = devices.get(device);
-			String url = device.getUrl(value);
-			if (url != null) {
-				// Execute url
-				Log.d("RoomService", "RoomService: execute " + url);
-				
-				aquery.ajax(url, String.class, new AjaxCallback<String>() {
-					@Override
-			        public void callback(String url, String html, AjaxStatus status) {
-						Log.d("CALLBACK", "callback: " + status.getCode());
-			        }
-				});
-			} else {
-				Log.e("RoomService", "RoomService: no url fo current value");
+		scenario.execute(new OnExecuteListener() {
+			@Override
+			public void execute(String url, int value) {
+				if (url != null) {
+					// Execute url
+					Log.d("RoomService", "RoomService: execute " + url);
+					
+					aquery.ajax(url, String.class, new AjaxCallback<String>() {
+						@Override
+				        public void callback(String url, String html, AjaxStatus status) {
+							Log.d("CALLBACK", "callback: " + status.getCode());
+				        }
+					});
+				} else {
+					Log.e("RoomService", "RoomService: no url fo current value");
+				}
 			}
-		}
+		});
 	}
 
 	public void addRoom(RoomModel room) {

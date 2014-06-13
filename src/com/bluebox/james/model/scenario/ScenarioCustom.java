@@ -1,8 +1,8 @@
 package com.bluebox.james.model.scenario;
 
 import com.bluebox.james.DBHelper;
+import com.bluebox.james.model.DeviceBaseModel;
 import com.bluebox.james.model.FeatureModel;
-
 
 public class ScenarioCustom extends ScenarioBase {
 
@@ -17,6 +17,11 @@ public class ScenarioCustom extends ScenarioBase {
 	
 	public ScenarioCustom asCustom() {
 		return (ScenarioCustom)this;
+	}
+
+	@Override
+	public DeviceBaseModel getDevice() {
+		return null;
 	}
 
 }

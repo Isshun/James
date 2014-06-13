@@ -4,17 +4,20 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 
+import com.bluebox.james.model.DeviceBaseModel;
 import com.bluebox.james.model.FeatureModel;
 import com.bluebox.james.model.ScenarioOptionModel;
 
 public class ScenarioTemperature extends ScenarioBase {
 	private ScenarioOptionModel mScenarioDecrease;
 	private ScenarioOptionModel mScenarioIncrease;
-	private float mExpected;
+	private float 				mExpected;
+	private DeviceBaseModel 	mDevice;
 
-	public ScenarioTemperature(FeatureModel feature) {
+	public ScenarioTemperature(FeatureModel feature, DeviceBaseModel device) {
 		super(feature);
 		
+		mDevice = device;
 		mScenarioDecrease = new ScenarioOptionModel(this, null, 0, "Decrease", -1, -1);
 		mScenarioDecrease.setFeature(feature);
 		mScenarioDecrease.setOnClickListener(new OnClickListener() {
@@ -60,6 +63,11 @@ public class ScenarioTemperature extends ScenarioBase {
 
 	public ScenarioTemperature asTemperature() {
 		return (ScenarioTemperature)this;
+	}
+
+	@Override
+	public DeviceBaseModel getDevice() {
+		return mDevice;
 	}
 
 }
