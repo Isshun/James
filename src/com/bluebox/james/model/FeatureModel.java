@@ -25,7 +25,7 @@ public class FeatureModel extends DBModel {
 	private int 					mColor;
 	private ScenarioBase			mScenario;
 	private ScenarioBase			mCustomScenario;
-	private DeviceBaseModel mDevice;
+	private DeviceBaseModel 		mDevice;
 	
 	public FeatureModel(int type, long id, String name, int icon, int color) {
 		mDbId = id;
@@ -114,7 +114,7 @@ public class FeatureModel extends DBModel {
 		
 		switch (type) {
 		case FeatureModel.SCENE_SWITCH:
-			mScenario = new ScenarioSwitch(this, null);
+			mScenario = new ScenarioSwitch(this, mDevice);
 			break;
 		case FeatureModel.SCENE_SCENARIO:
 			mScenario = mCustomScenario;

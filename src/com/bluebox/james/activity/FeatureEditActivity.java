@@ -2,13 +2,16 @@ package com.bluebox.james.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -36,6 +39,7 @@ public class FeatureEditActivity extends FragmentActivity {
 	private ListView listAction;
 	private ScenarioAdapter actionsAdapter;
 	private SelectIconDialogFragment mSelectIconDialog;
+	private ViewGroup mFrameOptions;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,8 +130,50 @@ public class FeatureEditActivity extends FragmentActivity {
         TextView lbFeature = (TextView)findViewById(R.id.lb_feature);
         lbFeature.setText(mFeature.getTypeName());
 
+        switch (mFeature.getType()) {
+		case FeatureModel.SCENE_SWITCH:
+			createOptions(LayoutInflater.from(this).inflate(R.layout.view_feature_switch_options, null));
+			break;
+		case FeatureModel.SCENE_SCENARIO:
+			createScenarioOptions(LayoutInflater.from(this).inflate(R.layout.view_feature_custom_options, null));
+			break;
+		case FeatureModel.SCENE_TEMPERATURE:
+			createOptions(LayoutInflater.from(this).inflate(R.layout.view_feature_temperature_options, null));
+			break;
+		}
+        
+        // Action on "select color" button
+		findViewById(R.id.bt_scene_color).setBackgroundColor(mFeature.getColor());
+        findViewById(R.id.bt_scene_color).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				final SelectColorDialogFragment f = new SelectColorDialogFragment();
+		        f.show(getFragmentManager().beginTransaction(), "dialog");
+		        f.setOnCloseListener(new OnCloseListener() {
+					@Override
+					public void onClose() {
+						if (f.getColor() != -1) {
+							findViewById(R.id.bt_scene_color).setBackgroundColor(f.getColor());
+							mFeature.setColor(f.getColor());
+							mFeature.commit();
+						}
+					}
+				});
+			}
+		});
+
+        Utils.hideKeyboard(this);
+        
+        refresh();
+    }
+
+	private void createScenarioOptions(View view) {
+        mFrameOptions = (ViewGroup)findViewById(R.id.frame_options);
+        mFrameOptions.removeAllViews();
+        mFrameOptions.addView(view);
+
         // "Actions" ListView
-        listAction = (ListView)findViewById(R.id.list_action);
+        listAction = (ListView)view.findViewById(R.id.list_action);
         actionsAdapter = new ScenarioAdapter(mFeature);
         listAction.setAdapter(actionsAdapter);
         listAction.setOnItemClickListener(new OnItemClickListener() {
@@ -170,10 +216,15 @@ public class FeatureEditActivity extends FragmentActivity {
 		        f.show(getFragmentManager().beginTransaction(), "dialog");
 			}
 		});
-        
-        // Action on "select color" button
-		findViewById(R.id.bt_scene_color).setBackgroundColor(mFeature.getColor());
-        findViewById(R.id.bt_scene_color).setOnClickListener(new OnClickListener() {
+	}
+
+	private void createOptions(View view) {
+        mFrameOptions = (ViewGroup)findViewById(R.id.frame_options);
+        mFrameOptions.removeAllViews();
+        mFrameOptions.addView(view);
+
+        View btDevice = findViewById(R.id.bt_device);
+        btDevice.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				final SelectColorDialogFragment f = new SelectColorDialogFragment();
@@ -190,17 +241,16 @@ public class FeatureEditActivity extends FragmentActivity {
 				});
 			}
 		});
-
-        Utils.hideKeyboard(this);
-        
-        refresh();
-    }
+	}
 
 	protected void refresh() {
         btSwitch.setBackgroundResource(mFeature.isType(FeatureModel.SCENE_SWITCH) ? R.drawable.button_selected : R.drawable.button_resting);
         btScenario.setBackgroundResource(mFeature.isType(FeatureModel.SCENE_SCENARIO) ? R.drawable.button_selected : R.drawable.button_resting);
         btTemp.setBackgroundResource(mFeature.isType(FeatureModel.SCENE_TEMPERATURE) ? R.drawable.button_selected : R.drawable.button_resting);
-        actionsAdapter.notifyDataSetChanged();
+        
+        if (actionsAdapter != null) {
+            actionsAdapter.notifyDataSetChanged();
+        }
 	}
 	
     @Override

@@ -13,11 +13,6 @@ public class ScenarioSwitch extends ScenarioBase {
 	public ScenarioSwitch(FeatureModel feature, DeviceBaseModel device) {
 		super(feature);
 		
-		if (device == null) {
-			Log.error("Device cannot be null");
-			return;
-		}
-		
 		mDevice = device;
 		
 		mOn = new ScenarioOptionModel(this, device, 0, "On", -1, -1);
@@ -27,7 +22,7 @@ public class ScenarioSwitch extends ScenarioBase {
 
 		mOff = new ScenarioOptionModel(this, device, 1, "Off", -1, -1);
 		mOff.setFeature(feature);
-		mOn.addDevice(device, 0);
+		mOff.addDevice(device, 0);
 		add(mOff);
 	}
 
@@ -44,4 +39,11 @@ public class ScenarioSwitch extends ScenarioBase {
 		DBHelper.getInstance().updateScenario(this);
 	}
 	
+	public DeviceBaseModel getDevice() {
+		return mDevice;
+	}
+
+	public void setDevice(DeviceBaseModel device) {
+		mDevice = device;
+	}
 }

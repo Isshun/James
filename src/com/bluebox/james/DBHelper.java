@@ -296,7 +296,7 @@ public class DBHelper extends SQLiteOpenHelper {
 		ContentValues values = new ContentValues();
 
 		values.put(DBHelper.T_SCENARIO_SWITCH_COL_FEATURE_ID, scenario.getFeature().getId());
-		values.put(DBHelper.T_SCENARIO_SWITCH_COL_DEVICE_ID, scenario.getOn().getDevice().getId());
+		values.put(DBHelper.T_SCENARIO_SWITCH_COL_DEVICE_ID, scenario.getOn().getDevice() != null ? scenario.getOn().getDevice().getId() : -1);
 
 		values.put(DBHelper.T_SCENARIO_SWITCH_COL_LABEL_ON, scenario.getOn().getLabel());
 		values.put(DBHelper.T_SCENARIO_SWITCH_COL_ICON_ON, scenario.getOn().getIcon());
