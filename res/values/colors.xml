@@ -17,5 +17,8 @@
     <color name="blue">#0000FF</color>
     <color name="navy">#000080</color>
     <color name="list_entry_option">#55FFFFFF</color>
+    <color name="button">#55aaFF</color>
+    <color name="button_type_resting">#55aaFF</color>
+    <color name="button_type_pressed">#88ddFF</color>
 
 </resources>

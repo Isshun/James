@@ -8,20 +8,21 @@ import com.bluebox.james.DBHelper;
 public class FeatureBaseModel extends DBModel {
 	
 	public final static int	SCENE_UNKNOW = 0;
-	public final static int	SCENE_LIGHT = 1;
+	public final static int	SCENE_SCENARIO = 1;
 	public final static int	SCENE_TEMPERATURE = 2;
-	public final static int	SCENE_COUNT = 3;
-	public final static int SCENE_ALARM = 4;
-	public final static int SCENE_SWITCH = 5;
+	public final static int SCENE_ALARM = 3;
+	public final static int SCENE_SWITCH = 4;
+	public final static int	SCENE_COUNT = 5;
 	
 	public String 					mName;
 	public List<DeviceBaseModel>	mEquipments;
 	protected List<ScenarioModel> 	mScenarios;
-	private ScenarioModel 			mScenario;
+	protected ScenarioModel 		mScenario;
 	protected boolean 				mOn;
 	private int 					mType;
 	private int 					mIcon;
 	private int 					mColor;
+	private List<ScenarioModel> 	mCustomScenarios;
 	
 	public FeatureBaseModel(int type, long id, String name, int icon, int color) {
 		mDbId = id;
@@ -30,6 +31,7 @@ public class FeatureBaseModel extends DBModel {
 		mIcon = icon;
 		mColor = color;
 		mScenarios = new ArrayList<ScenarioModel>();
+		mCustomScenarios = new ArrayList<ScenarioModel>();
 	}
 	
 	public FeatureBaseModel(String name) {
@@ -44,7 +46,7 @@ public class FeatureBaseModel extends DBModel {
 	public String getTypeName() {
 		switch (mType) {
 		case SCENE_TEMPERATURE: return "Temperature";
-		case SCENE_LIGHT: return "Light";
+		case SCENE_SCENARIO: return "Light";
 		case SCENE_ALARM: return "Alarm";
 		case SCENE_SWITCH: return "Switch";
 		}
@@ -99,8 +101,30 @@ public class FeatureBaseModel extends DBModel {
 		return mColor;
 	}
 
-	public void setType(int type) {
+	public FeatureBaseModel setType(int type) {
+		if (mType == type) {
+			return this;
+		}
+		
+		mScenarios.clear();
+		switch (type) {
+		case FeatureBaseModel.SCENE_SWITCH:
+			addScenario(new ScenarioModel(-1, "On", -1, -1));
+			addScenario(new ScenarioModel(-1, "Off", -1, -1));
+			break;
+		case FeatureBaseModel.SCENE_SCENARIO:
+			for (ScenarioModel scenario: mCustomScenarios) {
+				addScenario(scenario);
+			}
+			break;
+		case FeatureBaseModel.SCENE_TEMPERATURE:
+			addScenario(new ScenarioModel(-1, "Decrease", -1, -1));
+			addScenario(new ScenarioModel(-1, "Increase", -1, -1));
+			break;
+		}
+			
 		mType = type;
+		return this;
 	}
 
 	public void commit() {
@@ -125,5 +149,12 @@ public class FeatureBaseModel extends DBModel {
 
 	public String getFormattedValue() {
 		return null;
+	}
+
+	public void addCustomScenario(ScenarioModel scenario) {
+		mCustomScenarios.add(scenario);
+		if (mType == SCENE_SCENARIO) {
+			addScenario(scenario);
+		}
 	}
 }

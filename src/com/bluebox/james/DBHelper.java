@@ -16,6 +16,7 @@ import com.bluebox.james.model.DeviceProbeModel;
 import com.bluebox.james.model.DeviceSwitchModel;
 import com.bluebox.james.model.FeatureBaseModel;
 import com.bluebox.james.model.FeatureLightModel;
+import com.bluebox.james.model.FeatureSwitchModel;
 import com.bluebox.james.model.FeatureTemperatureModel;
 import com.bluebox.james.model.RoomModel;
 import com.bluebox.james.model.ScenarioModel;
@@ -357,14 +358,14 @@ public class DBHelper extends SQLiteOpenHelper {
 				
 				FeatureBaseModel feature = null;
 				switch (c.getInt(1)) {
-				case FeatureBaseModel.SCENE_LIGHT:
+				case FeatureBaseModel.SCENE_SCENARIO:
 					feature = new FeatureLightModel(c.getLong(0), c.getString(2), c.getInt(3), c.getInt(4));
 					break;
 				case FeatureBaseModel.SCENE_TEMPERATURE:
 					feature = new FeatureTemperatureModel(c.getLong(0), c.getString(2), c.getInt(3), c.getInt(4));
 					break;
 				default:
-					feature = new FeatureLightModel(c.getLong(0), c.getString(2), c.getInt(3), c.getInt(4));
+					feature = new FeatureSwitchModel(c.getLong(0), c.getString(2), c.getInt(3), c.getInt(4));
 					break;
 				}
 				mFeatures.put(feature.getId(), feature);
@@ -413,7 +414,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
 				FeatureBaseModel feature = mFeatures.get(c.getLong(0));
 				ScenarioModel scenario = mScenarios.get(c.getLong(1));
-				feature.addScenario(scenario);
+				feature.addCustomScenario(scenario);
 			}
 			c.close();
 		}

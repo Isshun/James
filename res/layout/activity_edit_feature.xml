@@ -23,22 +23,55 @@
                 android:text="Temperature"
                 android:textSize="22sp" />
 
-            <LinearLayout
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="32dp"
+                android:layout_margin="5dp" >
 
-                <Button
-                    android:id="@+id/bt_set_switch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Switch" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
+                    android:orientation="horizontal" >
 
-                <Button
-                    android:id="@+id/bt_set_temp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Temp" />
-            </LinearLayout>
+                    <Button
+                        android:id="@+id/bt_type_switch"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_feature_type"
+                        android:text="Switch" />
+
+                    <View
+                        android:layout_width="5dp"
+                        android:layout_height="match_parent" />
+
+                    <Button
+                        android:id="@+id/bt_type_temp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_feature_type"
+                        android:text="Temp" />
+
+                    <View
+                        android:layout_width="5dp"
+                        android:layout_height="match_parent" />
+
+                    <Button
+                        android:id="@+id/bt_type_scenario"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_feature_type"
+                        android:text="Scenario" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/bt_overlay"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/list_entry_option" />
+            </FrameLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -40,7 +40,7 @@ public class Mock {
 
 			RoomModel salon = DoomService.getInstance().createRoom("Living Room", R.drawable.bg_living);
 
-			FeatureBaseModel ftLight = DoomService.getInstance().createFeature(FeatureBaseModel.SCENE_LIGHT, "Light", R.drawable.bg_light, Color.RED);
+			FeatureBaseModel ftLight = DoomService.getInstance().createFeature(FeatureBaseModel.SCENE_SCENARIO, "Light", R.drawable.bg_light, Color.RED);
 			DoomService.getInstance().addFeatureToRoom(salon, ftLight);
 			
 			ScenarioModel scn1 = DoomService.getInstance().createScenario("Bright", R.drawable.ic_light_on);

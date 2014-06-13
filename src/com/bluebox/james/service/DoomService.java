@@ -102,7 +102,7 @@ public class DoomService {
 
 	public void addScenarioToFeature(FeatureBaseModel feature, ScenarioModel scenario) {
 		mScenarios.put(scenario.getId(), scenario);
-		feature.addScenario(scenario);
+		feature.addCustomScenario(scenario);
 		
 		DBHelper.getInstance().addScenarioToFeature(feature, scenario);
 	}
@@ -179,7 +179,7 @@ public class DoomService {
 		FeatureBaseModel feature = null;
 		
 		switch (type) {
-		case FeatureBaseModel.SCENE_LIGHT:
+		case FeatureBaseModel.SCENE_SCENARIO:
 			feature = new FeatureLightModel(-1, name, icon, color);
 			break;
 		default:

@@ -85,7 +85,7 @@ public class FeatureAdapter extends BaseAdapter {
 			holder = (ViewHolder)view.getTag();
 		}
 		
-		final int color = currentScenario.getColor();
+		final int color = currentScenario != null ? currentScenario.getColor() : feature.getColor();
 
 		holder.mLayout.setBackgroundColor(color);
 		holder.mName.setText(feature.getName());

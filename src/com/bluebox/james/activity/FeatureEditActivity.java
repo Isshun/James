@@ -1,5 +1,8 @@
 package com.bluebox.james.activity;
 
+import android.animation.IntEvaluator;
+import android.animation.ValueAnimator;
+import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
@@ -9,6 +12,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -29,6 +33,11 @@ public class FeatureEditActivity extends FragmentActivity {
 	private FeatureBaseModel mFeature;
 	private RoomModel mRoom;
 	private EditText editSceneName;
+	private View btSwitch;
+	private View btTemp;
+	private View btScenario;
+	private ListView listAction;
+	private ScenarioAdapter actionsAdapter;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,19 +48,53 @@ public class FeatureEditActivity extends FragmentActivity {
         mRoom = DoomService.getInstance().getRoom(bundle.getLong(Application.ARG_ROOM_ID));
         mFeature = mRoom.getFeature(bundle.getLong(Application.ARG_FEATURE_ID));
 
-        findViewById(R.id.bt_set_switch).setOnClickListener(new OnClickListener() {
+//        final View overlay = findViewById(R.id.bt_overlay);
+        //overlay.setLayoutParams(lp);
+//        OnClickListener btTypeListener = new OnClickListener() {
+//			@Override
+//			public void onClick(View view) {
+//				final FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams)overlay.getLayoutParams();
+//				lp.width = view.getWidth();
+//				Integer fromPos = overlay.getLeft();
+////				Integer colorFrom = mAnimFromScenario.getColor();
+////				Integer colorTo = mAnimToScenario.getColor();
+//				Integer toPos = view.getLeft();
+//				ValueAnimator colorAnimation = ValueAnimator.ofObject(new IntEvaluator(), fromPos, toPos);
+//				colorAnimation.addUpdateListener(new AnimatorUpdateListener() {
+//				    @Override
+//				    public void onAnimationUpdate(ValueAnimator animator) {
+//				    	//((FrameLayout.LayoutParams)overlay.getLayoutParams()).leftMargin = (Integer)animator.getAnimatedValue();
+////				    	overlay.setPadding((Integer)animator.getAnimatedValue(), 0, 0, 0);
+//				    	lp.leftMargin = (Integer)animator.getAnimatedValue();
+//				    	overlay.setLayoutParams(lp);
+//				    }
+//				});
+//				colorAnimation.start();
+//			}
+//		};
+        
+        btSwitch = findViewById(R.id.bt_type_switch);
+        btTemp = findViewById(R.id.bt_type_temp);
+        btScenario = findViewById(R.id.bt_type_scenario);
+        btSwitch.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				mFeature.setType(FeatureBaseModel.SCENE_LIGHT);
-				mFeature.commit();
+				mFeature.setType(FeatureBaseModel.SCENE_SWITCH).commit();
+				refresh();
 			}
 		});
-
-        findViewById(R.id.bt_set_temp).setOnClickListener(new OnClickListener() {
+        btTemp.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				mFeature.setType(FeatureBaseModel.SCENE_TEMPERATURE);
-				mFeature.commit();
+				mFeature.setType(FeatureBaseModel.SCENE_TEMPERATURE).commit();
+				refresh();
+			}
+		});
+        btScenario.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				mFeature.setType(FeatureBaseModel.SCENE_SCENARIO).commit();
+				refresh();
 			}
 		});
         
@@ -64,8 +107,8 @@ public class FeatureEditActivity extends FragmentActivity {
         lbFeature.setText(mFeature.getTypeName());
 
         // "Actions" ListView
-        final ListView listAction = (ListView)findViewById(R.id.list_action);
-        final ScenarioAdapter actionsAdapter = new ScenarioAdapter(mFeature);
+        listAction = (ListView)findViewById(R.id.list_action);
+        actionsAdapter = new ScenarioAdapter(mFeature);
         listAction.setAdapter(actionsAdapter);
         listAction.setOnItemClickListener(new OnItemClickListener() {
 			@Override
@@ -129,8 +172,17 @@ public class FeatureEditActivity extends FragmentActivity {
 		});
 
         Utils.hideKeyboard(this);
+        
+        refresh();
     }
 
+	protected void refresh() {
+        btSwitch.setBackgroundResource(mFeature.isType(FeatureBaseModel.SCENE_SWITCH) ? R.drawable.button_selected : R.drawable.button_resting);
+        btScenario.setBackgroundResource(mFeature.isType(FeatureBaseModel.SCENE_SCENARIO) ? R.drawable.button_selected : R.drawable.button_resting);
+        btTemp.setBackgroundResource(mFeature.isType(FeatureBaseModel.SCENE_TEMPERATURE) ? R.drawable.button_selected : R.drawable.button_resting);
+        actionsAdapter.notifyDataSetChanged();
+	}
+	
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

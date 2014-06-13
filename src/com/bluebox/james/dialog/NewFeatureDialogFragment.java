@@ -42,7 +42,7 @@ public class NewFeatureDialogFragment extends DialogFragment {
                 .setPositiveButton("Create",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
-                        	FeatureBaseModel feature = DoomService.getInstance().createFeature(FeatureBaseModel.SCENE_LIGHT, editActionName.getText().toString(), R.drawable.ic_alarm, Color.GRAY);
+                        	FeatureBaseModel feature = DoomService.getInstance().createFeature(FeatureBaseModel.SCENE_SCENARIO, editActionName.getText().toString(), R.drawable.ic_alarm, Color.GRAY);
                         	DoomService.getInstance().addFeatureToRoom(room, feature);
                         	mOnCloseListener.onClose();
                         }
