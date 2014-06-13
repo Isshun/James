@@ -36,7 +36,9 @@ public class EditScenarioDialogFragment extends BaseDialogFragment {
         
         // "icon" image
         final ImageView imgIcon = (ImageView)view.findViewById(R.id.img_icon);
-        imgIcon.setImageResource(mScenario.getIcon());
+        if (mScenario.getIcon() != -1) {
+            imgIcon.setImageResource(mScenario.getIcon());
+        }
 
         // "select icon" dialog
 		mSelectIconDialog = new SelectIconDialogFragment();

@@ -1,5 +1,6 @@
 package com.bluebox.james.adapter;
 
+import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -20,7 +21,7 @@ public class IconAdapter extends BaseAdapter {
 		switch (pos) {
 		case 0: return R.drawable.ic_light_1;
 		case 1: return R.drawable.ic_light_2;
-		case 2: return R.drawable.ic_light_3;
+		case 2: return R.drawable.bg_sound;
 		case 3: return R.drawable.ic_temp;
 		case 4: return R.drawable.bg_light;
 		}
@@ -37,6 +38,7 @@ public class IconAdapter extends BaseAdapter {
 		ImageView image = new ImageView(parent.getContext());
 		image.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.WRAP_CONTENT, 200));
 		image.setImageResource((Integer)getItem(pos));
+		image.setBackgroundColor(Color.rgb(100, 100, 100));
 		return image;
 	}
 

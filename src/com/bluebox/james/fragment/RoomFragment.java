@@ -56,18 +56,18 @@ public class RoomFragment extends Fragment {
 			}
 		});
         
-//        // Item long click
-//        grid.setOnItemLongClickListener(new OnItemLongClickListener() {
-//			@Override
-//			public boolean onItemLongClick(AdapterView<?> parent, View view, int pos, long id) {
-//				FeatureBaseModel feature = room.getFeatures().get(pos);
-//				Intent intent = new Intent(RoomFragment.this.getActivity(), FeatureEditActivity.class);
-//				intent.putExtra(ARG_ROOM_ID, room.getId());
-//				intent.putExtra(ARG_FEATURE_ID, feature.getId());
-//				startActivity(intent);
-//				return true;
-//			}
-//		});
+        // Item long click
+        grid.setOnItemLongClickListener(new OnItemLongClickListener() {
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view, int pos, long id) {
+				FeatureBaseModel feature = room.getFeatures().get(pos);
+				Intent intent = new Intent(RoomFragment.this.getActivity(), FeatureEditActivity.class);
+				intent.putExtra(ARG_ROOM_ID, room.getId());
+				intent.putExtra(ARG_FEATURE_ID, feature.getId());
+				startActivity(intent);
+				return true;
+			}
+		});
         
         // Item sub click
         adapter.setOnScenarioClickListener(new OnScenarioClickListener() {
