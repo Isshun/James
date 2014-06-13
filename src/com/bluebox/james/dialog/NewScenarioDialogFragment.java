@@ -12,7 +12,7 @@ import android.widget.EditText;
 import com.bluebox.james.Application;
 import com.bluebox.james.R;
 import com.bluebox.james.model.FeatureModel;
-import com.bluebox.james.model.ScenarioModel;
+import com.bluebox.james.model.ScenarioOptionModel;
 import com.bluebox.james.service.DoomService;
 
 public class NewScenarioDialogFragment extends DialogFragment {
@@ -41,7 +41,7 @@ public class NewScenarioDialogFragment extends DialogFragment {
                 .setPositiveButton("Create",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
-                        	ScenarioModel scenario = DoomService.getInstance().createScenario(editActionName.getText().toString(), R.drawable.ic_alarm);
+                        	ScenarioOptionModel scenario = DoomService.getInstance().createScenario(editActionName.getText().toString(), R.drawable.ic_alarm);
                         	DoomService.getInstance().addScenarioToFeature(feature, scenario);
                         	mOnCloseListener.onClose();
                         }

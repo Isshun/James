@@ -6,23 +6,26 @@ import java.util.Map;
 import android.view.View.OnClickListener;
 
 import com.bluebox.james.DBHelper;
+import com.bluebox.james.model.scenario.ScenarioBase;
 
-public class ScenarioModel extends DBModel {
+public class ScenarioOptionModel extends DBModel {
 	private Map<DeviceBaseModel, Integer>	mDevices;
 	private String 							mLabel;
 	public int 								mIcon;
 	private int 							mColor = -1;
 	private FeatureModel 					mFeature;
 	private OnClickListener 				mOnClickListener;
-	private DeviceBaseModel mDevice;
+	private DeviceBaseModel 				mDevice;
+	private ScenarioBase 					mScenario;
 	
-	public ScenarioModel(DeviceBaseModel device, long id, String label, int icon, int color) {
+	public ScenarioOptionModel(ScenarioBase scenario, DeviceBaseModel device, long id, String label, int icon, int color) {
 		mDbId = id;
 		mLabel = label;
 		mIcon = icon;
 		mDevice = device;
 		mColor = color;//Color.rgb(64, 138, 191);
 		mDevices = new HashMap<DeviceBaseModel, Integer>();
+		mScenario = scenario;
 	}
 
 	public void execute() {
@@ -58,10 +61,6 @@ public class ScenarioModel extends DBModel {
 	public void setIcon(int icon) {
 		mIcon = icon;
 	}
-	
-	public void commit() {
-		DBHelper.getInstance().updateScenario(this);
-	}
 
 	public void setFeature(FeatureModel feature) {
 		mFeature = feature;
@@ -81,5 +80,13 @@ public class ScenarioModel extends DBModel {
 
 	public void setLabel(String label) {
 		mLabel = label;
+	}
+
+	public void commit() {
+		mScenario.commit();
+	}
+
+	public void setScenario(ScenarioBase scenario) {
+		mScenario = scenario;
 	}
 }

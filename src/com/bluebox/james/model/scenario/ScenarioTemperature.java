@@ -5,17 +5,17 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 import com.bluebox.james.model.FeatureModel;
-import com.bluebox.james.model.ScenarioModel;
+import com.bluebox.james.model.ScenarioOptionModel;
 
 public class ScenarioTemperature extends ScenarioBase {
-	private ScenarioModel mScenarioDecrease;
-	private ScenarioModel mScenarioIncrease;
+	private ScenarioOptionModel mScenarioDecrease;
+	private ScenarioOptionModel mScenarioIncrease;
 	private float mExpected;
 
 	public ScenarioTemperature(FeatureModel feature) {
 		super(feature);
 		
-		mScenarioDecrease = new ScenarioModel(null, 0, "decrease", -1, -1);
+		mScenarioDecrease = new ScenarioOptionModel(this, null, 0, "Decrease", -1, -1);
 		mScenarioDecrease.setFeature(feature);
 		mScenarioDecrease.setOnClickListener(new OnClickListener() {
 			@Override
@@ -25,7 +25,7 @@ public class ScenarioTemperature extends ScenarioBase {
 		});
 		add(mScenarioDecrease);
 
-		mScenarioIncrease = new ScenarioModel(null, 1, "increase", -1, -1);
+		mScenarioIncrease = new ScenarioOptionModel(this, null, 1, "Increase", -1, -1);
 		mScenarioIncrease.setFeature(feature);
 		mScenarioIncrease.setOnClickListener(new OnClickListener() {
 			@Override
@@ -58,4 +58,5 @@ public class ScenarioTemperature extends ScenarioBase {
 		// TODO Auto-generated method stub
 		
 	}
+
 }

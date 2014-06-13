@@ -9,19 +9,19 @@ import android.widget.TextView;
 
 import com.bluebox.james.R;
 import com.bluebox.james.model.FeatureModel;
-import com.bluebox.james.model.ScenarioModel;
+import com.bluebox.james.model.ScenarioOptionModel;
 
 public class ScenarioAdapter extends BaseAdapter {
 
-	private FeatureModel mScene;
+	private FeatureModel mFeature;
 
 	public ScenarioAdapter(FeatureModel feature) {
-		mScene = feature;
+		mFeature = feature;
 	}
 	
 	@Override
 	public int getCount() {
-		return mScene.getScenarios().size();
+		return mFeature.getOptions().size();
 	}
 
 	@Override
@@ -37,14 +37,14 @@ public class ScenarioAdapter extends BaseAdapter {
 	@Override
 	public View getView(int pos, View view, ViewGroup parent) {
 		view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_entry_scenario, null);
-		ScenarioModel scenario = mScene.getScenarios().get(pos);
+		ScenarioOptionModel option = mFeature.getOptions().get(pos);
 		
 		TextView lbScene = (TextView)view.findViewById(R.id.lb_scene);
-		lbScene.setText(scenario.getLabel());
+		lbScene.setText(option.getLabel());
 		
-		if (scenario.getIcon() != -1) {
+		if (option.getIcon() != -1) {
 			ImageView imgIcon = (ImageView)view.findViewById(R.id.img_icon);
-			imgIcon.setImageResource(scenario.getIcon());
+			imgIcon.setImageResource(option.getIcon());
 		}
 		
 		return view;

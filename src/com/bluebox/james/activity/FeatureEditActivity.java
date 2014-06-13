@@ -22,7 +22,7 @@ import com.bluebox.james.dialog.NewScenarioDialogFragment;
 import com.bluebox.james.dialog.SelectColorDialogFragment;
 import com.bluebox.james.model.FeatureModel;
 import com.bluebox.james.model.RoomModel;
-import com.bluebox.james.model.ScenarioModel;
+import com.bluebox.james.model.ScenarioOptionModel;
 import com.bluebox.james.service.DoomService;
 
 public class FeatureEditActivity extends FragmentActivity {
@@ -109,7 +109,7 @@ public class FeatureEditActivity extends FragmentActivity {
         listAction.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
-				ScenarioModel action = mFeature.getScenarios().get(pos);
+				ScenarioOptionModel action = mFeature.getOptions().get(pos);
 //				Intent intent = new Intent(FeatureEditActivity.this, ScenarioEditActivity.class);
 //				startActivity(intent);
 				
@@ -123,7 +123,7 @@ public class FeatureEditActivity extends FragmentActivity {
 		    	Bundle args = new Bundle();
 				args.putLong(Application.ARG_ROOM_ID, mRoom.getId());
 				args.putLong(Application.ARG_FEATURE_ID, mFeature.getId());
-				args.putLong(Application.ARG_SCENARIO_ID, action.getId());
+				args.putInt(Application.ARG_SCENARIO_POS, pos);
 		        f.setArguments(args);
 		        f.show(getFragmentManager().beginTransaction(), "dialog");
 			}

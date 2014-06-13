@@ -20,7 +20,7 @@ import android.widget.TextView;
 import com.bluebox.james.R;
 import com.bluebox.james.model.FeatureModel;
 import com.bluebox.james.model.RoomModel;
-import com.bluebox.james.model.ScenarioModel;
+import com.bluebox.james.model.ScenarioOptionModel;
 
 public class FeatureAdapter extends BaseAdapter {
 	private static class ViewHolder {
@@ -33,8 +33,8 @@ public class FeatureAdapter extends BaseAdapter {
 	
 	private RoomModel 				mRoom;
 	private OnScenarioClickListener mScenarioClickListener;
-	private ScenarioModel 			mAnimFromScenario;
-	private ScenarioModel 			mAnimToScenario;
+	private ScenarioOptionModel 			mAnimFromScenario;
+	private ScenarioOptionModel 			mAnimToScenario;
 
 	public FeatureAdapter(RoomModel room) {
 		mRoom = room;
@@ -68,7 +68,7 @@ public class FeatureAdapter extends BaseAdapter {
 	@Override
 	public View getView(final int pos, View view, ViewGroup viewgroup) {
 		final FeatureModel feature = mRoom.getFeatures().get(pos);
-		final ScenarioModel currentScenario = feature.getScenario();
+		final ScenarioOptionModel currentScenario = feature.getScenario();
 		ViewHolder holder = null;
 		
 		if (view == null) {
@@ -111,8 +111,8 @@ public class FeatureAdapter extends BaseAdapter {
 		holder.mOptions.removeAllViews();
 		final ViewHolder h = holder;
 		int i = 0;
-		for (ScenarioModel scenario: feature.getScenarios()) {
-			final ScenarioModel finalScenario = scenario;
+		for (ScenarioOptionModel scenario: feature.getOptions()) {
+			final ScenarioOptionModel finalScenario = scenario;
 			final int optionIndex = i;
 			
 			// Separator
@@ -233,7 +233,7 @@ public class FeatureAdapter extends BaseAdapter {
 		mScenarioClickListener = scenarioClickListener;
 	}
 
-	public void startAnim(ScenarioModel fromScenario, ScenarioModel toScenario) {
+	public void startAnim(ScenarioOptionModel fromScenario, ScenarioOptionModel toScenario) {
 		mAnimFromScenario = fromScenario;
 		mAnimToScenario = toScenario;
 	}

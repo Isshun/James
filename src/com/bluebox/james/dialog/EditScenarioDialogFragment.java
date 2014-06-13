@@ -12,27 +12,23 @@ import com.bluebox.james.Application;
 import com.bluebox.james.R;
 import com.bluebox.james.model.DeviceBaseModel;
 import com.bluebox.james.model.FeatureModel;
-import com.bluebox.james.model.ScenarioModel;
+import com.bluebox.james.model.ScenarioOptionModel;
 import com.bluebox.james.service.DoomService;
 
 public class EditScenarioDialogFragment extends BaseDialogFragment {
 	
 	private SelectIconDialogFragment 	mSelectIconDialog;
 	private SelectColorDialogFragment 	mSelectColorDialog;
-	private ScenarioModel 				mScenario;
+	private ScenarioOptionModel 		mScenario;
 	private FeatureModel 				mFeature;
-	private EditText mEditScenarioName;
+	private EditText 					mEditScenarioName;
 
     @Override
 	protected void onCreateDialog() {
     	final View view = LayoutInflater.from(getActivity()).inflate(R.layout.activity_edit_scenario, null, false);
+    	final int optionIndex = getArguments().getInt(Application.ARG_SCENARIO_POS);
         mFeature = DoomService.getInstance().getFeature(getArguments().getLong(Application.ARG_FEATURE_ID));
-        
-        if (mFeature.isType(FeatureModel.SCENE_SCENARIO)) {
-            mScenario = DoomService.getInstance().getScenario(getArguments().getLong(Application.ARG_SCENARIO_ID));
-        } else {
-        	mScenario = mFeature.getScenarios().get((int)getArguments().getLong(Application.ARG_SCENARIO_ID));
-        }
+        mScenario = mFeature.getOptions().get(optionIndex);
         		
         // Cutomize dialog
         setTitle(R.string.edit_scenario);
@@ -62,7 +58,7 @@ public class EditScenarioDialogFragment extends BaseDialogFragment {
 			}
 		});
     	Bundle args = new Bundle();
-        args.putLong(Application.ARG_SCENARIO_ID, mScenario.getId());
+        args.putLong(Application.ARG_SCENARIO_POS, optionIndex);
         mSelectIconDialog.setArguments(args);
         view.findViewById(R.id.bt_icon).setOnClickListener(new OnClickListener() {
 			@Override

@@ -1,5 +1,6 @@
 package com.bluebox.james.model.scenario;
 
+import com.bluebox.james.DBHelper;
 import com.bluebox.james.model.FeatureModel;
 
 
@@ -11,8 +12,7 @@ public class ScenarioCustom extends ScenarioBase {
 
 	@Override
 	public void commit() {
-		// TODO Auto-generated method stub
-		
+		DBHelper.getInstance().updateScenario(this);
 	}
 
 }

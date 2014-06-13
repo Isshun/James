@@ -18,7 +18,7 @@ import com.bluebox.james.model.DeviceProbeModel;
 import com.bluebox.james.model.DeviceSwitchModel;
 import com.bluebox.james.model.FeatureModel;
 import com.bluebox.james.model.RoomModel;
-import com.bluebox.james.model.ScenarioModel;
+import com.bluebox.james.model.ScenarioOptionModel;
 import com.bluebox.james.model.scenario.ScenarioBase;
 import com.bluebox.james.model.scenario.ScenarioSwitch;
 
@@ -26,7 +26,7 @@ public class DoomService {
 
 	private static DoomService 			sRoomService;
 	private Map<Long, RoomModel> 		mRooms;
-	private Map<Long, ScenarioModel> 	mScenarios;
+	private Map<Long, ScenarioOptionModel> 	mScenarios;
 	private Map<Long, FeatureModel> mFeatures;
 	private Map<Long, DeviceProbeModel> mProbes;
 	private Map<Long,DeviceSwitchModel> mSwitchs;
@@ -34,7 +34,7 @@ public class DoomService {
 	private DoomService() {
 		mRooms = new HashMap<Long, RoomModel>();
 		mFeatures = new HashMap<Long, FeatureModel>();
-		mScenarios = new HashMap<Long, ScenarioModel>();
+		mScenarios = new HashMap<Long, ScenarioOptionModel>();
 		mProbes = new HashMap<Long, DeviceProbeModel>();
 		mSwitchs = new HashMap<Long, DeviceSwitchModel>();
 	}
@@ -50,15 +50,15 @@ public class DoomService {
 		return mRooms.size();
 	}
 
-	public List<ScenarioModel> getAllActions() {
-		return new ArrayList<ScenarioModel>(mScenarios.values());
+	public List<ScenarioOptionModel> getAllActions() {
+		return new ArrayList<ScenarioOptionModel>(mScenarios.values());
 	}
 
 //	public List<RoomModel> getRoomList() {
 //		return new ArrayList<RoomModel>(mRooms.values());
 //	}
 
-	public static void execute(ScenarioModel scenario) {
+	public static void execute(ScenarioOptionModel scenario) {
 		AQuery aquery = new AQuery(Application.getContext());
 		
 		Map<DeviceBaseModel, Integer> devices = scenario.getDevices();
@@ -87,7 +87,7 @@ public class DoomService {
 		for (FeatureModel scene: room.getFeatures()) {
 			mFeatures.put(scene.getId(), scene);
 
-			for (ScenarioModel action: scene.getScenarios()) {
+			for (ScenarioOptionModel action: scene.getOptions()) {
 				mScenarios.put(action.getId(), action);
 			}
 		}
@@ -97,11 +97,11 @@ public class DoomService {
 		return mFeatures.get(sceneId);
 	}
 
-	public ScenarioModel getScenario(long scenarioId) {
+	public ScenarioOptionModel getScenario(long scenarioId) {
 		return mScenarios.get(scenarioId);
 	}
 
-	public void addScenarioToFeature(FeatureModel feature, ScenarioModel scenario) {
+	public void addScenarioToFeature(FeatureModel feature, ScenarioOptionModel scenario) {
 		mScenarios.put(scenario.getId(), scenario);
 		feature.addCustomScenario(scenario);
 		
@@ -138,7 +138,7 @@ public class DoomService {
 		room.addFeature(feature);
 	}
 	
-	public void addDeviceToScenario(ScenarioModel scenario, DeviceBaseModel device, int value) {
+	public void addDeviceToScenario(ScenarioOptionModel scenario, DeviceBaseModel device, int value) {
 		DBHelper.getInstance().addDeviceToScenario(scenario, device, value);
 
 		scenario.addDevice(device, value);
@@ -168,8 +168,8 @@ public class DoomService {
 		return room;
 	}
 
-	public ScenarioModel createScenario(String name, int icon) {
-		ScenarioModel scenario = new ScenarioModel(null, -1, name, icon, Color.RED);
+	public ScenarioOptionModel createScenario(String name, int icon) {
+		ScenarioOptionModel scenario = new ScenarioOptionModel(null, null, -1, name, icon, Color.RED);
 		
 		DBHelper.getInstance().createScenario(scenario);
 		

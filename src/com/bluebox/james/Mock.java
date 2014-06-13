@@ -6,7 +6,7 @@ import android.util.Log;
 import com.bluebox.james.model.DeviceBaseModel;
 import com.bluebox.james.model.FeatureModel;
 import com.bluebox.james.model.RoomModel;
-import com.bluebox.james.model.ScenarioModel;
+import com.bluebox.james.model.ScenarioOptionModel;
 import com.bluebox.james.model.scenario.ScenarioBase;
 import com.bluebox.james.service.DoomService;
 
@@ -44,21 +44,21 @@ public class Mock {
 			FeatureModel ftLight = DoomService.getInstance().createFeature(FeatureModel.SCENE_SCENARIO, "Light", R.drawable.bg_light, Color.RED);
 			DoomService.getInstance().addFeatureToRoom(salon, ftLight);
 			
-			ScenarioModel scn1 = DoomService.getInstance().createScenario("Bright", R.drawable.ic_light_on);
+			ScenarioOptionModel scn1 = DoomService.getInstance().createScenario("Bright", R.drawable.ic_light_on);
 			scn1.setColor(Color.rgb(223, 90, 72));
 			DoomService.getInstance().addDeviceToScenario(scn1, light1, 0);
 			DoomService.getInstance().addDeviceToScenario(scn1, light2, 100);
 			DoomService.getInstance().addDeviceToScenario(scn1, light3, 100);
 			DoomService.getInstance().addScenarioToFeature(ftLight, scn1);
 
-			ScenarioModel scn2 = DoomService.getInstance().createScenario("Medium", R.drawable.ic_light_medium);
+			ScenarioOptionModel scn2 = DoomService.getInstance().createScenario("Medium", R.drawable.ic_light_medium);
 			scn2.setColor(Color.rgb(223, 90, 72));
 			DoomService.getInstance().addDeviceToScenario(scn2, light1, 100);
 			DoomService.getInstance().addDeviceToScenario(scn2, light2, 0);
 			DoomService.getInstance().addDeviceToScenario(scn2, light3, 100);
 			DoomService.getInstance().addScenarioToFeature(ftLight, scn2);
 
-			ScenarioModel scn3 = DoomService.getInstance().createScenario("Light off", R.drawable.ic_light_off);
+			ScenarioOptionModel scn3 = DoomService.getInstance().createScenario("Light off", R.drawable.ic_light_off);
 			scn3.setColor(Color.rgb(223, 90, 72));
 			DoomService.getInstance().addDeviceToScenario(scn3, light1, 0);
 			DoomService.getInstance().addDeviceToScenario(scn3, light2, 0);
@@ -66,7 +66,7 @@ public class Mock {
 			DoomService.getInstance().addScenarioToFeature(ftLight, scn3);
 
 						
-			FeatureModel ampli = DoomService.getInstance().createFeature(FeatureModel.SCENE_SWITCH, "Ampli", R.drawable.bg_switch, Color.RED);
+			FeatureModel ampli = DoomService.getInstance().createFeature(FeatureModel.SCENE_SWITCH, "Ampli", R.drawable.bg_temp, Color.RED);
 			DoomService.getInstance().addFeatureToRoom(salon, ampli);
 			DeviceBaseModel eAmpli = DoomService.getInstance().createDevice("Light desk", 19);
 			ScenarioBase ampliA1 = DoomService.getInstance().createScenarioSwitch(ampli, eAmpli);

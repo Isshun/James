@@ -74,7 +74,7 @@ public class FeatureModel extends DBModel {
 		return mName;
 	}
 	
-	public List<ScenarioModel> getScenarios() {
+	public List<ScenarioOptionModel> getOptions() {
 		return mScenario.getOptions();
 	}
 	
@@ -82,7 +82,7 @@ public class FeatureModel extends DBModel {
 		return mEquipments;
 	}
 
-	public ScenarioModel nextScenario() {
+	public ScenarioOptionModel nextScenario() {
 		return mScenario.next();
 	}
 	
@@ -90,12 +90,12 @@ public class FeatureModel extends DBModel {
 		return mOn;
 	}
 
-	public void addScenario(ScenarioModel scenario) {
+	public void addScenario(ScenarioOptionModel scenario) {
 		mScenario.add(scenario);
 		scenario.setFeature(this);
 	}
 
-	public ScenarioModel getScenario() {
+	public ScenarioOptionModel getScenario() {
 		return mScenario.getCurrent();
 	}
 
@@ -151,12 +151,13 @@ public class FeatureModel extends DBModel {
 		return mScenario.getFormatterValue();
 	}
 
-	public void addCustomScenario(ScenarioModel scenario) {
+	public void addCustomScenario(ScenarioOptionModel scenario) {
 		mCustomScenario.add(scenario);
+		scenario.setScenario(mCustomScenario);
 		scenario.setFeature(this);
 	}
 
-	public void setScenario(ScenarioModel scenario) {
+	public void setScenario(ScenarioOptionModel scenario) {
 		mScenario.setCurrentOption(scenario);
 	}
 

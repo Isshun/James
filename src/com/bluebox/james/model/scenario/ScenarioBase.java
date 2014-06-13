@@ -3,22 +3,21 @@ package com.bluebox.james.model.scenario;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.bluebox.james.DBHelper;
 import com.bluebox.james.model.FeatureModel;
-import com.bluebox.james.model.ScenarioModel;
+import com.bluebox.james.model.ScenarioOptionModel;
 
 public abstract class ScenarioBase {
-	private long					mId;
-	private List<ScenarioModel> mOptions;
-	private ScenarioModel 		mCurrent;
-	private FeatureModel 		mFeature;
+	private long						mId;
+	private List<ScenarioOptionModel> 	mOptions;
+	private ScenarioOptionModel 		mCurrent;
+	private FeatureModel 				mFeature;
 
 	public ScenarioBase(FeatureModel feature) {
 		mFeature = feature;
-		mOptions = new ArrayList<ScenarioModel>();
+		mOptions = new ArrayList<ScenarioOptionModel>();
 	}
 	
-	public ScenarioModel next() {
+	public ScenarioOptionModel next() {
 		if (mOptions.size() == 0) {
 			return null;
 		}
@@ -30,22 +29,22 @@ public abstract class ScenarioBase {
 		return mCurrent;
 	}
 
-	public void setCurrentOption(ScenarioModel scenarioModel) {
+	public void setCurrentOption(ScenarioOptionModel scenarioModel) {
 		mCurrent = scenarioModel;
 	}
 
-	public void add(ScenarioModel option) {
+	public void add(ScenarioOptionModel option) {
 		if (mOptions.size() == 0) {
 			mCurrent = option;
 		}
 		mOptions.add(option);
 	}
 
-	public ScenarioModel getCurrent() {
+	public ScenarioOptionModel getCurrent() {
 		return mCurrent;
 	}
 
-	public List<ScenarioModel> getOptions() {
+	public List<ScenarioOptionModel> getOptions() {
 		return mOptions;
 	}
 

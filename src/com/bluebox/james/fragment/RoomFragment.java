@@ -22,7 +22,7 @@ import com.bluebox.james.adapter.FeatureAdapter;
 import com.bluebox.james.adapter.OnScenarioClickListener;
 import com.bluebox.james.model.FeatureModel;
 import com.bluebox.james.model.RoomModel;
-import com.bluebox.james.model.ScenarioModel;
+import com.bluebox.james.model.ScenarioOptionModel;
 import com.bluebox.james.service.DoomService;
 
 public class RoomFragment extends Fragment {
@@ -48,9 +48,9 @@ public class RoomFragment extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
 				FeatureModel scene = room.getFeatures().get(pos);
-				ScenarioModel fromScenario = scene.getScenario();
+				ScenarioOptionModel fromScenario = scene.getScenario();
 				clickOnTile(view, scene);
-				ScenarioModel toScenario = scene.getScenario();
+				ScenarioOptionModel toScenario = scene.getScenario();
 				adapter.startAnim(fromScenario, toScenario);
 				adapter.notifyDataSetChanged();
 			}
@@ -72,7 +72,7 @@ public class RoomFragment extends Fragment {
         // Item sub click
         adapter.setOnScenarioClickListener(new OnScenarioClickListener() {
 			@Override
-			public void onScenarioClick(FeatureModel feature, ScenarioModel scenario) {
+			public void onScenarioClick(FeatureModel feature, ScenarioOptionModel scenario) {
 				adapter.startAnim(feature.getScenario(), scenario);
 				feature.setScenario(scenario);
 				DoomService.execute(scenario);
@@ -96,7 +96,7 @@ public class RoomFragment extends Fragment {
 	}
 
 	protected void nextAction(View view, FeatureModel scene) {
-		ScenarioModel scenario = scene.nextScenario();
+		ScenarioOptionModel scenario = scene.nextScenario();
 		
 		if (scenario != null) {
 			DoomService.execute(scenario);

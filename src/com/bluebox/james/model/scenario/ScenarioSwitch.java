@@ -3,12 +3,12 @@ package com.bluebox.james.model.scenario;
 import com.bluebox.james.DBHelper;
 import com.bluebox.james.model.DeviceBaseModel;
 import com.bluebox.james.model.FeatureModel;
-import com.bluebox.james.model.ScenarioModel;
+import com.bluebox.james.model.ScenarioOptionModel;
 
 public class ScenarioSwitch extends ScenarioBase {
-	private ScenarioModel 	mOn;
-	private ScenarioModel 	mOff;
-	private DeviceBaseModel mDevice;
+	private ScenarioOptionModel 	mOn;
+	private ScenarioOptionModel 	mOff;
+	private DeviceBaseModel			mDevice;
 
 	public ScenarioSwitch(FeatureModel feature, DeviceBaseModel device) {
 		super(feature);
@@ -20,22 +20,22 @@ public class ScenarioSwitch extends ScenarioBase {
 		
 		mDevice = device;
 		
-		mOn = new ScenarioModel(device, 0, "On", -1, -1);
+		mOn = new ScenarioOptionModel(this, device, 0, "On", -1, -1);
 		mOn.setFeature(feature);
 		mOn.addDevice(device, 100);
 		add(mOn);
 
-		mOff = new ScenarioModel(device, 1, "Off", -1, -1);
+		mOff = new ScenarioOptionModel(this, device, 1, "Off", -1, -1);
 		mOff.setFeature(feature);
 		mOn.addDevice(device, 0);
 		add(mOff);
 	}
 
-	public ScenarioModel getOn() {
+	public ScenarioOptionModel getOn() {
 		return mOn;
 	}
 
-	public ScenarioModel getOff() {
+	public ScenarioOptionModel getOff() {
 		return mOff;
 	}
 
@@ -43,4 +43,5 @@ public class ScenarioSwitch extends ScenarioBase {
 	public void commit() {
 		DBHelper.getInstance().updateScenario(this);
 	}
+	
 }
