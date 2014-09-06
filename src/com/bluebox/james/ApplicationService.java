@@ -12,6 +12,10 @@ import com.bluebox.james.model.RoomModel;
 import com.bluebox.james.model.scenario.ScenarioBase;
 
 public class ApplicationService {
+	public static interface DeviceFilter {
+		boolean isMatching(DeviceBaseModel device);
+	}
+	
 	private static ApplicationService sSelf;
 	
 	private List<RoomModel>				mRooms;
@@ -90,6 +94,18 @@ public class ApplicationService {
 
 	public List<DeviceBaseModel> getDevices() {
 		return mDevices;
+	}
+	
+	public List<DeviceBaseModel> getDevices(DeviceFilter filter) {
+		List<DeviceBaseModel> devices = new ArrayList<DeviceBaseModel>();
+		
+		for (DeviceBaseModel device: mDevices) {
+			if (filter.isMatching(device)) {
+				devices.add(device);
+			}
+		}
+		
+		return devices;
 	}
 
 	public List<FeatureModel> getFeatures() {

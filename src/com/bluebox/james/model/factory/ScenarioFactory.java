@@ -67,10 +67,6 @@ public class ScenarioFactory {
 	}
 
 	public static ScenarioBase fromJSON(FeatureModel feature, JSONObject obj) {
-//		ScenarioOptionModel opt1 = new ScenarioOptionModel();
-//		opt1.setLabel("opt1");
-//		feature.addScenarioOption(opt1);
-		
 		if (obj != null) {
 			try {
 				ScenarioCustom scenario = new ScenarioCustom(feature);
@@ -87,21 +83,25 @@ public class ScenarioFactory {
 						if (objOption.has("label")) option.setLabel(objOption.getString("label"));
 
 						if (objOption.has("devices")) {
-							JSONArray arrayDevices = obj.getJSONArray("devices");
-							for (int j = 0; j < arrayDevices.length(); j++) {
-								JSONObject objDevice  = arrayDevices.getJSONObject(j);
-								DeviceBaseModel device = ApplicationService.getInstance().getDevice(objDevice.getInt("device_id"));
-								if (device != null) {
-									option.addDevice(device, objDevice.getInt("value"));
-								}
-							}	
+							try {
+								JSONArray arrayDevices = objOption.getJSONArray("devices");
+								for (int j = 0; j < arrayDevices.length(); j++) {
+									JSONObject objDevice  = arrayDevices.getJSONObject(j);
+									DeviceBaseModel device = ApplicationService.getInstance().getDevice(objDevice.getInt("device_id"));
+									if (device != null) {
+										option.addDevice(device, objDevice.getInt("value"));
+									}
+								}	
+							} catch (JSONException e) {
+								e.printStackTrace();
+							}
 						}
 
-//						feature.addScenarioOption(option);
+						//						feature.addScenarioOption(option);
 						scenario.add(option);
 					}
 				}
-				
+
 				return scenario;
 			} catch (JSONException e) {
 				e.printStackTrace();

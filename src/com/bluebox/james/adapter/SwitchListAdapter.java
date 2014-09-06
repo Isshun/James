@@ -2,40 +2,32 @@ package com.bluebox.james.adapter;
 
 import java.util.List;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
+import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import com.bluebox.james.R;
-import com.bluebox.james.model.DeviceSwitchModel;
-import com.bluebox.james.service.DoomService;
+import com.bluebox.james.model.DeviceBaseModel;
 
-public class SwitchListAdapter extends ArrayAdapter<DeviceSwitchModel> {
+public class SwitchListAdapter extends BaseAdapter {
 
-	private List<DeviceSwitchModel> mSwitchList;
+	private List<DeviceBaseModel> 	mDevices;
 
-	public SwitchListAdapter(Context context, int resource) {
-		super(context, resource);
-
-		mSwitchList = DoomService.getInstance().getSwitchList();
-	}
-	
 	@Override
 	public int getCount() {
-		return mSwitchList.size();
+		return mDevices != null ? mDevices.size() : 0;
 	}
 
 	@Override
-	public DeviceSwitchModel getItem(int pos) {
-		return mSwitchList.get(pos);
+	public DeviceBaseModel getItem(int pos) {
+		return mDevices.get(pos);
 	}
 
 	@Override
 	public long getItemId(int pos) {
-		return mSwitchList.get(pos).getId();
+		return mDevices.get(pos).getId();
 	}
 
 	@Override
@@ -45,14 +37,14 @@ public class SwitchListAdapter extends ArrayAdapter<DeviceSwitchModel> {
 			view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_entry_switch, null);
 		}
 		
-		EditText editName = (EditText) view.findViewById(R.id.edit_name);
-		EditText editId = (EditText) view.findViewById(R.id.edit_id);
+		DeviceBaseModel device = mDevices.get(pos);
 		
-		DeviceSwitchModel sw = mSwitchList.get(pos);
-		
-		editName.setText(sw.getName());
-		editId.setText(String.valueOf(sw.getId()));
+		((TextView)view.findViewById(R.id.lb_device)).setText(device.getName());
 		
 		return view;
+	}
+
+	public void setDevices(List<DeviceBaseModel> devices) {
+		mDevices = devices;
 	}
 }

@@ -46,7 +46,7 @@ public class JSONUtils extends JSONUtilsBase {
 //	}
 
 	public static void loadDevices(DataSourceListener listener) {
-		JSONArray array = JSONUtils.loadArray(JSONUtils.ROOMS_FILENAME);
+		JSONArray array = JSONUtils.loadArray(JSONUtils.DEVICES_FILENAME);
 		if (array != null) {
 			for (int i = 0; i < array.length(); i++) {
 				try {

@@ -12,38 +12,60 @@ import com.bluebox.james.model.DeviceBaseModel;
 import com.bluebox.james.service.DoomService;
 
 public class DeviceAdapter extends BaseAdapter {
+	private List<DeviceBaseModel> 	mDevices;
 
+	public DeviceAdapter() {
+		mDevices = DoomService.getInstance().getDevices();
+	}
+	
 	@Override
 	public int getCount() {
-		return DoomService.getInstance().getDevices().size();
+		return DoomService.getInstance().getDevices().size() + 1;
 	}
 
 	@Override
 	public Object getItem(int pos) {
-		return DoomService.getInstance().getDevices().get(pos);
+		if (pos > 0) {
+			return DoomService.getInstance().getDevices().get(pos - 1);
+		}
+		return null;
 	}
 
 	@Override
 	public long getItemId(int pos) {
-		return DoomService.getInstance().getDevices().get(pos).getId();
+		if (pos > 0) {
+			return DoomService.getInstance().getDevices().get(pos - 1).getId();
+		}
+		return 0;
 	}
 
 	@Override
 	public View getView(int pos, View view, ViewGroup parent) {
-		DeviceBaseModel device = DoomService.getInstance().getDevices().get(pos);
 		int padding = (int)parent.getContext().getResources().getDimension(R.dimen.list_device_padding);
 		
 		TextView text = new TextView(parent.getContext());
-		//AbsListView.LayoutParams lp = new AbsListView.LayoutParams(100, 100);
-//		v.setLayoutParams(lp);
-//		v.setBackgroundColor((Integer)getItem(pos));
-		text.setText(device.getName());
+		if (pos > 0) {
+			DeviceBaseModel device = DoomService.getInstance().getDevices().get(pos - 1);
+			text.setText(device.getName());
+		}
 		text.setPadding(padding, padding, padding, padding);
+		
 		return text;
 	}
 
 	public List<DeviceBaseModel> getDevices() {
 		return DoomService.getInstance().getDevices();
+	}
+
+	public DeviceBaseModel getDevice(int pos) {
+		if (pos > 0) {
+			return DoomService.getInstance().getDevices().get(pos - 1);
+		}
+		return null;
+	}
+
+	public int indexOf(DeviceBaseModel device) {
+		return mDevices.indexOf(device) + 1;
 	}
 	
 }
