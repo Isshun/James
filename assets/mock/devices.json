@@ -1,0 +1,30 @@
+[
+    {
+        "value": 23.5,
+        "id": 10,
+        "device_id": 19,
+        "type": 1,
+        "name": "Ampli"
+    },
+    {
+        "value": 23.5,
+        "id": 16,
+        "device_id": 20,
+        "type": 1,
+        "name": "Lampe bureau"
+    },
+    {
+        "value": 23.5,
+        "id": 17,
+        "device_id": 4,
+        "type": 1,
+        "name": "Lampe lit"
+    },
+    {
+        "value": 23.5,
+        "id": 23,
+        "device_id": 8,
+        "type": 1,
+        "name": "Lampe salon"
+    }
+]

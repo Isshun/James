@@ -1,0 +1,80 @@
+[
+    {
+        "features": [
+            {
+                "id": 3,
+                "icon": 0,
+                "scenario": {
+                    "id": 0,
+                    "options": [
+                        {
+                            "devices": [
+                                {
+                                    "value": 1,
+                                    "device_id": 16
+                                },
+                                {
+                                    "value": 1,
+                                    "device_id": 23
+                                }
+                            ],
+                            "icon": 2130837509,
+                            "color": -1324032,
+                            "label": "Bright"
+                        },
+                        {
+                            "devices": [
+                                {
+                                    "value": 1,
+                                    "device_id": 16
+                                },
+                                {
+                                    "value": 0,
+                                    "device_id": 23
+                                }
+                            ],
+                            "icon": 2130837509,
+                            "color": -2000128,
+                            "label": "Soft"
+                        }
+                    ]
+                },
+                "type": 1,
+                "color": 0,
+                "name": "Light"
+            }
+        ],
+        "img_background": 2130837512,
+        "id": 1,
+        "name": "Living Room"
+    },
+    {
+        "features": [
+            {
+                "id": 6,
+                "icon": 0,
+                "scenario": {
+                    "id": 0,
+                    "options": [
+                        {
+                            "icon": 0,
+                            "color": 0,
+                            "label": "opt1"
+                        },
+                        {
+                            "icon": 0,
+                            "color": 0,
+                            "label": "opt2"
+                        }
+                    ]
+                },
+                "type": 1,
+                "color": 0,
+                "name": "mock"
+            }
+        ],
+        "img_background": 2130837508,
+        "id": 2,
+        "name": "Kitchen"
+    }
+]

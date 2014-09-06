@@ -12,13 +12,13 @@
         android:targetSdkVersion="19" />
 
     <application
-        android:name="com.bluebox.james.Application"
+        android:name="org.smallbox.doomotic.Application"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.bluebox.james.activity.MainActivity"
+            android:name="org.smallbox.doomotic.activity.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,35 +27,35 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.bluebox.james.activity.TemperatureSceneActivity"
+            android:name="org.smallbox.doomotic.activity.TemperatureSceneActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="com.bluebox.james.activity.AdminActivity"
+            android:name="org.smallbox.doomotic.activity.AdminActivity"
             android:label="@string/title_activity_admin" >
         </activity>
         <activity
-            android:name="com.bluebox.james.activity.AdminRoomsActivity"
+            android:name="org.smallbox.doomotic.activity.AdminRoomsActivity"
             android:label="@string/title_activity_admin_rooms" >
         </activity>
         <activity
-            android:name="com.bluebox.james.activity.FeatureEditActivity"
+            android:name="org.smallbox.doomotic.activity.FeatureEditActivity"
             android:label="@string/edit_feature" >
         </activity>
         <activity
-            android:name="com.bluebox.james.activity.ScenarioEditActivity"
+            android:name="org.smallbox.doomotic.activity.ScenarioEditActivity"
             android:label="@string/edit_scenario" >
         </activity>
         <activity
-            android:name="com.bluebox.james.activity.RoomActivity"
+            android:name="org.smallbox.doomotic.activity.RoomActivity"
             android:label="@string/title_activity_room" >
         </activity>
         <activity
-            android:name="com.bluebox.james.activity.AdminProbesActivity"
+            android:name="org.smallbox.doomotic.activity.AdminProbesActivity"
             android:label="@string/title_activity_probes" >
         </activity>
         <activity
-            android:name="com.bluebox.james.activity.AdminSwitchsActivity"
+            android:name="org.smallbox.doomotic.activity.AdminSwitchsActivity"
             android:label="@string/title_activity_switchs" >
         </activity>
     </application>
