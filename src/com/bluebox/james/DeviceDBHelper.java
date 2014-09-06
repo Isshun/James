@@ -1,3 +1,4 @@
+package com.bluebox.james;
 //package com.bluebox.james;
 //
 //import android.content.ContentValues;
