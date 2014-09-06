@@ -149,9 +149,11 @@ public class FeatureModel extends DBModel {
 		scenario.setFeature(this);
 	}
 
-	public void setScenario(ScenarioOptionModel scenario) {
-		mScenario = new ScenarioCustom(this);
-		mScenario.setCurrentOption(scenario);
+	public void setScenario(ScenarioOptionModel option) {
+		if (mScenario == null) {
+			mScenario = new ScenarioCustom(this);
+		}
+		mScenario.setCurrentOption(option);
 	}
 
 	public void setScenario(ScenarioBase scenario) {

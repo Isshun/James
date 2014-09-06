@@ -2,7 +2,7 @@ package org.smallbox.doomotic.fragment;
 
 import org.smallbox.doomotic.activity.FeatureEditActivity;
 import org.smallbox.doomotic.activity.TemperatureSceneActivity;
-import org.smallbox.doomotic.adapter.FeatureAdapter;
+import org.smallbox.doomotic.adapter.RoomFeatureAdapter;
 import org.smallbox.doomotic.adapter.OnScenarioClickListener;
 import org.smallbox.doomotic.model.FeatureModel;
 import org.smallbox.doomotic.model.RoomModel;
@@ -39,7 +39,7 @@ public class RoomFragment extends Fragment {
         ((TextView)rootView.findViewById(R.id.room_name)).setText(room.getName());
         ((ImageView)rootView.findViewById(R.id.room_img)).setImageResource(room.getImgBackground());
     	
-        final FeatureAdapter adapter = new FeatureAdapter(room);
+        final RoomFeatureAdapter adapter = new RoomFeatureAdapter(room);
 
         final GridView grid = (GridView) rootView.findViewById(R.id.grid_actions);
         grid.setAdapter(adapter);

@@ -23,7 +23,7 @@ import android.widget.TextView;
 
 import com.bluebox.james.R;
 
-public class FeatureAdapter extends BaseAdapter {
+public class RoomFeatureAdapter extends BaseAdapter {
 	private static class ViewHolder {
 		public TextView		mName;
 		public ImageView 	mIcon;
@@ -32,12 +32,12 @@ public class FeatureAdapter extends BaseAdapter {
 		public TextView 	mValue;
 	}
 	
-	private RoomModel 				mRoom;
-	private OnScenarioClickListener mScenarioClickListener;
-	private ScenarioOptionModel 			mAnimFromScenario;
-	private ScenarioOptionModel 			mAnimToScenario;
+	private RoomModel 					mRoom;
+	private OnScenarioClickListener 	mScenarioClickListener;
+	private ScenarioOptionModel 		mAnimFromScenario;
+	private ScenarioOptionModel 		mAnimToScenario;
 
-	public FeatureAdapter(RoomModel room) {
+	public RoomFeatureAdapter(RoomModel room) {
 		mRoom = room;
 	}
 
