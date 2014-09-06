@@ -43,7 +43,7 @@ public abstract class DeviceBaseModel extends DBModel {
 	}
 
 	public double getValue() {
-		return 23.5;
+		return mValue;
 	}
 
 	public boolean isProbe() {

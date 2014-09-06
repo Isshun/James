@@ -1,6 +1,7 @@
 package org.smallbox.doomotic.dialog;
 
 import org.smallbox.doomotic.adapter.IconAdapter;
+import org.smallbox.lib.dialog.BaseDialogFragment;
 
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,8 +14,7 @@ import android.widget.ListAdapter;
 
 import com.bluebox.james.R;
 
-public class SelectIconDialogFragment extends BaseDialogFragment {
-	
+public class IconSelectDialog extends BaseDialogFragment {
 	protected Integer mIcon = -1;
 
     public int getIcon() {
@@ -23,10 +23,14 @@ public class SelectIconDialogFragment extends BaseDialogFragment {
     
 	@Override
 	protected void onCreateDialog() {
-        final ListAdapter adapter = new IconAdapter();
+		setTitle(R.string.title_dialog_select_icon);
+		setNegativeButton(R.string.bt_dialog_cancel);
+
+		final ListAdapter adapter = new IconAdapter();
 
         LinearLayout layout = new LinearLayout(getActivity());
         layout.setOrientation(LinearLayout.VERTICAL);
+		setContentView(layout);
         
         // Cutomize grid
         final GridView grid = new GridView(getActivity());
@@ -54,10 +58,6 @@ public class SelectIconDialogFragment extends BaseDialogFragment {
 			}
 		});
         layout.addView(btRemove);
-		
-		setTitle(R.string.title_dialog_select_icon);
-		setView(layout);
-		setNegativeButton(R.string.bt_dialog_cancel);
     }
 
 	@Override
@@ -65,6 +65,6 @@ public class SelectIconDialogFragment extends BaseDialogFragment {
 	}
 
 	@Override
-	protected void onSave() {
+	protected void onConfirm() {
 	}
 }

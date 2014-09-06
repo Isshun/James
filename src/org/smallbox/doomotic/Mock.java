@@ -1,14 +1,6 @@
 package org.smallbox.doomotic;
 
-import org.smallbox.doomotic.model.DeviceBaseModel;
-import org.smallbox.doomotic.model.FeatureModel;
-import org.smallbox.doomotic.model.RoomModel;
-import org.smallbox.doomotic.model.ScenarioOptionModel;
-import org.smallbox.doomotic.model.scenario.ScenarioBase;
 import org.smallbox.doomotic.service.DoomService;
-
-import android.graphics.Color;
-import android.util.Log;
 
 public class Mock {
 

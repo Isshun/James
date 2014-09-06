@@ -23,7 +23,6 @@ public class FeatureModel extends DBModel {
 	private int 					mColor;
 	private ScenarioBase			mScenario;
 	private ScenarioBase			mCustomScenario;
-	private static int 				sCount;
 	
 	public FeatureModel(int type, int  id, String name, int icon, int color) {
 		super(id);
@@ -33,22 +32,6 @@ public class FeatureModel extends DBModel {
 		mColor = color;
 		
 		mScenario = new ScenarioCustom(this);
-
-//		// TODO
-//		switch (type) {
-//		case SCENE_SCENARIO:
-//			mScenario = new ScenarioCustom(this);
-//			mCustomScenario = mScenario;
-//			break;
-//		case SCENE_SWITCH:
-//			mScenario = new ScenarioSwitch(this, null);
-//			mCustomScenario = new ScenarioCustom(this);
-//			break;
-//		case SCENE_TEMPERATURE:
-//			mScenario = new ScenarioTemperature(this, null);
-//			mCustomScenario = new ScenarioCustom(this);
-//			break;
-//		}
 	}
 	
 	public FeatureModel(String name) {
@@ -163,7 +146,6 @@ public class FeatureModel extends DBModel {
 
 	public void addCustomScenario(ScenarioOptionModel scenario) {
 		mCustomScenario.add(scenario);
-		scenario.setScenario(mCustomScenario);
 		scenario.setFeature(this);
 	}
 

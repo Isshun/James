@@ -3,7 +3,6 @@ package org.smallbox.doomotic.datasource;
 import org.smallbox.doomotic.model.DeviceBaseModel;
 import org.smallbox.doomotic.model.FeatureModel;
 import org.smallbox.doomotic.model.RoomModel;
-import org.smallbox.doomotic.model.ScenarioOptionModel;
 import org.smallbox.doomotic.model.scenario.ScenarioBase;
 
 public interface DataSourceListener {

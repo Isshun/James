@@ -3,7 +3,7 @@ package org.smallbox.doomotic.activity;
 import org.smallbox.doomotic.Application;
 import org.smallbox.doomotic.JSONUtils;
 import org.smallbox.doomotic.adapter.RoomAdapter;
-import org.smallbox.doomotic.dialog.NewFeatureDialogFragment;
+import org.smallbox.doomotic.dialog.FeatureCreateDialog;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,27 +20,11 @@ import android.widget.ListView;
 import com.bluebox.james.R;
 
 public class MainActivity extends FragmentActivity {
-
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link android.support.v4.app.FragmentPagerAdapter} derivative, which
-     * will keep every loaded fragment in memory. If this becomes too memory
-     * intensive, it may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
-    RoomAdapter mSectionsPagerAdapter;
-
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
-    ViewPager mViewPager;
-
-	private DrawerLayout mDrawerLayout;
-
-	private ActionBarDrawerToggle mDrawerToggle;
-
-	private ListView mDrawerList;
+	private RoomAdapter 			mSectionsPagerAdapter;
+	private ViewPager 				mViewPager;
+	private DrawerLayout 			mDrawerLayout;
+	private ActionBarDrawerToggle 	mDrawerToggle;
+	private ListView 				mDrawerList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +68,6 @@ public class MainActivity extends FragmentActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         // If the nav drawer is open, hide action items related to the content view
         boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-//        menu.findItem(R.id.action_websearch).setVisible(!drawerOpen);
         return super.onPrepareOptionsMenu(menu);
     }
     
@@ -119,8 +102,8 @@ public class MainActivity extends FragmentActivity {
             return true;
         }
         case R.id.action_add_feature: {
-			NewFeatureDialogFragment f = new NewFeatureDialogFragment();
-			f.setOnCloseListener(new NewFeatureDialogFragment.OnCloseListener() {
+			FeatureCreateDialog f = new FeatureCreateDialog();
+			f.setOnCloseListener(new FeatureCreateDialog.OnCloseListener() {
 				@Override
 				public void onClose() {
 					mSectionsPagerAdapter.notifyDataSetChanged();

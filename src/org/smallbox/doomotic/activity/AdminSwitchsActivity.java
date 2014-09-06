@@ -1,8 +1,8 @@
 package org.smallbox.doomotic.activity;
 
 import org.smallbox.doomotic.ApplicationService;
-import org.smallbox.doomotic.Utils;
 import org.smallbox.doomotic.ApplicationService.DeviceFilter;
+import org.smallbox.doomotic.Utils;
 import org.smallbox.doomotic.adapter.SwitchListAdapter;
 import org.smallbox.doomotic.dialog.DeviceEditDialog;
 import org.smallbox.doomotic.model.DeviceBaseModel;

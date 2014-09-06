@@ -5,10 +5,8 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.smallbox.doomotic.ApplicationService;
 import org.smallbox.doomotic.model.FeatureModel;
 import org.smallbox.doomotic.model.RoomModel;
-import org.smallbox.doomotic.model.ScenarioOptionModel;
 
 public class RoomFactory {
 

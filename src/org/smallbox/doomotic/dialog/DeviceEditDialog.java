@@ -34,11 +34,11 @@ public class DeviceEditDialog extends BaseDialogFragment {
 	private DeviceBaseModel 	mDevice;
 
 	@Override
-	protected View onCreateDialog(LayoutInflater inflater) {
-		final View view = inflater.inflate(R.layout.dialog_device, null);
+	protected void onCreateDialog() {
+		setContentView(R.layout.dialog_device);
 		
-		mEditName = (EditText)view.findViewById(R.id.edit_name);
-		mEditId = (EditText)view.findViewById(R.id.edit_id);
+		mEditName = (EditText)findViewById(R.id.edit_name);
+		mEditId = (EditText)findViewById(R.id.edit_id);
 		
 		mDevice = ApplicationService.getInstance().getDevice(getArguments().getInt(ARG_DEVICE_ID, 0));
 		if (mDevice != null) {
@@ -48,8 +48,6 @@ public class DeviceEditDialog extends BaseDialogFragment {
 		setTitle(R.string.title_dialog_create_feature);
 		setPositiveButton(mDevice != null ? R.string.bt_dialog_save : R.string.bt_dialog_create);
 		setNegativeButton(R.string.bt_dialog_cancel);
-		
-		return view;
 	}
 
 	private void customize(DeviceBaseModel device) {

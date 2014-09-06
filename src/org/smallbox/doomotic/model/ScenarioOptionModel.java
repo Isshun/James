@@ -10,7 +10,6 @@ import org.smallbox.doomotic.service.OnExecuteListener;
 import android.view.View.OnClickListener;
 
 public class ScenarioOptionModel extends DBModel {
-	private static int						sCount;
 	private Map<DeviceBaseModel, Integer>	mDevices;
 	private String 							mLabel;
 	public int 								mIcon;
@@ -18,7 +17,6 @@ public class ScenarioOptionModel extends DBModel {
 	private FeatureModel 					mFeature;
 	private OnClickListener 				mOnClickListener;
 	private DeviceBaseModel 				mDevice;
-	private ScenarioBase 					mScenario;
 	
 	public ScenarioOptionModel(ScenarioBase scenario, DeviceBaseModel device, int  id, String label, int icon, int color) {
 		super(id);
@@ -98,9 +96,5 @@ public class ScenarioOptionModel extends DBModel {
 
 	public void setLabel(String label) {
 		mLabel = label;
-	}
-
-	public void setScenario(ScenarioBase scenario) {
-		mScenario = scenario;
 	}
 }

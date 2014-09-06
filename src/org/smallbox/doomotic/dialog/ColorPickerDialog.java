@@ -1,6 +1,7 @@
 package org.smallbox.doomotic.dialog;
 
 import org.smallbox.doomotic.adapter.ColorAdapter;
+import org.smallbox.lib.dialog.BaseDialogFragment;
 
 import android.view.View;
 import android.widget.AdapterView;
@@ -10,7 +11,7 @@ import android.widget.ListAdapter;
 
 import com.bluebox.james.R;
 
-public class SelectColorDialogFragment extends BaseDialogFragment {
+public class ColorPickerDialog extends BaseDialogFragment {
 	
 	protected int mColor = -1;
 
@@ -33,7 +34,7 @@ public class SelectColorDialogFragment extends BaseDialogFragment {
 		});
 		
 		setTitle(R.string.title_dialog_select_color);
-		setView(grid);
+		setContentView(grid);
 		setNegativeButton(R.string.bt_dialog_cancel);
     }
 
@@ -46,6 +47,8 @@ public class SelectColorDialogFragment extends BaseDialogFragment {
 	}
 
 	@Override
-	protected void onSave() {
+	protected void onConfirm() {
 	}
+
+
 }

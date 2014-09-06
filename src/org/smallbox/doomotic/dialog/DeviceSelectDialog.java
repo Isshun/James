@@ -2,6 +2,7 @@ package org.smallbox.doomotic.dialog;
 
 import org.smallbox.doomotic.adapter.DeviceAdapter;
 import org.smallbox.doomotic.model.DeviceBaseModel;
+import org.smallbox.lib.dialog.BaseDialogFragment;
 
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,7 +12,7 @@ import android.widget.ListView;
 
 import com.bluebox.james.R;
 
-public class SelectDeviceDialogFragment extends BaseDialogFragment {
+public class DeviceSelectDialog extends BaseDialogFragment {
 	
 	protected DeviceBaseModel mDevice;
 
@@ -30,7 +31,7 @@ public class SelectDeviceDialogFragment extends BaseDialogFragment {
 		});
 		
 		setTitle(R.string.title_dialog_select_color);
-		setView(list);
+		setContentView(list);
 		setNegativeButton(R.string.bt_dialog_cancel);
     }
 
@@ -43,6 +44,6 @@ public class SelectDeviceDialogFragment extends BaseDialogFragment {
 	}
 
 	@Override
-	protected void onSave() {
+	protected void onConfirm() {
 	}
 }

@@ -3,19 +3,18 @@ package org.smallbox.doomotic.activity;
 import org.smallbox.doomotic.Application;
 import org.smallbox.doomotic.Utils;
 import org.smallbox.doomotic.adapter.ScenarioAdapter;
-import org.smallbox.doomotic.dialog.EditScenarioDialogFragment;
-import org.smallbox.doomotic.dialog.NewScenarioDialogFragment;
-import org.smallbox.doomotic.dialog.SelectColorDialogFragment;
-import org.smallbox.doomotic.dialog.SelectDeviceDialogFragment;
-import org.smallbox.doomotic.dialog.SelectIconDialogFragment;
-import org.smallbox.doomotic.dialog.BaseDialogFragment.OnCloseListener;
+import org.smallbox.doomotic.dialog.ColorPickerDialog;
+import org.smallbox.doomotic.dialog.DeviceSelectDialog;
+import org.smallbox.doomotic.dialog.IconSelectDialog;
+import org.smallbox.doomotic.dialog.ScenarioCreateDialog;
+import org.smallbox.doomotic.dialog.ScenarioEditDialog;
 import org.smallbox.doomotic.model.FeatureModel;
 import org.smallbox.doomotic.model.RoomModel;
-import org.smallbox.doomotic.model.ScenarioOptionModel;
 import org.smallbox.doomotic.model.scenario.ScenarioCustom;
 import org.smallbox.doomotic.model.scenario.ScenarioSwitch;
 import org.smallbox.doomotic.model.scenario.ScenarioTemperature;
 import org.smallbox.doomotic.service.DoomService;
+import org.smallbox.lib.dialog.BaseDialogFragment.OnCloseListener;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -42,7 +41,7 @@ public class FeatureEditActivity extends FragmentActivity {
 	private View btScenario;
 	private ListView listAction;
 	private ScenarioAdapter actionsAdapter;
-	private SelectIconDialogFragment mSelectIconDialog;
+	private IconSelectDialog mSelectIconDialog;
 	private ViewGroup mFrameOptions;
 
 	@Override
@@ -53,35 +52,10 @@ public class FeatureEditActivity extends FragmentActivity {
         Bundle bundle = getIntent().getExtras();
         mRoom = DoomService.getInstance().getRoom(bundle.getLong(Application.ARG_ROOM_ID));
         mFeature = mRoom.getFeature(bundle.getLong(Application.ARG_FEATURE_ID));
-
-//        final View overlay = findViewById(R.id.bt_overlay);
-        //overlay.setLayoutParams(lp);
-//        OnClickListener btTypeListener = new OnClickListener() {
-//			@Override
-//			public void onClick(View view) {
-//				final FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams)overlay.getLayoutParams();
-//				lp.width = view.getWidth();
-//				Integer fromPos = overlay.getLeft();
-////				Integer colorFrom = mAnimFromScenario.getColor();
-////				Integer colorTo = mAnimToScenario.getColor();
-//				Integer toPos = view.getLeft();
-//				ValueAnimator colorAnimation = ValueAnimator.ofObject(new IntEvaluator(), fromPos, toPos);
-//				colorAnimation.addUpdateListener(new AnimatorUpdateListener() {
-//				    @Override
-//				    public void onAnimationUpdate(ValueAnimator animator) {
-//				    	//((FrameLayout.LayoutParams)overlay.getLayoutParams()).leftMargin = (Integer)animator.getAnimatedValue();
-////				    	overlay.setPadding((Integer)animator.getAnimatedValue(), 0, 0, 0);
-//				    	lp.leftMargin = (Integer)animator.getAnimatedValue();
-//				    	overlay.setLayoutParams(lp);
-//				    }
-//				});
-//				colorAnimation.start();
-//			}
-//		};
         
         // "select icon" dialog
-		mSelectIconDialog = new SelectIconDialogFragment();
-		mSelectIconDialog.setOnCloseListener(new SelectIconDialogFragment.OnCloseListener() {
+		mSelectIconDialog = new IconSelectDialog();
+		mSelectIconDialog.setOnCloseListener(new IconSelectDialog.OnCloseListener() {
 			@Override
 			public void onClose() {
 				if (mSelectIconDialog.hasBeenActivated()) {
@@ -96,7 +70,7 @@ public class FeatureEditActivity extends FragmentActivity {
         btIcon.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				mSelectIconDialog.show(getFragmentManager().beginTransaction(), "dialog");
+				mSelectIconDialog.show(getSupportFragmentManager().beginTransaction(), "dialog");
 			}
 		});
 
@@ -143,8 +117,8 @@ public class FeatureEditActivity extends FragmentActivity {
         findViewById(R.id.bt_scene_color).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				final SelectColorDialogFragment f = new SelectColorDialogFragment();
-		        f.show(getFragmentManager().beginTransaction(), "dialog");
+				final ColorPickerDialog f = new ColorPickerDialog();
+		        f.show(getSupportFragmentManager().beginTransaction(), "dialog");
 		        f.setOnCloseListener(new OnCloseListener() {
 					@Override
 					public void onClose() {
@@ -198,8 +172,8 @@ public class FeatureEditActivity extends FragmentActivity {
         findViewById(R.id.bt_new_scenario).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				NewScenarioDialogFragment f = new NewScenarioDialogFragment();
-				f.setOnCloseListener(new NewScenarioDialogFragment.OnCloseListener() {
+				ScenarioCreateDialog f = new ScenarioCreateDialog();
+				f.setOnCloseListener(new ScenarioCreateDialog.OnCloseListener() {
 					@Override
 					public void onClose() {
 						actionsAdapter.notifyDataSetChanged();
@@ -208,7 +182,7 @@ public class FeatureEditActivity extends FragmentActivity {
 		    	Bundle args = new Bundle();
 		        args.putLong(Application.ARG_FEATURE_ID, mFeature.getId());
 		        f.setArguments(args);
-		        f.show(getFragmentManager().beginTransaction(), "dialog");
+		        f.show(getSupportFragmentManager().beginTransaction(), "dialog");
 			}
 		});
 
@@ -224,8 +198,8 @@ public class FeatureEditActivity extends FragmentActivity {
         btDevice.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				final SelectDeviceDialogFragment f = new SelectDeviceDialogFragment();
-		        f.show(getFragmentManager().beginTransaction(), "dialog");
+				final DeviceSelectDialog f = new DeviceSelectDialog();
+		        f.show(getSupportFragmentManager().beginTransaction(), "dialog");
 		        f.setOnCloseListener(new OnCloseListener() {
 					@Override
 					public void onClose() {
@@ -254,23 +228,14 @@ public class FeatureEditActivity extends FragmentActivity {
         listAction.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
-				ScenarioOptionModel action = mFeature.getOptions().get(pos);
-//				Intent intent = new Intent(FeatureEditActivity.this, ScenarioEditActivity.class);
-//				startActivity(intent);
-				
-				EditScenarioDialogFragment f = new EditScenarioDialogFragment();
-				f.setOnCloseListener(new EditScenarioDialogFragment.OnCloseListener() {
+				ScenarioEditDialog f = ScenarioEditDialog.newInstance(mRoom, mFeature, pos);
+				f.setOnCloseListener(new ScenarioEditDialog.OnCloseListener() {
 					@Override
 					public void onClose() {
 						actionsAdapter.notifyDataSetChanged();
 					}
 				});
-		    	Bundle args = new Bundle();
-				args.putLong(Application.ARG_ROOM_ID, mRoom.getId());
-				args.putLong(Application.ARG_FEATURE_ID, mFeature.getId());
-				args.putInt(Application.ARG_SCENARIO_POS, pos);
-		        f.setArguments(args);
-		        f.show(getFragmentManager().beginTransaction(), "dialog");
+		        f.show(getSupportFragmentManager().beginTransaction(), "dialog");
 			}
 		});
 	}
