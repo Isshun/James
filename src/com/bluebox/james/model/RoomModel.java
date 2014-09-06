@@ -5,14 +5,23 @@ import java.util.List;
 
 public class RoomModel extends DBModel {
 	private String 					mName;
-	private List<FeatureModel>	mFeatures;
+	private List<FeatureModel>		mFeatures;
 	private int 					mIcon;
 
-	public RoomModel(long id, String name, int icon) {
-		mDbId = id;
+	public RoomModel(int id) {
+		super(id);
+		mFeatures = new ArrayList<FeatureModel>();
+	}
+	
+	public RoomModel(int id, String name, int icon) {
+		super(id);
 		mName = name;
 		mFeatures = new ArrayList<FeatureModel>();
 		mIcon = icon;
+	}
+
+	public RoomModel() {
+		super();
 	}
 
 	public void addFeature(FeatureModel feature) {
@@ -38,6 +47,14 @@ public class RoomModel extends DBModel {
 
 	public int getImgBackground() {
 		return mIcon;
+	}
+
+	public void setImgBackground(int imgBackground) {
+		mIcon = imgBackground;
+	}
+
+	public void setName(String name) {
+		mName = name;
 	}
 
 }

@@ -2,10 +2,10 @@ package com.bluebox.james.adapter;
 
 import java.util.Locale;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.os.Bundle;
-import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 
 import com.bluebox.james.fragment.RoomFragment;
 import com.bluebox.james.service.DoomService;

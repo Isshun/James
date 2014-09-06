@@ -68,7 +68,7 @@ public class FeatureAdapter extends BaseAdapter {
 	@Override
 	public View getView(final int pos, View view, ViewGroup viewgroup) {
 		final FeatureModel feature = mRoom.getFeatures().get(pos);
-		final ScenarioOptionModel currentScenario = feature.getScenario();
+		final ScenarioOptionModel currentScenario = feature.getCurrentOption();
 		ViewHolder holder = null;
 		
 		if (view == null) {
@@ -111,6 +111,7 @@ public class FeatureAdapter extends BaseAdapter {
 		holder.mOptions.removeAllViews();
 		final ViewHolder h = holder;
 		int i = 0;
+		if (feature.getOptions() != null) {
 		for (ScenarioOptionModel scenario: feature.getOptions()) {
 			final ScenarioOptionModel finalScenario = scenario;
 			final int optionIndex = i;
@@ -171,6 +172,7 @@ public class FeatureAdapter extends BaseAdapter {
 				}
 			});
 			holder.mOptions.addView(lbOption);
+		}
 		}
 		
 		// Color change animation

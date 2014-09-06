@@ -2,9 +2,9 @@ package com.bluebox.james.fragment;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,9 +48,9 @@ public class RoomFragment extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
 				FeatureModel scene = room.getFeatures().get(pos);
-				ScenarioOptionModel fromScenario = scene.getScenario();
+				ScenarioOptionModel fromScenario = scene.getCurrentOption();
 				clickOnTile(view, scene);
-				ScenarioOptionModel toScenario = scene.getScenario();
+				ScenarioOptionModel toScenario = scene.getCurrentOption();
 				adapter.startAnim(fromScenario, toScenario);
 				adapter.notifyDataSetChanged();
 			}
@@ -73,7 +73,7 @@ public class RoomFragment extends Fragment {
         adapter.setOnScenarioClickListener(new OnScenarioClickListener() {
 			@Override
 			public void onScenarioClick(FeatureModel feature, ScenarioOptionModel scenario) {
-				adapter.startAnim(feature.getScenario(), scenario);
+				adapter.startAnim(feature.getCurrentOption(), scenario);
 				feature.setScenario(scenario);
 				DoomService.execute(scenario);
 				adapter.notifyDataSetChanged();

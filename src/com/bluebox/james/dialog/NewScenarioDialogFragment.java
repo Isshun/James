@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.bluebox.james.Application;
+import com.bluebox.james.NotImplementedException;
 import com.bluebox.james.R;
 import com.bluebox.james.model.FeatureModel;
 import com.bluebox.james.model.ScenarioOptionModel;
@@ -41,9 +42,11 @@ public class NewScenarioDialogFragment extends DialogFragment {
                 .setPositiveButton("Create",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
-                        	ScenarioOptionModel scenario = DoomService.getInstance().createScenario(editActionName.getText().toString(), R.drawable.ic_alarm);
-                        	DoomService.getInstance().addScenarioToFeature(feature, scenario);
-                        	mOnCloseListener.onClose();
+                        	throw new NotImplementedException();
+//                        	ScenarioOptionModel scenario = DoomService.getInstance().createScenario(editActionName.getText().toString(), R.drawable.ic_alarm);
+//                        	feature.addScenarioOption(option);
+//                        	DoomService.getInstance().addScenarioToFeature(feature, scenario);
+//                        	mOnCloseListener.onClose();
                         }
                     }
                 )

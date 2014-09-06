@@ -1,17 +1,16 @@
 package com.bluebox.james.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.ListView;
 
 import com.bluebox.james.R;
 import com.bluebox.james.adapter.FloorPagerAdapter;
-import com.bluebox.james.adapter.RoomAdapter;
 
-public class AdminRoomsActivity extends Activity {
+public class AdminRoomsActivity extends FragmentActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -41,7 +40,7 @@ public class AdminRoomsActivity extends Activity {
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the app.
-        mSectionsPagerAdapter = new FloorPagerAdapter(getFragmentManager());
+        mSectionsPagerAdapter = new FloorPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);

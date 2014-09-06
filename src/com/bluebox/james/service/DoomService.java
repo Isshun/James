@@ -5,14 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.graphics.Color;
 import android.util.Log;
 
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
 import com.bluebox.james.Application;
-import com.bluebox.james.DBHelper;
+import com.bluebox.james.ApplicationService;
+import com.bluebox.james.JSONUtils;
 import com.bluebox.james.model.DeviceBaseModel;
 import com.bluebox.james.model.DeviceProbeModel;
 import com.bluebox.james.model.DeviceSwitchModel;
@@ -28,10 +28,10 @@ public class DoomService {
 
 	private static DoomService 			sRoomService;
 	private Map<Long, RoomModel> 		mRooms;
-	private Map<Long, ScenarioOptionModel> 	mScenarios;
+//	private Map<Long, ScenarioBase> 	mScenarios;
 	private Map<Long, FeatureModel> mFeatures;
 	private Map<Long, DeviceProbeModel> mProbes;
-	private Map<Long,DeviceSwitchModel> mSwitchs;
+	private Map<Long, DeviceSwitchModel> mSwitchs;
 
 	private DoomService() {
 		mFloors = new ArrayList<FloorModel>();
@@ -41,7 +41,7 @@ public class DoomService {
 
 		mRooms = new HashMap<Long, RoomModel>();
 		mFeatures = new HashMap<Long, FeatureModel>();
-		mScenarios = new HashMap<Long, ScenarioOptionModel>();
+//		mScenarios = new HashMap<Long, ScenarioOptionModel>();
 		mProbes = new HashMap<Long, DeviceProbeModel>();
 		mSwitchs = new HashMap<Long, DeviceSwitchModel>();
 	}
@@ -57,9 +57,9 @@ public class DoomService {
 		return mRooms.size();
 	}
 
-	public List<ScenarioOptionModel> getAllActions() {
-		return new ArrayList<ScenarioOptionModel>(mScenarios.values());
-	}
+//	public List<ScenarioOptionModel> getAllActions() {
+//		return new ArrayList<ScenarioOptionModel>(mScenarios.values());
+//	}
 
 	//	public List<RoomModel> getRoomList() {
 	//		return new ArrayList<RoomModel>(mRooms.values());
@@ -94,9 +94,9 @@ public class DoomService {
 		for (FeatureModel scene: room.getFeatures()) {
 			mFeatures.put(scene.getId(), scene);
 
-			for (ScenarioOptionModel action: scene.getOptions()) {
-				mScenarios.put(action.getId(), action);
-			}
+//			for (ScenarioOptionModel action: scene.getOptions()) {
+//				mScenarios.put(action.getId(), action);
+//			}
 		}
 	}
 
@@ -104,16 +104,18 @@ public class DoomService {
 		return mFeatures.get(sceneId);
 	}
 
-	public ScenarioOptionModel getScenario(long scenarioId) {
-		return mScenarios.get(scenarioId);
-	}
+//	public ScenarioOptionModel getScenario(long scenarioId) {
+//		return mScenarios.get(scenarioId);
+//	}
 
-	public void addScenarioToFeature(FeatureModel feature, ScenarioOptionModel scenario) {
-		mScenarios.put(scenario.getId(), scenario);
-		feature.addCustomScenario(scenario);
-
-		DBHelper.getInstance().addScenarioToFeature(feature, scenario);
-	}
+//	public void addScenarioToFeature(FeatureModel feature, ScenarioOptionModel scenario) {
+//		mScenarios.put(scenario.getId(), scenario);
+//		feature.addCustomScenario(scenario);
+//
+//		JSONUtils.saveRooms();
+//		
+//		//DBHelper.getInstance().addScenarioToFeature(feature, scenario);
+//	}
 
 	public RoomModel getRoom(long id) {
 		return mRooms.get(id);
@@ -136,63 +138,95 @@ public class DoomService {
 	public void addSwitch(DeviceSwitchModel device) {
 		mSwitchs.put(device.getId(), device);
 
-		DBHelper.getInstance().createSwitch(device);
+		//DBHelper.getInstance().createSwitch(device);
+		
+		ApplicationService.getInstance().addDevice(device);
 	}
 
 	public void addFeatureToRoom(RoomModel room, FeatureModel feature) {
-		DBHelper.getInstance().addFeatureToRoom(room, feature);
+//		DBHelper.getInstance().addFeatureToRoom(room, feature);
 
 		room.addFeature(feature);
+		
+		JSONUtils.saveRooms();
 	}
 
 	public void addDeviceToScenario(ScenarioOptionModel scenario, DeviceBaseModel device, int value) {
-		DBHelper.getInstance().addDeviceToScenario(scenario, device, value);
+//		DBHelper.getInstance().addDeviceToScenario(scenario, device, value);
 
 		scenario.addDevice(device, value);
+		
+		JSONUtils.saveRooms();
 	}
 
 	public void init() {
-		DBHelper.getInstance().open();
-		//		if (DBHelper.getInstance().isExists() == false) {
-		//			DBHelper.getInstance().onCreate(DBHelper.getInstance().getWritableDatabase());
-		//		}
-		//		DBHelper.getInstance().onCreate(DBHelper.getInstance().getWritableDatabase());
-		//		DBHelper.getInstance().reset(DBHelper.getInstance().getWritableDatabase());
-
-		try {
-			DBHelper.getInstance().load();
-		} catch (Exception e) {
-			e.printStackTrace();
-			DBHelper.getInstance().reset(DBHelper.getInstance().getWritableDatabase());
-			DBHelper.getInstance().load();
+//		DBHelper.getInstance().open();
+//		//		if (DBHelper.getInstance().isExists() == false) {
+//		//			DBHelper.getInstance().onCreate(DBHelper.getInstance().getWritableDatabase());
+//		//		}
+//		//		DBHelper.getInstance().onCreate(DBHelper.getInstance().getWritableDatabase());
+//		//		DBHelper.getInstance().reset(DBHelper.getInstance().getWritableDatabase());
+//
+//		try {
+//			DBHelper.getInstance().load();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			DBHelper.getInstance().reset(DBHelper.getInstance().getWritableDatabase());
+//			DBHelper.getInstance().load();
+//		}
+//		mSwitchs = DBHelper.getInstance().getSwitchs();
+//		//		mProbes = DBHelper.getInstance().getProbes();
+//		mRooms = DBHelper.getInstance().getRooms();
+//		mScenarios = DBHelper.getInstance().getScenarios();
+//		mFeatures = DBHelper.getInstance().getFeatures();
+		
+		ApplicationService service = ApplicationService.getInstance();
+		
+		mSwitchs = new HashMap<Long, DeviceSwitchModel>();
+		for (DeviceBaseModel device: service.getDevices()) {
+			mSwitchs.put(device.getId(), device.getDeviceSwitch());
 		}
-		mSwitchs = DBHelper.getInstance().getSwitchs();
-		//		mProbes = DBHelper.getInstance().getProbes();
-		mRooms = DBHelper.getInstance().getRooms();
-		mScenarios = DBHelper.getInstance().getScenarios();
-		mFeatures = DBHelper.getInstance().getFeatures();
+		
+		mRooms = new HashMap<Long, RoomModel>();
+		for (RoomModel room: service.getRooms()) {
+			mRooms.put(room.getId(), room);
+		}
+
+//		mScenarios = new HashMap<Long, ScenarioBase>();
+//		for (ScenarioBase scenario: service.getScenarios()) {
+//			mScenarios.put(scenario.getId(), scenario);
+//		}
+
+		mFeatures = new HashMap<Long, FeatureModel>();
+		for (FeatureModel feature: service.getFeatures()) {
+			mFeatures.put(feature.getId(), feature);
+		}
 	}
 
 	public RoomModel createRoom(String name, int icon) {
 		RoomModel room = new RoomModel(-1, name, icon);
 
-		DBHelper.getInstance().createRoom(room);
+		ApplicationService.getInstance().addRoom(room);
+		
+		//DBHelper.getInstance().createRoom(room);
 
 		return room;
 	}
 
 	public ScenarioOptionModel createScenario(String name, int icon) {
-		ScenarioOptionModel scenario = new ScenarioOptionModel(null, null, -1, name, icon, Color.RED);
-
-		DBHelper.getInstance().createScenario(scenario);
-
-		return scenario;
+//		ScenarioOptionModel scenario = new ScenarioOptionModel(null, null, -1, name, icon, Color.RED);
+//
+////		DBHelper.getInstance().createScenario(scenario);
+//
+//		ApplicationService.getInstance().addScenario(scenario);
+//		return scenario;
+		throw new RuntimeException("not implemented");
 	}
 
 	public ScenarioBase createScenarioSwitch(FeatureModel feature, DeviceBaseModel device) {
 		ScenarioSwitch scenarioSwitch = new ScenarioSwitch(feature, device);
 
-		DBHelper.getInstance().createScenarioSwitch(scenarioSwitch);
+		//DBHelper.getInstance().createScenarioSwitch(scenarioSwitch);
 
 		return scenarioSwitch;
 	}
@@ -201,7 +235,9 @@ public class DoomService {
 		FeatureModel feature = null;
 
 		feature = new FeatureModel(type, -1, name, icon, color);
-		DBHelper.getInstance().createFeature(feature);
+		ApplicationService.getInstance().addFeature(feature);
+		//DBHelper.getInstance().createFeature(feature);
+		JSONUtils.saveRooms();
 
 		return feature;
 	}
@@ -209,7 +245,9 @@ public class DoomService {
 	public DeviceBaseModel createDevice(String name, int deviceId) {
 		DeviceSwitchModel device = new DeviceSwitchModel(-1, name, deviceId);
 
-		DBHelper.getInstance().createSwitch(device);
+		//DBHelper.getInstance().createSwitch(device);
+		
+		ApplicationService.getInstance().addDevice(device);
 
 		return device;
 	}
@@ -238,6 +276,10 @@ public class DoomService {
 			}
 		}
 		return null;
+	}
+
+	public void saveScenario(ScenarioOptionModel mScenario) {
+		JSONUtils.saveRooms();
 	}
 
 }

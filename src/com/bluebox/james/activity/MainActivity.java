@@ -1,9 +1,9 @@
 package com.bluebox.james.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
@@ -13,11 +13,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.bluebox.james.Application;
+import com.bluebox.james.JSONUtils;
 import com.bluebox.james.R;
 import com.bluebox.james.adapter.RoomAdapter;
 import com.bluebox.james.dialog.NewFeatureDialogFragment;
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -70,7 +71,7 @@ public class MainActivity extends Activity {
         
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the app.
-        mSectionsPagerAdapter = new RoomAdapter(getFragmentManager());
+        mSectionsPagerAdapter = new RoomAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -97,6 +98,10 @@ public class MainActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
+        case R.id.action_save:
+        	JSONUtils.saveDevices();
+        	JSONUtils.saveRooms();
+        	return true;
         case R.id.action_all_probe: {
 			Intent intent = new Intent(MainActivity.this, AdminProbesActivity.class);
 			startActivity(intent);

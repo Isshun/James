@@ -181,7 +181,7 @@ public class FeatureEditActivity extends FragmentActivity {
         mFrameOptions.removeAllViews();
         mFrameOptions.addView(view);
 
-        if (scenario.getCurrent().getDevice() != null) {
+        if (scenario != null && scenario.getCurrent() != null && scenario.getCurrent().getDevice() != null) {
             ((TextView)view.findViewById(R.id.lb_temperature)).setText(scenario.getCurrent().getDevice().getValue() + "°");
         } else {
             ((TextView)view.findViewById(R.id.lb_temperature)).setText("No sensor");

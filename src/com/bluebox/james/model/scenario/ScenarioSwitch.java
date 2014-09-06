@@ -1,6 +1,6 @@
 package com.bluebox.james.model.scenario;
 
-import com.bluebox.james.DBHelper;
+import com.bluebox.james.JSONUtils;
 import com.bluebox.james.model.DeviceBaseModel;
 import com.bluebox.james.model.FeatureModel;
 import com.bluebox.james.model.ScenarioOptionModel;
@@ -36,7 +36,8 @@ public class ScenarioSwitch extends ScenarioBase {
 
 	@Override
 	public void commit() {
-		DBHelper.getInstance().updateScenario(this);
+//		DBHelper.getInstance().updateScenario(this);
+		JSONUtils.saveRooms();
 	}
 
 	public DeviceBaseModel getDevice() {
@@ -55,4 +56,11 @@ public class ScenarioSwitch extends ScenarioBase {
 	public ScenarioSwitch asSwitch() {
 		return (ScenarioSwitch)this;
 	}
+	
+
+	@Override
+	public int getType() {
+		return FeatureModel.SCENE_SWITCH;
+	}
+
 }

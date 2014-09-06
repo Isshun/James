@@ -1,5 +1,10 @@
 package com.bluebox.james;
+import org.smallbox.lib.SmallboxLib;
+
 import android.content.Context;
+
+import com.bluebox.james.datasource.JSONDataSource;
+import com.bluebox.james.datasource.MockDataSource;
 
 public class Application extends android.app.Application {
 	public static final String TAG = "JAMES";
@@ -13,7 +18,13 @@ public class Application extends android.app.Application {
 
 	public void onCreate() {
 		sContext = getApplicationContext();
+		SmallboxLib.setContext(sContext);
+		
+		ApplicationService.getInstance().addDataSource(MockDataSource.class);
+		ApplicationService.getInstance().addDataSource(JSONDataSource.class);
+
 		Mock.init();
+		
 	}
 	
 	public static Context getContext() {

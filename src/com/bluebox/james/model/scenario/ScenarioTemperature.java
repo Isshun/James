@@ -69,5 +69,12 @@ public class ScenarioTemperature extends ScenarioBase {
 	public DeviceBaseModel getDevice() {
 		return mDevice;
 	}
+	
+
+	@Override
+	public int getType() {
+		return FeatureModel.SCENE_TEMPERATURE;
+	}
+
 
 }

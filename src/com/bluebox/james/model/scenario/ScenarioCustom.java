@@ -1,6 +1,6 @@
 package com.bluebox.james.model.scenario;
 
-import com.bluebox.james.DBHelper;
+import com.bluebox.james.JSONUtils;
 import com.bluebox.james.model.DeviceBaseModel;
 import com.bluebox.james.model.FeatureModel;
 
@@ -12,7 +12,8 @@ public class ScenarioCustom extends ScenarioBase {
 
 	@Override
 	public void commit() {
-		DBHelper.getInstance().updateScenario(this);
+//		DBHelper.getInstance().updateScenario(this);
+		JSONUtils.saveRooms();
 	}
 	
 	public ScenarioCustom asCustom() {
@@ -22,6 +23,11 @@ public class ScenarioCustom extends ScenarioBase {
 	@Override
 	public DeviceBaseModel getDevice() {
 		return null;
+	}
+
+	@Override
+	public int getType() {
+		return FeatureModel.SCENE_SCENARIO;
 	}
 
 }

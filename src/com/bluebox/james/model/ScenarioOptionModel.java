@@ -10,6 +10,7 @@ import com.bluebox.james.model.scenario.ScenarioBase;
 import com.bluebox.james.service.OnExecuteListener;
 
 public class ScenarioOptionModel extends DBModel {
+	private static int						sCount;
 	private Map<DeviceBaseModel, Integer>	mDevices;
 	private String 							mLabel;
 	public int 								mIcon;
@@ -19,14 +20,24 @@ public class ScenarioOptionModel extends DBModel {
 	private DeviceBaseModel 				mDevice;
 	private ScenarioBase 					mScenario;
 	
-	public ScenarioOptionModel(ScenarioBase scenario, DeviceBaseModel device, long id, String label, int icon, int color) {
-		mDbId = id;
+	public ScenarioOptionModel(ScenarioBase scenario, DeviceBaseModel device, int  id, String label, int icon, int color) {
+		super(id);
 		mLabel = label;
 		mIcon = icon;
 		mDevice = device;
 		mColor = color;//Color.rgb(64, 138, 191);
 		mDevices = new HashMap<DeviceBaseModel, Integer>();
-		mScenario = scenario;
+	}
+
+	public ScenarioOptionModel(int id) {
+		super(id);
+		mDevices = new HashMap<DeviceBaseModel, Integer>();
+
+	}
+
+	public ScenarioOptionModel() {
+		super();
+		mDevices = new HashMap<DeviceBaseModel, Integer>();
 	}
 
 	public void execute(OnExecuteListener executeListener) {
@@ -87,10 +98,6 @@ public class ScenarioOptionModel extends DBModel {
 
 	public void setLabel(String label) {
 		mLabel = label;
-	}
-
-	public void commit() {
-		mScenario.commit();
 	}
 
 	public void setScenario(ScenarioBase scenario) {

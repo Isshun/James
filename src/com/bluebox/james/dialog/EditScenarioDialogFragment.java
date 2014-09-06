@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.webkit.WebView.FindListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -147,7 +146,7 @@ public class EditScenarioDialogFragment extends BaseDialogFragment {
 			mScenario.setColor(mSelectColorDialog.getColor());
 		}
 
-		mScenario.commit();
+		DoomService.getInstance().saveScenario(mScenario);
 	}
 
 	@Override
