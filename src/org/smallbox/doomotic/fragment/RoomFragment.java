@@ -27,13 +27,12 @@ import android.widget.TextView;
 import com.bluebox.james.R;
 
 public class RoomFragment extends Fragment {
-
     public static final String ARG_ROOM_ID = "room_id";
     public static final String ARG_FEATURE_ID = "feature_id";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final RoomModel room = DoomService.getInstance().getRoom(getArguments().getLong(ARG_ROOM_ID));
+        final RoomModel room = DoomService.getInstance().getRoom(getArguments().getInt(ARG_ROOM_ID));
     	final View rootView = inflater.inflate(R.layout.fragment_room, container, false);
 
         ((TextView)rootView.findViewById(R.id.room_name)).setText(room.getName());

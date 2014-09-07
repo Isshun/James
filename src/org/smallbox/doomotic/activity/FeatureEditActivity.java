@@ -50,8 +50,8 @@ public class FeatureEditActivity extends FragmentActivity {
         setContentView(R.layout.activity_edit_feature);
 
         Bundle bundle = getIntent().getExtras();
-        mRoom = DoomService.getInstance().getRoom(bundle.getLong(Application.ARG_ROOM_ID));
-        mFeature = mRoom.getFeature(bundle.getLong(Application.ARG_FEATURE_ID));
+        mRoom = DoomService.getInstance().getRoom(bundle.getInt(Application.ARG_ROOM_ID));
+        mFeature = mRoom.getFeature(bundle.getInt(Application.ARG_FEATURE_ID));
         
         // "select icon" dialog
 		mSelectIconDialog = new IconSelectDialog();
@@ -172,16 +172,13 @@ public class FeatureEditActivity extends FragmentActivity {
         findViewById(R.id.bt_new_scenario).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				ScenarioCreateDialog f = new ScenarioCreateDialog();
+				ScenarioCreateDialog f = ScenarioCreateDialog.newInstance(mFeature);
 				f.setOnCloseListener(new ScenarioCreateDialog.OnCloseListener() {
 					@Override
 					public void onClose() {
 						actionsAdapter.notifyDataSetChanged();
 					}
 				});
-		    	Bundle args = new Bundle();
-		        args.putLong(Application.ARG_FEATURE_ID, mFeature.getId());
-		        f.setArguments(args);
 		        f.show(getSupportFragmentManager().beginTransaction(), "dialog");
 			}
 		});

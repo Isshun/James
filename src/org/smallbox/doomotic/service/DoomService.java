@@ -28,11 +28,11 @@ public class DoomService {
 	private List<FloorModel>	mFloors;
 
 	private static DoomService 			sRoomService;
-	private Map<Long, RoomModel> 		mRooms;
+	private Map<Integer, RoomModel> 		mRooms;
 //	private Map<Long, ScenarioBase> 	mScenarios;
-	private Map<Long, FeatureModel> mFeatures;
-	private Map<Long, DeviceProbeModel> mProbes;
-	private Map<Long, DeviceSwitchModel> mSwitchs;
+	private Map<Integer, FeatureModel> mFeatures;
+	private Map<Integer, DeviceProbeModel> mProbes;
+	private Map<Integer, DeviceSwitchModel> mSwitchs;
 
 	private DoomService() {
 		mFloors = new ArrayList<FloorModel>();
@@ -40,11 +40,11 @@ public class DoomService {
 		mFloors.add(new FloorModel(1, "Ground floor"));
 		mFloors.add(new FloorModel(2, "2nd floor"));
 
-		mRooms = new HashMap<Long, RoomModel>();
-		mFeatures = new HashMap<Long, FeatureModel>();
+		mRooms = new HashMap<Integer, RoomModel>();
+		mFeatures = new HashMap<Integer, FeatureModel>();
 //		mScenarios = new HashMap<Long, ScenarioOptionModel>();
-		mProbes = new HashMap<Long, DeviceProbeModel>();
-		mSwitchs = new HashMap<Long, DeviceSwitchModel>();
+		mProbes = new HashMap<Integer, DeviceProbeModel>();
+		mSwitchs = new HashMap<Integer, DeviceSwitchModel>();
 	}
 
 	public static DoomService getInstance() {
@@ -101,7 +101,7 @@ public class DoomService {
 		}
 	}
 
-	public FeatureModel getFeature(long sceneId) {
+	public FeatureModel getFeature(int sceneId) {
 		return mFeatures.get(sceneId);
 	}
 
@@ -118,7 +118,7 @@ public class DoomService {
 //		//DBHelper.getInstance().addScenarioToFeature(feature, scenario);
 //	}
 
-	public RoomModel getRoom(long id) {
+	public RoomModel getRoom(int id) {
 		return mRooms.get(id);
 	}
 
@@ -183,12 +183,12 @@ public class DoomService {
 		
 		ApplicationService service = ApplicationService.getInstance();
 		
-		mSwitchs = new HashMap<Long, DeviceSwitchModel>();
+		mSwitchs = new HashMap<Integer, DeviceSwitchModel>();
 		for (DeviceBaseModel device: service.getDevices()) {
 			mSwitchs.put(device.getId(), device.getDeviceSwitch());
 		}
 		
-		mRooms = new HashMap<Long, RoomModel>();
+		mRooms = new HashMap<Integer, RoomModel>();
 		for (RoomModel room: service.getRooms()) {
 			mRooms.put(room.getId(), room);
 		}
@@ -198,7 +198,7 @@ public class DoomService {
 //			mScenarios.put(scenario.getId(), scenario);
 //		}
 
-		mFeatures = new HashMap<Long, FeatureModel>();
+		mFeatures = new HashMap<Integer, FeatureModel>();
 		for (FeatureModel feature: service.getFeatures()) {
 			mFeatures.put(feature.getId(), feature);
 		}
@@ -214,14 +214,21 @@ public class DoomService {
 		return room;
 	}
 
-	public ScenarioOptionModel createScenario(String name, int icon) {
+	public ScenarioOptionModel createScenarioOption(FeatureModel feature, String name, int icon) {
+		ScenarioOptionModel option = new ScenarioOptionModel();
+		option.setLabel(name);
+		
+		feature.addScenarioOption(option);
+	
+		return option;
+		
 //		ScenarioOptionModel scenario = new ScenarioOptionModel(null, null, -1, name, icon, Color.RED);
 //
 ////		DBHelper.getInstance().createScenario(scenario);
 //
 //		ApplicationService.getInstance().addScenario(scenario);
 //		return scenario;
-		throw new RuntimeException("not implemented");
+//		throw new RuntimeException("not implemented");
 	}
 
 	public ScenarioBase createScenarioSwitch(FeatureModel feature, DeviceBaseModel device) {
@@ -270,7 +277,7 @@ public class DoomService {
 		return floors;
 	}
 
-	public FloorModel getFloor(long id) {
+	public FloorModel getFloor(int id) {
 		for (FloorModel floor: mFloors) {
 			if (floor.getId() == id) {
 				return floor;

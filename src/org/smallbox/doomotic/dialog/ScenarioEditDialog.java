@@ -15,7 +15,6 @@ import org.smallbox.lib.dialog.BaseDialogFragment;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -45,8 +44,8 @@ public class ScenarioEditDialog extends BaseDialogFragment {
 	private static final LinearLayout.LayoutParams textLp = new LinearLayout.LayoutParams(170, LinearLayout.LayoutParams.MATCH_PARENT);
 	private static final LinearLayout.LayoutParams linearLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 65);
 
-	private IconSelectDialog 	mSelectIconDialog;
-	private ColorPickerDialog 	mSelectColorDialog;
+	private IconSelectDialog 			mSelectIconDialog;
+	private ColorPickerDialog 			mSelectColorDialog;
 	private ScenarioOptionModel 		mScenario;
 	private FeatureModel 				mFeature;
 	private EditText 					mEditScenarioName;
@@ -54,8 +53,8 @@ public class ScenarioEditDialog extends BaseDialogFragment {
 
 	public static ScenarioEditDialog newInstance(RoomModel room, FeatureModel feature, int pos) {
     	Bundle args = new Bundle();
-		args.putLong(Application.ARG_ROOM_ID, room.getId());
-		args.putLong(Application.ARG_FEATURE_ID, feature.getId());
+		args.putInt(Application.ARG_ROOM_ID, room.getId());
+		args.putInt(Application.ARG_FEATURE_ID, feature.getId());
 		args.putInt(Application.ARG_SCENARIO_POS, pos);
 		ScenarioEditDialog f = new ScenarioEditDialog();
         f.setArguments(args);
@@ -67,7 +66,7 @@ public class ScenarioEditDialog extends BaseDialogFragment {
 		setContentView(R.layout.activity_edit_scenario);
 		
 		final int optionIndex = getArguments().getInt(Application.ARG_SCENARIO_POS);
-		mFeature = DoomService.getInstance().getFeature(getArguments().getLong(Application.ARG_FEATURE_ID));
+		mFeature = DoomService.getInstance().getFeature(getArguments().getInt(Application.ARG_FEATURE_ID));
 		mScenario = mFeature.getOptions().get(optionIndex);
 		mDeviceEntries = new ArrayList<DeviceEntry>();
 

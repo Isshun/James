@@ -176,4 +176,8 @@ public class FeatureModel extends DBModel {
 	public ScenarioBase getScenario() {
 		return mScenario;
 	}
+
+	public void addScenario(ScenarioBase scenario) {
+		
+	}
 }

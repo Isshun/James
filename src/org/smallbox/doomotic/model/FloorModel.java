@@ -1,21 +1,15 @@
 package org.smallbox.doomotic.model;
 
-public class FloorModel {
+public class FloorModel extends DBModel {
+	private String 	mLabel;
 
-	private String mLabel;
-	private long mId;
-
-	public FloorModel(long id, String label) {
+	public FloorModel(int id, String label) {
+		super(id);
 		mLabel = label;
-		mId = id;
 	}
 
 	public String getLabel() {
 		return mLabel;
-	}
-
-	public long getId() {
-		return mId;
 	}
 
 }

@@ -19,7 +19,7 @@ public class FloorPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int pos) {
         Fragment fragment = new FloorAdminFragment();
         Bundle args = new Bundle();
-        args.putLong(FloorAdminFragment.ARG_FLOOR_ID, DoomService.getInstance().getFloors().get(pos).getId());
+        args.putInt(FloorAdminFragment.ARG_FLOOR_ID, DoomService.getInstance().getFloors().get(pos).getId());
         fragment.setArguments(args);
         return fragment;
     }

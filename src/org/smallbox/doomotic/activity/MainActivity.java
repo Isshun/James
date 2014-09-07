@@ -1,9 +1,9 @@
 package org.smallbox.doomotic.activity;
 
-import org.smallbox.doomotic.Application;
 import org.smallbox.doomotic.JSONUtils;
 import org.smallbox.doomotic.adapter.RoomAdapter;
 import org.smallbox.doomotic.dialog.FeatureCreateDialog;
+import org.smallbox.doomotic.model.RoomModel;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -102,19 +102,15 @@ public class MainActivity extends FragmentActivity {
             return true;
         }
         case R.id.action_add_feature: {
-			FeatureCreateDialog f = new FeatureCreateDialog();
+	    	RoomModel room = mSectionsPagerAdapter.getRoom(mViewPager.getCurrentItem());
+        	FeatureCreateDialog f = FeatureCreateDialog.newInstance(room);
 			f.setOnCloseListener(new FeatureCreateDialog.OnCloseListener() {
 				@Override
 				public void onClose() {
 					mSectionsPagerAdapter.notifyDataSetChanged();
-					//adapter.notifyDataSetChanged();
 				}
 			});
-	    	Bundle args = new Bundle();
-	    	long roomId = mSectionsPagerAdapter.getItemId(mViewPager.getCurrentItem());
-	        args.putLong(Application.ARG_ROOM_ID, roomId);
-	        f.setArguments(args);
-	        f.show(getFragmentManager().beginTransaction(), "dialog");
+	        f.show(getSupportFragmentManager().beginTransaction(), "dialog");
         }
         default:
             return super.onOptionsItemSelected(item);

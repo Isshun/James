@@ -25,7 +25,7 @@ public class FloorAdminFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mFloor = DoomService.getInstance().getFloor(getArguments().getLong(ARG_FLOOR_ID));
+        mFloor = DoomService.getInstance().getFloor(getArguments().getInt(ARG_FLOOR_ID));
 
         final View view = inflater.inflate(R.layout.fragment_admin_floor, container, false);
     	((TextView)view.findViewById(R.id.lb_floor)).setText(mFloor.getLabel());
